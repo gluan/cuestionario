@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import './book.css';
-import Instructions from '../book/book';
+import Instructions from '../instructions/instructions';
 
 class Book extends Component {
     handleChange (event) {
@@ -21,22 +21,31 @@ class Book extends Component {
     };
 
     render() {
+		var instrucciones={
+			title: 'Instrucciones',
+			text: 'Responde el cuestionario selecionando la respuesta correcta en las preguntas de opcion multiple,'+ 
+			'selecionanado las respuestas correctas en las preguntas de sellecion y escribiendo la respuesta en las preguntas abiertas'
+		}
         return(
-            <div className="row col-12">
-                <Instructions />
-                <div className="col-6 page">
-                    <textarea
-                        id="page-1"
-                        placeholder="Type here ..."
-                        onChange={this.handleChange.bind(this)}>
-                    </textarea>
-                </div>
-                <div className="col-6 page">
-                    <textarea
-                        id="page-2"
-                        onChange={this.handleChangePage.bind(this)}>
-                    </textarea>
-                </div>
+            <div className="body-book ">
+			<div className="row">
+                <Instructions title={instrucciones.title} text={instrucciones.text} />
+				</div>
+				<div className="row col-12 book">
+					<div className="col-6 page">
+						<textarea
+							id="page-1"
+							placeholder="Type here ..."
+							onChange={this.handleChange.bind(this)}>
+						</textarea>
+					</div>
+					<div className="col-6 page">
+						<textarea
+							id="page-2"
+							onChange={this.handleChangePage.bind(this)}>
+						</textarea>
+					</div>
+				</div>
             </div>
         );
     }

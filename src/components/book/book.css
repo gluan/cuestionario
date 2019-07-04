@@ -5,7 +5,17 @@ textarea {
     overflow: hidden;
 
 }
-
+.container{
+	margin-bottom:10px;
+	display: block;
+}
+.body-book {
+	background: url('/img/fondo.jpg');
+}
 .page {
     height: 200px;
+}
+
+.book {
+	
 }

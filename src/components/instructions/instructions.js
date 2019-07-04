@@ -12,9 +12,8 @@ class Instructions extends Component {
                 <img className="title_image" src={"/img/avatar.png"} alt="background_avatar"/>
                 <img className="title_instructions" src={"/img/fondo-instrucciones.png"} alt="background_instrucciones"/>
                 <div className="text_instructions">
-                    <h3>INSTRUCCIONES:</h3>
-                    <p>estas osn las instrucciones</p>
-                    <p>{this.props.instructions}</p>
+                    <div className="title">{this.props.title}:</div>
+					<div>{this.props.text}</div>
                 </div>
             </div>
         );
