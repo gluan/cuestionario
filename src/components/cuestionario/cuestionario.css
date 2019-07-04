@@ -1,0 +1,12 @@
+.body-cuestionario {
+	background-repeat: no-repeat;
+    background: url(/img/fondo.jpg);
+    background-size: cover;
+}
+
+.cuestionario{
+	margin-top: 90px;
+	text-align:left;
+	margin-left: 5px;
+	width: 100%;
+}

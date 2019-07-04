@@ -10,12 +10,14 @@ textarea {
 	display: block;
 }
 .body-book {
-	background: url('/img/fondo.jpg');
+	background-repeat: no-repeat;
+    background: url(/img/fondo.jpg);
+    background-size: cover;
 }
 .page {
     height: 200px;
 }
 
 .book {
-	
+	margin-top: 90px;
 }

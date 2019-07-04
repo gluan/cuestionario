@@ -1,0 +1,23 @@
+input[type="checkbox"] {
+	/*display:none;*/
+}
+.check { 
+	margin: 0px;
+	margin-right: 5px;
+}
+ input[type="checkbox"] + label {
+	display: inline-block;	
+	width: 20px;
+	height: 20px;
+	cursor: pointer;	
+	background-image: url('/img/circulo.png');
+	background-size: cover;
+}
+input[type="checkbox"]:checked + label {
+	display: inline-block;	
+	width: 20px;
+	height: 20px;
+	cursor: pointer;	
+	background-image: url('/img/avatar.png');
+	background-size: cover;
+}

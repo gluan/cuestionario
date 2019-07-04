@@ -20,8 +20,14 @@ class Question extends Component {
             );
             question =
                 <div>
-                    <div> {this.props.question} </div>
-                    <div> {checks} </div>
+                    <div className="question">
+						<img className="numero" src="/img/circulo.png" />
+						<div className="div-num">{this.props.num}</div>
+						{this.props.question}
+					</div>
+                    <div className="text"> 
+						{checks} 
+					</div>
                 </div>
         /* Pregunta tipo 2 - opcion multiple*/
         }else if (this.props.type == '2') {
@@ -37,20 +43,30 @@ class Question extends Component {
             );
             question =
                 <div>
-                    <div>{this.props.question}</div>
-                    <div>{radios}</div>
+                    <div className="question">
+						<img className="numero" src="/img/circulo.png" />
+						<div className="div-num">{this.props.num}</div>
+						{this.props.question}
+					</div>
+                    <div className="text">
+						{radios}
+					</div>
                 </div>
         /*Opcion 3 respuesta abierta*/
         }else {
             question =
                 <div>
-                    <div>{this.props.question}</div>
-                    <textarea></textarea>
+                    <div className="question">
+						<img className="numero" src="/img/circulo.png" />
+						<div className="div-num">{this.props.num}</div>
+						{this.props.question}
+					</div>
+                    <textarea placeholder={this.props.placeholder} className="text"></textarea>
                 </div>
         }
 
         return(
-            <div>{question}</div>
+            <div className="body-question">{question}</div>
         );
     }
 

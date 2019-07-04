@@ -1,0 +1,17 @@
+.numero {
+	width: 40px;
+}
+.div-num{
+	display: inline;
+    width: 30px;
+    margin-left: -25px;
+    margin-right: 20px;
+}
+.text {
+	background-color: #e6d1915e;
+	padding-left: 45px;
+    border: none;
+}
+.body-question{
+	width: 90%;
+}

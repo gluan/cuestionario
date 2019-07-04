@@ -8,12 +8,14 @@ class Radio extends Component{
     }
     render() {
         return(
-            <label>
-                <input type="radio"
-                    value={this.props.value}
-                    name={this.props.name}
-                />{this.props.value}
-            </label>
+			<div>				
+				<input type="radio"
+					id={this.props.value}
+					value={this.props.value}
+                    name={this.props.name} />
+				<label for={this.props.value} class="radio"></label>
+				{this.props.value}
+			</div>
         );
     }
 }

@@ -9,9 +9,14 @@ class Checkbox extends Component{
 
     render() {
         return(
-            <label>
-                <input type="checkbox" />{this.props.name}
-            </label>
+			<div>				
+				<input type="checkbox"
+					id={this.props.value}
+					value={this.props.value}
+				/>
+				<label for={this.props.value} class="check"></label>
+				{this.props.value}
+			</div>
         );
     }
 }
