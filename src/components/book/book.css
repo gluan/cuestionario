@@ -20,10 +20,11 @@
 
 .book {
     width: 80%;
-    height: 100%;
+    height: -webkit-fill-available;
     margin-top: 90px;
     background: url(/img/libro-abierto.png);
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     margin-left: 10%;
+    background-position: top;
 }
