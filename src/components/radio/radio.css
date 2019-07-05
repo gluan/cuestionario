@@ -10,7 +10,7 @@ input[type="radio"] {
 	width: 20px;
 	height: 20px;
 	cursor: pointer;
-	background-image: url('/img/circulo.png');
+	background-image: url('/img/Diamanteplata.png');
 	background-size: cover;
 }
 input[type="radio"]:checked + label {
@@ -18,6 +18,6 @@ input[type="radio"]:checked + label {
 	width: 20px;
 	height: 20px;
 	cursor: pointer;
-	background-image: url('/img/avatar.png');
+	background-image: url('/img/Diamanteblue.png');
 	background-size: cover;
 }

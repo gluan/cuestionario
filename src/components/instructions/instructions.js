@@ -8,7 +8,7 @@ class Instructions extends Component {
     }
     render(){
         return(
-            <div className="container">
+            <div>
                 <img className="title_image" src={"/img/avatar.png"} alt="background_avatar"/>
                 <img className="title_instructions" src={"/img/fondo-instrucciones.png"} alt="background_instrucciones"/>
                 <div className="text_instructions">

@@ -10,9 +10,10 @@ class Student extends Component {
             values:[
                 {
                     question: '¿Cuál es el río más largo del mundo?',
-                    options: [ 'Misisipi', 'Amazonas', 'Nilo', 'Ninguno de los anteriores' ],
+                    options: [ 'Misisipi', 'Amazonas', 'Nilo' ],
                     type: '2',
-                },{
+                },
+                {
                     question: 'Las tres ciudades más grandes y pobladas del país son:',
                     options: [ 'Ciudad de México', 'Guadalajara ', 'Monterrey', 'Cancún' ],
                     type: '1',

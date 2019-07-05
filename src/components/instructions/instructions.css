@@ -5,23 +5,26 @@
     top: -45px;
 }
 .text_instructions{
-    font-size: 0.75rem;
+    font-family: Trattatello;
+    font-size: 1rem;
     margin-top: -164px;
     width: 76%;
     margin-left: 200px;
     text-align: left;
 }
 .title {
+    /* font-family: Trattatello; */
 	font-weight: bold;
 	text-transform: uppercase;
 }
 .text_instructions h3 {
-    font-family: Trattatello;
+    /* font-family: Trattatello; */
     font-size: 18pt;
 }
 .title_instructions{
-  height: 175px !important;
-  width : 100% !important;
+    /* font-family: Trattatello; */
+    height: 175px !important;
+    width : 100% !important;
 }
 .title_image{
   top: -30px;
@@ -29,7 +32,6 @@
 }
 @media (max-width: 770px){
 	.text_instructions{
-		font-size: 0.7rem;
 		width: 60%;
 	}
 }

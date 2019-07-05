@@ -15,10 +15,12 @@ input[type="checkbox"] {
 }
 input[type="checkbox"]:checked + label {
 	display: inline-block;
-	width: 16px;
-	height: 16px;
-	background-color: #cbaa83bd;
-	border-radius: 6px;
-	background-image: url('/img/paloma.png');
-	background-size: cover;
+    width: 20px;
+    height: 16px;
+    background-color: #cbaa83bd;
+    border-radius: 6px;
+    background-image: url(/img/Palomita.svg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }

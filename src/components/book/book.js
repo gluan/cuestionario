@@ -23,7 +23,7 @@ class Book extends Component {
     render() {
 		var instrucciones={
 			title: 'Instrucciones',
-			text: 'Responde el cuestionario selecionando la respuesta correcta en las preguntas de opcion multiple,'+ 
+			text: 'Responde el cuestionario selecionando la respuesta correcta en las preguntas de opcion multiple,'+
 			'selecionanado las respuestas correctas en las preguntas de sellecion y escribiendo la respuesta en las preguntas abiertas'
 		}
         return(
@@ -36,12 +36,14 @@ class Book extends Component {
 						<textarea
 							id="page-1"
 							placeholder="Type here ..."
+                            className="book-text"
 							onChange={this.handleChange.bind(this)}>
 						</textarea>
 					</div>
 					<div className="col-6 page">
 						<textarea
 							id="page-2"
+                            className="book-text"
 							onChange={this.handleChangePage.bind(this)}>
 						</textarea>
 					</div>

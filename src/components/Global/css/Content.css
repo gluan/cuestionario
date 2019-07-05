@@ -1,1 +1,16 @@
-
+@font-face {
+    font-family: 'Montserrat'; /*a name to be used later*/
+    src:  url(Montserrat-SemiBold.ttf); /*URL to font*/
+}
+@font-face {
+    font-family: 'Trattatello';
+    src: url(Trattatello.ttf);
+}
+@font-face {
+    font-family: 'MontserratBold';
+    src: url(Montserrat-Bold.ttf);
+}
+@font-face {
+    font-family: 'MontserratLight';
+    src: url(Montserrat-Light.ttf);
+}
