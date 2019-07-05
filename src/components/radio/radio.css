@@ -1,23 +1,23 @@
 input[type="radio"] {
 	display:none;
 }
-.radio { 
+.radio {
 	margin: 0px;
 	margin-right: 5px;
 }
- input + label {
-	display: inline-block;	
+ input[type="radio"] + label {
+	display: inline-block;
 	width: 20px;
 	height: 20px;
-	cursor: pointer;	
+	cursor: pointer;
 	background-image: url('/img/circulo.png');
 	background-size: cover;
 }
 input[type="radio"]:checked + label {
-	display: inline-block;	
+	display: inline-block;
 	width: 20px;
 	height: 20px;
-	cursor: pointer;	
+	cursor: pointer;
 	background-image: url('/img/avatar.png');
 	background-size: cover;
 }

@@ -1,23 +1,24 @@
 input[type="checkbox"] {
-	/*display:none;*/
+	display:none;
 }
-.check { 
+.check {
 	margin: 0px;
 	margin-right: 5px;
 }
  input[type="checkbox"] + label {
-	display: inline-block;	
-	width: 20px;
-	height: 20px;
-	cursor: pointer;	
-	background-image: url('/img/circulo.png');
-	background-size: cover;
+	 display: inline-block;
+     width: 16px;
+     height: 16px;
+     cursor: pointer;
+     background-color: #cbaa83bd;
+	 border-radius: 6px;
 }
 input[type="checkbox"]:checked + label {
-	display: inline-block;	
-	width: 20px;
-	height: 20px;
-	cursor: pointer;	
-	background-image: url('/img/avatar.png');
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background-color: #cbaa83bd;
+	border-radius: 6px;
+	background-image: url('/img/paloma.png');
 	background-size: cover;
 }

@@ -15,7 +15,7 @@ class Question extends Component {
         if(this.props.type == '1') {
             var checks = this.props.options.map(
                 function iterator(option){
-                    return (<Checkbox name={option} />);
+                    return (<Checkbox value={option} />);
                 }
             );
             question =
@@ -25,18 +25,20 @@ class Question extends Component {
 						<div className="div-num">{this.props.num}</div>
 						{this.props.question}
 					</div>
-                    <div className="text"> 
-						{checks} 
+                    <div className="text">
+						{checks}
 					</div>
                 </div>
         /* Pregunta tipo 2 - opcion multiple*/
         }else if (this.props.type == '2') {
+            const r = Math.random().toString(36).substring(7);
+            console.log("random", r);
             var radios = this.props.options.map(
                 function iterator(option){
                     return(
                         <Radio
                             value={option}
-                            name="question-1"
+                            name={r}
                         />
                     );
                 }
@@ -61,7 +63,9 @@ class Question extends Component {
 						<div className="div-num">{this.props.num}</div>
 						{this.props.question}
 					</div>
-                    <textarea placeholder={this.props.placeholder} className="text"></textarea>
+                    <div className="text">
+                        <textarea placeholder={this.props.placeholder} className="respuesta"></textarea>
+                    </div>
                 </div>
         }
 

@@ -20,6 +20,10 @@ class Student extends Component {
                     question: '¿Qué nombre científico recibe el detector de mentiras?',
                     type: '3',
 					placeholder: 'Escribe tu respuesta',
+                },{
+                    question: '¿Cuál es el río más largo del mundo?',
+                    options: [ 'Misisipi', 'Amazonas', 'Nilo', 'Ninguno de los anteriores' ],
+                    type: '2',
                 },
             ]
         }
@@ -40,7 +44,7 @@ class Student extends Component {
         );
 		var instrucciones={
 			title: 'Instrucciones',
-			text: 'Responde el cuestionario selecionando la respuesta correcta en las preguntas de opcion multiple,'+ 
+			text: 'Responde el cuestionario selecionando la respuesta correcta en las preguntas de opcion multiple,'+
 			'selecionanado las respuestas correctas en las preguntas de sellecion y escribiendo la respuesta en las preguntas abiertas'
 		}
         return(

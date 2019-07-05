@@ -9,7 +9,7 @@ class Checkbox extends Component{
 
     render() {
         return(
-			<div>				
+			<div>
 				<input type="checkbox"
 					id={this.props.value}
 					value={this.props.value}
