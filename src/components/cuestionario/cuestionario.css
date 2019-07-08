@@ -9,4 +9,108 @@
 	text-align:left;
 	margin-left: 5px;
 	width: 100%;
+	height: 100vh;
+	overflow: auto;
+}
+
+/*scroll*/
+.force-overflow {
+	width: 100%;
+	/* min-height: 450px; */
+}
+.cuestionario::-webkit-scrollbar-track {
+	/* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
+	/* border-radius: 20px; */
+	/* background-color: #f0ce9fbd; */
+}
+
+.cuestionario::-webkit-scrollbar {
+	width: 20px;
+	margin: 10px;
+	border-radius: 20px;
+	background-color: #f0ce9fbd;
+}
+
+.cuestionario::-webkit-scrollbar-thumb{
+	/* border-radius: 10px; */
+	/* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); */
+	/* background-color: #f0ce9fbd; */
+	background: url('/img/scroll.svg');
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+/*Estilos Teacher*/
+.body-cuestionario-teacher {
+  --text-color: #3f88d7;
+}
+/*---------*/
+
+.body-cuestionario-teacher{
+	color: var(--text-color);
+	width: 96%;
+	margin-left: 2%;
+}
+.letter-red {
+	color: red;
+	font-size: .6rem;
+}
+.header-btn {
+	display: flex;
+	justify-content: space-between;
+	line-height: 5px;
+}
+.button-agregar {
+	background-color: #f8730a;
+	border: none;
+	color: #ffffff;
+	font-size: .7rem;
+}
+.text-teacher {
+	width: 100%;
+	margin-top: 6px;
+	margin-bottom: 20px;
+}
+.question-admin {
+	width: 100%;
+	margin: 10px;
+	display: flex;
+}
+.question-text-admin {
+	color: var(--text-color);
+	width: 100%;
+	border: #007bff;
+	border-style: solid;
+	border-width: thin;
+}
+.radio{
+	display: inline-flex !important;
+}
+.radio:checked{
+	display: inline-flex !important;
+	color: #4545445;
+}
+.questions-options{
+	width: 100%;
+	border: #007bff;
+	border-style: solid;
+	border-width: thin;
+}
+.type-question{
+	width: 100%;
+	border: #007bff;
+	border-style: solid;
+	border-width: thin;
+	border-top: none;
+	border-bottom: none;
+}
+.div-delete {
+	background: url('/img/tache.svg');
+    width: 15px;
+    height: 15px;
+    margin-top: 26px;
+	background-repeat: no-repeat;
+}
+.div-question {
+	width: 90%
 }

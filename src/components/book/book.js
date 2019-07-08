@@ -28,9 +28,9 @@ class Book extends Component {
 		}
         return(
             <div className="body-book ">
-			<div className="row">
-                <Instructions title={instrucciones.title} text={instrucciones.text} />
-				</div>
+                <div className="row col-12">
+                    <Instructions title={instrucciones.title} text={instrucciones.text} />
+                </div>
 				<div className="row col-12 book">
 					<div className="col-6 page">
 						<textarea

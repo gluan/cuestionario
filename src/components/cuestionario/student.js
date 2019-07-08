@@ -12,8 +12,7 @@ class Student extends Component {
                     question: '¿Cuál es el río más largo del mundo?',
                     options: [ 'Misisipi', 'Amazonas', 'Nilo' ],
                     type: '2',
-                },
-                {
+                },{
                     question: 'Las tres ciudades más grandes y pobladas del país son:',
                     options: [ 'Ciudad de México', 'Guadalajara ', 'Monterrey', 'Cancún' ],
                     type: '1',
@@ -22,6 +21,14 @@ class Student extends Component {
                     type: '3',
 					placeholder: 'Escribe tu respuesta',
                 },{
+                    question: '¿Cuál es el río más largo del mundo?',
+                    options: [ 'Misisipi', 'Amazonas', 'Nilo', 'Ninguno de los anteriores' ],
+                    type: '2',
+                },,{
+                    question: '¿Cuál es el río más largo del mundo?',
+                    options: [ 'Misisipi', 'Amazonas', 'Nilo', 'Ninguno de los anteriores' ],
+                    type: '2',
+                },,{
                     question: '¿Cuál es el río más largo del mundo?',
                     options: [ 'Misisipi', 'Amazonas', 'Nilo', 'Ninguno de los anteriores' ],
                     type: '2',
@@ -54,7 +61,9 @@ class Student extends Component {
 					<Instructions title={instrucciones.title} text={instrucciones.text} />
 				</div>
 				<div className="row col-12 cuestionario">
-					{questions}
+                    <div className="force-overflow">
+    					{questions}
+                    </div>
 				</div>
             </div>
         );
