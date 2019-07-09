@@ -3,6 +3,49 @@ import React, { Component } from 'react';
 class CuestionarioTeacher extends Component {
     constructor(props) {
         super(props);
+        /*Borra pregunta*/
+        this.handleClickDelete =id =>{
+            if (this.state.questions.length > 1){
+                var question=[];
+                this.state.questions.map((item, i) =>{
+                    if (i != id.currentTarget.id){
+                        question.push(item);
+                    }
+                });
+                this.state.questions = question;
+                this.createDivs();
+                this.forceUpdate();
+            }
+        };
+        /*Borra opcion*/
+        this.handleClickDeleteOption =id =>{
+            var ids=id.currentTarget.id.split('-');
+            if (ids[1] > 1){
+                var options=[];
+                this.state.questions.map((value, i) =>{
+                    if(i == ids[0] ){
+                        value.options.map((option, j) =>{
+                            if (j != ids[1]){
+                                options.push(option);
+                            }
+                        });
+                        this.state.questions[i].options=options;
+                    }
+                });
+                this.createDivs();
+                this.forceUpdate();
+            }
+        };
+        /*Pinta opciones*/
+        this.createOptions = values =>{
+             var options = values.map((value, i) =>{
+                // console.log(value);
+
+            });
+            return <div>hola</div>;
+
+        }
+        /*this. state*/
         this.state={
             questions:[
                 {
@@ -19,33 +62,47 @@ class CuestionarioTeacher extends Component {
         }
         this.createDivs();
     }
-    handleClickDelete(){
-        this.state.questions.pop();
-        this.createDivs();
-        this.forceUpdate();
-    }
+
+
     createDivs(){
+        var click = this.handleClickDelete;
+        var opciones = this.createOptions;
+        var deleteOption = this.handleClickDeleteOption;
         this.state.divs = this.state.questions.map(
             function iterator (value, i){
+                var style = i >0 ? {display:'block'} : {display:'none'};
+                var options = value.options.map(
+                   function iterator (option, j){
+                       var styleOption = j > 1 ? {display:'block'} : {display:'none'};
+                       return(
+                            <div className="option">
+                                <input value={option} type="text" className="question-option" />
+                                <button className="div-delete-option" id={i+'-'+j} style={styleOption} onClick={deleteOption}></button>
+                            </div>
+                       );
+                   }
+                );
                 return(
                     <div className="question-admin">
                         <div className="div-question">
                             <div>Pregunta {i+1}</div>
                             <input value={value.question} type="text" className="question-text-admin" />
                             <div className="type-question">
-                                <input type="radio"  value="1" name={i} className="radio" />Respuesta abierta
-                                <input type="radio"  value="2" name={i} className="radio" />Respuesta abierta
-                                <input type="radio"  value="3" name={i} className="radio" />Respuesta abierta
+                                <div><input type="radio"  value="3" name={i} className="radio" checked/>Respuesta abierta</div>
+                                <div><input type="radio"  value="2" name={i} className="radio" />Opcion multiple</div>
+                                <div><input type="radio"  value="1" name={i} className="radio" />Selección</div>
                             </div>
-                            <div className="questions-options">{value.type}</div>
+                            <div className="questions-options">
+                                {options}
+                            </div>
                         </div>
-                        <div className="div-delete" onClick={() => this.handleClickDelete(i)}></div>
+                        <button className="div-delete" onClick={click} id={i} style={style}></button>
                     </div>
                 );
             }
         );
-        console.log(this.state);
     }
+
     handleClick() {
         this.state.questions.push({type:1, question:'', options:[]});
         this.createDivs();
