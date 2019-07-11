@@ -13,20 +13,30 @@ class CuestionarioTeacher extends Component {
                         question.push(item);
                     }
                 });
-
-                this.state.questions = question;
-                console.log(question)
-                // var a = document.getElementById("divOpciones-"+id.currentTarget.id);
-                // console.log('a  '+ a)
-                // a.remove();
-                this.createDivs();
-                this.forceUpdate();
+                // this.setState({questions:question})
+                console.log(question);
+                // this.setState({questions:[{
+                //     type:2,
+                //     question:'¿............?',
+                //     options: [
+                //         'Amazonas',
+                //         'Amazonasssss',
+                //         'oooo',
+                //     ],
+                // }]})
+                this.setState({questions:question})
+                this.setState({questions:question}, () => {
+                    console.log(this.state.questions);
+                });
+                // this.forceUpdate();
+                // console.log(this.state.questions);
             }
         };
         /*Borra opcion*/
         this.handleClickDeleteOption =id => {
             var ids=id.currentTarget.id.split('-');
             if (ids[1] > 1){
+                var questions=this.state.questions;
                 var options=[];
                 this.state.questions.map((value, i) =>{
                     if(i == ids[0] ){
@@ -35,14 +45,11 @@ class CuestionarioTeacher extends Component {
                                 options.push(option);
                             }
                         });
-                        this.state.questions[i].options=options;
-                        console.log(this.state.questions[i].options)
+                        questions[i].options = options;
                     }
                 });
-                // console.log(this.state)
+                this.setState({questions:questions});
             }
-            this.createDivs();
-            this.forceUpdate();
         };
         /*Pinta opciones*/
         this.createOptions = values => {
@@ -56,16 +63,19 @@ class CuestionarioTeacher extends Component {
         /*Change en pregunta*/
         this.handleChangeEventQuestion = value => {
             var index =value.currentTarget.id.split('-')[1];
-            this.state.questions[index].question= value.currentTarget.value;
+            var questions=this.state.questions
+            questions[index].question= value.currentTarget.value;
+            this.setState({questions:questions})
         }
         /**Change opciones*/
         this.handleChangeEventOption = value => {
             var i =value.currentTarget.id.split('-')[1];
             var j =value.currentTarget.id.split('-')[2];
-            this.state.questions[i].options[j]= value.currentTarget.value;
-            console.log(this.state.questions[i].options)
+            var questions=this.state.questions;
+            questions[i].options[j]= value.currentTarget.value;
+            this.setState({questions:questions});
         }
-        /*this. state*/
+        /*this state*/
         this.state={
             questions:[
                 {
@@ -82,29 +92,92 @@ class CuestionarioTeacher extends Component {
                 }
             ],
         }
-        this.createDivs();
+
     }
 
     createDivs(){
+        // var click = this.handleClickDelete;
+        // var opciones = this.createOptions;
+        // var deleteOption = this.handleClickDeleteOption;
+        // var handleChangeEventQuestion = this.handleChangeEventQuestion;
+        // var handleChangeEventOption = this.handleChangeEventOption;
+        // this.state.divs = this.state.questions.map(
+        //     function iterator (value, i){
+        //         var style = i >0 ? {display:'block'} : {display:'none'};
+        //         var options = value.options.map(
+        //            function iterator (option, j){
+        //                var styleOption = j > 1 ? {display:'block'} : {display:'none'};
+        //                return(
+        //                     <div className="option">
+        //                         <input
+        //                             defaultValue={option}
+        //                             type="text"
+        //                             id={'option-'+i+'-'+j}
+        //                             className="question-option"
+        //                             onChange={handleChangeEventOption}
+        //                         />
+        //                         <button className="div-delete-option" id={i+'-'+j} style={styleOption} onClick={deleteOption}></button>
+        //                     </div>
+        //                );
+        //            }
+        //         );
+        //         return(
+        //             <div className="question-admin">
+        //                 <div className="div-question">
+        //                     <div>Pregunta {i+1}</div>
+        //                     <input
+        //                         defaultValue={value.question}
+        //                         onChange={handleChangeEventQuestion}
+        //                         type="text"
+        //                         className="question-text-admin"
+        //                         id={'question-'+i}
+        //                     />
+        //                     <div className="type-question">
+        //                         <div><input type="radio"  value="3" name={i} className="radio" checked/>Respuesta abierta</div>
+        //                         <div><input type="radio"  value="2" name={i} className="radio" />Opcion multiple</div>
+        //                         <div><input type="radio"  value="1" name={i} className="radio" />Selección</div>
+        //                     </div>
+        //                     <div className="questions-options" id={"divOpciones-"+i}>
+        //                         {options}
+        //                     </div>
+        //                 </div>
+        //                 <button className="div-delete" onClick={click} id={i} style={style}></button>
+        //             </div>
+        //         );
+        //     }
+        // );
+    }
+
+    handleClick() {
+        var questions = this.state.questions;
+        questions.push({type:1, question:'', options:[]});
+        this.setState({questions:questions});
+        console.log(this.state.questions);
+    }
+
+    render(){
+        console.log('render ...');
+        console.log(this.state.questions)
         var click = this.handleClickDelete;
         var opciones = this.createOptions;
         var deleteOption = this.handleClickDeleteOption;
         var handleChangeEventQuestion = this.handleChangeEventQuestion;
         var handleChangeEventOption = this.handleChangeEventOption;
-        this.state.divs = this.state.questions.map(
+        var divs = this.state.questions.map(
             function iterator (value, i){
                 var style = i >0 ? {display:'block'} : {display:'none'};
                 var options = value.options.map(
                    function iterator (option, j){
+                       console.log(option)
                        var styleOption = j > 1 ? {display:'block'} : {display:'none'};
                        return(
                             <div className="option">
                                 <input
-                                    defaultValue={option}
+                                    value={option}
+                                    onChange={handleChangeEventOption}
                                     type="text"
                                     id={'option-'+i+'-'+j}
                                     className="question-option"
-                                    onChange={handleChangeEventOption}
                                 />
                                 <button className="div-delete-option" id={i+'-'+j} style={styleOption} onClick={deleteOption}></button>
                             </div>
@@ -116,7 +189,8 @@ class CuestionarioTeacher extends Component {
                         <div className="div-question">
                             <div>Pregunta {i+1}</div>
                             <input
-                                defaultValue={value.question}
+                                // value={value.question}
+                                value={value.question}
                                 onChange={handleChangeEventQuestion}
                                 type="text"
                                 className="question-text-admin"
@@ -136,15 +210,11 @@ class CuestionarioTeacher extends Component {
                 );
             }
         );
-    }
 
-    handleClick() {
-        this.state.questions.push({type:1, question:'', options:[]});
-        this.createDivs();
-        this.forceUpdate();
-    }
 
-    render(){
+
+
+
         return(
             <div className="body-cuestionario-teacher">
                 <div>Instrucciones de la actividad</div>
@@ -157,7 +227,7 @@ class CuestionarioTeacher extends Component {
                     <button onClick={() => this.handleClick()} className="button-agregar">+Agregar pregunta</button>
                 </div>
                 <div>
-                    {this.state.divs}
+                    {divs}
                 </div>
             </div>
         );
