@@ -11,11 +11,11 @@ import Page404 from './components/Page404/Page404';
 const AppRoutes = () =>
     <App>
         <Switch>
-            <Route path='/student' component={Student} />
-            <Route path='/tea' component={Teacher} />
+            <Route path='/cuestionario-student' component={Student} />
+            <Route path='/cuestionario-teacher' component={Teacher} />
             <Route path='/book' component={Book} />
             <Route path='/i' component={Instructions} />
-            <Route path='/' component={Student} />
+            <Route path='/' />
             <Route component={Page404}/>
         </Switch>
     </App>;

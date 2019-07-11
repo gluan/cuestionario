@@ -9,8 +9,19 @@
 	text-align:left;
 	margin-left: 5px;
 	width: 100%;
-	height: 100vh;
+	height: 65vh;
 	overflow: auto;
+}
+.div-btn {
+	text-align: right;
+}
+.button-terminar-ejercicio{
+	margin: 20px;
+	padding: 10px 20px;
+	background-color: #f8730a;
+	border: none;
+	color: #ffffff;
+	font-size: 1rem;
 }
 
 /*scroll*/
@@ -145,6 +156,7 @@
 	color: #ffffff;
 	font-size: .8rem;
 }
+
 .button-terminar {
 	margin: 10px 20px;
 	background-color: #f8730a;

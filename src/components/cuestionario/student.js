@@ -66,6 +66,9 @@ class Student extends Component {
     					{questions}
                     </div>
 				</div>
+                <div className="div-btn">
+                    <button className="button-terminar-ejercicio">Terminar</button>
+                </div>
             </div>
         );
     }
