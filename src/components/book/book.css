@@ -28,3 +28,37 @@
     margin-left: 10%;
     background-position: top;
 }
+
+/*Estilos Teacher*/
+.body-cuestionario-teacher {
+  --text-color: #3f88d7;
+}
+/*---------*/
+
+.body-cuestionario-teacher{
+	color: var(--text-color);
+	width: 96%;
+	margin-left: 2%;
+}
+.div-body {
+	height: 70vh;
+}
+.buttons {
+	display: flex;
+	justify-content: center;
+}
+.button-reset {
+	margin: 10px 20px;
+	background-color: #165e6a;
+	border: none;
+	color: #ffffff;
+	font-size: .8rem;
+}
+
+.button-terminar {
+	margin: 10px 20px;
+	background-color: #f8730a;
+	border: none;
+	color: #ffffff;
+	font-size: .8rem;
+}

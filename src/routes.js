@@ -5,6 +5,7 @@ import App from './App';
 import Student from './components/cuestionario/student';
 import Teacher from './components/cuestionario/teacher';
 import Book from './components/book/book';
+import BookTeacher from './components/book/book-teacher';
 import Instructions from './components/instructions/instructions';
 import Page404 from './components/Page404/Page404';
 
@@ -13,7 +14,8 @@ const AppRoutes = () =>
         <Switch>
             <Route path='/cuestionario-student' component={Student} />
             <Route path='/cuestionario-teacher' component={Teacher} />
-            <Route path='/book' component={Book} />
+            <Route path='/book-student' component={Book} />
+			<Route path='/book-teacher' component={BookTeacher} />
             <Route path='/i' component={Instructions} />
             <Route path='/' />
             <Route component={Page404}/>

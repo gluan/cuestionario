@@ -47,7 +47,7 @@ class CuestionarioTeacher extends Component {
             questions[index].question= value.currentTarget.value;
             this.setState({questions:questions})
         }
-        /**Change opciones*/
+        /*Change opciones*/
         this.handleChangeEventOption = value => {
             var i =value.currentTarget.id.split('-')[1];
             var j =value.currentTarget.id.split('-')[2];
