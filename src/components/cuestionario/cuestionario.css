@@ -214,3 +214,38 @@
 
 
 }
+/*Question*/
+.numero {
+	width: 40px;
+}
+.div-num{
+	font-family: Trattatello;
+	font-weight: bold;
+	display: inline;
+    width: 30px;
+    margin-left: -25px;
+    margin-right: 20px;
+}
+.text {
+    background: url(/img/fondo-pregunta.svg);
+	padding: 10px;
+    padding-left: 40px;
+    border: none;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.body-question{
+	width: 90%;
+	margin: 10px;
+}
+.respuesta {
+	min-height: 50px;
+	max-height: 500px;
+    border: none;
+    width: 95%;
+    height: 100px;
+    overflow: hidden;
+    color: #a08a44;
+    background-color: rgba(255, 255, 255, 0);
+}
