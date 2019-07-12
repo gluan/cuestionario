@@ -183,7 +183,7 @@ class Student extends Component {
         );
         return(
             <div className="body-cuestionario">
-				<div className="row col-12">
+				<div className="row col-12 instrucciones">
 					<Instructions title={this.instrucciones.title} text={this.instrucciones.text} />
 				</div>
 				<div className="row col-12 cuestionario">

@@ -1,3 +1,7 @@
+.instrucciones {
+	justify-content: center;
+}
+
 .body-cuestionario {
 	background-repeat: no-repeat;
     background: url(/img/fondo.jpg);

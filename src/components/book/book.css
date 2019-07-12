@@ -1,6 +1,8 @@
 .book-text {
+	margin: 0px 5%;
+	margin-top: -50%;
     resize: none;
-    width: 100%;
+    width: 40%;
     height: 100%;
     overflow: hidden;
     background-color: rgba(255, 255, 255, 0);
@@ -19,14 +21,25 @@
 }
 
 .book {
+	font-size: .7rem;
     width: 80%;
     height: -webkit-fill-available;
     margin-top: 90px;
-    background: url(/img/libro-abierto.png);
+    /*background: url(/img/libro-abierto.png);*/
     background-size: contain;
     background-repeat: no-repeat;
     margin-left: 10%;
     background-position: top;
+}
+.b{
+	margin: 0%;
+}
+.img-fondo {
+	width: -webkit-fill-available;
+    height: 70vh;
+}
+.instrucciones{
+	justify-content:center;
 }
 
 /*Estilos Teacher*/
