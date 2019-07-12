@@ -8,6 +8,11 @@ class Question extends Component {
     constructor(props){
         super(props);
     }
+	handleChangeAnswer= value =>{
+		console.log('value');
+		console.log(value.currentTarget.value);
+		//this.propsanswer=value.currentTarget.value;
+	}
 
     render() {
         var question;
@@ -64,7 +69,12 @@ class Question extends Component {
 						{this.props.question}
 					</div>
                     <div className="text">
-                        <textarea placeholder={this.props.placeholder} className="respuesta"></textarea>
+                        <textarea 
+							placeholder={this.props.placeholder} 
+							className="respuesta" 
+							value={this.props.answer}
+							onChange={this.handleChangeAnswer}>
+						</textarea>
                     </div>
                 </div>
         }

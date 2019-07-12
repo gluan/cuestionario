@@ -21,27 +21,39 @@ class Student extends Component {
                     question: '¿Qué nombre científico recibe el detector de mentiras?',
                     type: '3',
 					placeholder: 'Escribe tu respuesta',
+                }/*,{
+                    question: '¿Cuál es el río más largo del mundo?',
+                    options: [ 'Misisipi', 'Amazonas', 'Nilo', 'Ninguno de los anteriores' ],
+                    type: '2',
                 },{
                     question: '¿Cuál es el río más largo del mundo?',
                     options: [ 'Misisipi', 'Amazonas', 'Nilo', 'Ninguno de los anteriores' ],
                     type: '2',
-                },,{
+                },{
                     question: '¿Cuál es el río más largo del mundo?',
                     options: [ 'Misisipi', 'Amazonas', 'Nilo', 'Ninguno de los anteriores' ],
                     type: '2',
-                },,{
-                    question: '¿Cuál es el río más largo del mundo?',
-                    options: [ 'Misisipi', 'Amazonas', 'Nilo', 'Ninguno de los anteriores' ],
-                    type: '2',
-                },
+                },*/
             ]
-        }
+        };
+		this.handleChangeQuestion = value =>{
+			console.log('Cambio en question');
+			console.log(value);
+			console.log(value.currentTarget);
+		}
     }
+	handleClickTerminar(){
+		console.log('terminar');
+		console.log(this.props);
+	}
+	
     render(){
+		var handleChangeQuestion=this.handleChangeQuestion;
         var questions = this.state.values.map(
             function iterator (value, i){
                 return(
                     <Question
+						onChange={handleChangeQuestion}
 						placeholder={value.placeholder}
                         question={value.question}
                         options={value.options}
@@ -67,7 +79,7 @@ class Student extends Component {
                     </div>
 				</div>
                 <div className="div-btn">
-                    <button className="button-terminar-ejercicio">Terminar</button>
+                    <button onClick={this.handleClickTerminar} className="button-terminar-ejercicio">Terminar</button>
                 </div>
             </div>
         );

@@ -27,7 +27,7 @@
 /*scroll*/
 .force-overflow {
 	width: 100%;
-	/* min-height: 450px; */
+	/* min-height: 450px;
 }
 .cuestionario::-webkit-scrollbar-track {
 	/* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
@@ -36,7 +36,7 @@
 }
 
 .cuestionario::-webkit-scrollbar {
-	width: 20px;
+	width: 15px;
 	margin: 10px;
 	border-radius: 20px;
 	background-color: #f0ce9fbd;
@@ -48,7 +48,7 @@
 	/* background-color: #f0ce9fbd; */
 	background: url('/img/scroll.svg');
 	background-repeat: no-repeat;
-	background-size: contain;
+	background-size: auto;
 }
 
 /*Estilos Teacher*/
