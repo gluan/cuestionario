@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 //import Question from '../question/question';
 import Instructions from '../instructions/instructions';
 import './cuestionario.css';
-import Checkbox from '../checkbox/checkbox';
-import Radio from '../radio/radio';
+//import Checkbox from '../checkbox/checkbox';
+//import Radio from '../radio/radio';
 
 class Student extends Component {
     constructor(props){
@@ -28,39 +28,81 @@ class Student extends Component {
                     question: '¿Qué nombre científico recibe el detector de mentiras?',
                     type: '3',
 					placeholder: 'Escribe tu respuesta',
-                }/*,{
-                    question: '¿Cuál es el río más largo del mundo?',
-                    options: [ 'Misisipi', 'Amazonas', 'Nilo', 'Ninguno de los anteriores' ],
-                    type: '2',
                 },{
                     question: '¿Cuál es el río más largo del mundo?',
-                    options: [ 'Misisipi', 'Amazonas', 'Nilo', 'Ninguno de los anteriores' ],
+                    options: [ 'Misisipi', 'Amazonas', 'Nilo' ],
                     type: '2',
+                }
+                ,{
+                    question: 'Las tres ciudades más grandes y pobladas del país son:',
+                    options: [ 'Ciudad de México', 'Guadalajara ', 'Monterrey', 'Cancún' ],
+                    type: '1',
                 },{
-                    question: '¿Cuál es el río más largo del mundo?',
-                    options: [ 'Misisipi', 'Amazonas', 'Nilo', 'Ninguno de los anteriores' ],
-                    type: '2',
-                },*/
+                    question: '¿Qué nombre científico recibe el detector de mentiras?',
+                    type: '3',
+					placeholder: 'Escribe tu respuesta',
+                }
             ]
         };
+		/*Cambios pregunta abierta*/
 		this.handleChangeQuestion = value =>{
-			console.log('Cambio en question');
-			console.log(value);
-			console.log(value.currentTarget);
 			var values = this.state.values;
 			values[value.currentTarget.id.split('-')[1]].answer=value.currentTarget.value;
 			this.setState({values:values});
 		}
+		/*Terminar formulario*/
 		this.handleClickTerminar = value => {
 			console.log('terminar');
 			console.log(this.state);
 		}
+		/*Cambio radio*/
+		this.handleChangeRadio = value => {
+            var i =value.currentTarget.name.split('-')[1];
+            var j =value.currentTarget.name.split('-')[2];
+            var values=this.state.values;
+            values[i].answer = value.currentTarget.value;
+			values[i].answerOptions = j;
+            this.setState({values:values});
+        } 
+		/*Cambio en checkbox*/
+		this.handleChangeCheckbox = value => {
+			var values = this.state.values;
+			var i = value.currentTarget.id.split('-')[1];
+			var j = value.currentTarget.id.split('-')[2];
+			values[i].options[j].checked=!values[i].options[j].checked;
+			this.setState({values:values});
+		}
     }
 	
+	componentDidMount(){
+		var values = this.state.values.map(
+			function iterator(value, i){
+				var question = value;
+				if(value.type == '1') {
+					var opciones = value.options.map(
+						function iterator(option, j){
+							return(
+								{
+									value: option,
+									checked:false,
+								}
+							);
+						}
+					)
+					question.options = opciones;
+				}
+				return(question);
+			}
+		);
+		this.setState({values:values});
+	}
 	
     render(){
 		var handleChangeQuestion=this.handleChangeQuestion;
 		var handleChangeAnswer=this.handleChangeAnswer;
+		var handleChangeRadio=this.handleChangeRadio;
+		var handleChangeCheckbox=this.handleChangeCheckbox;
+		
         var questions = this.state.values.map(
             function iterator (value, i){
 				var questionBody;
@@ -68,8 +110,19 @@ class Student extends Component {
 				/*Si la pregunta es tipo 1 es opcion ckeckbox*/
 				if(value.type == '1') {
 					var checks = value.options.map(
-						function iterator(option){
-							return (<Checkbox value={option} />);
+						function iterator(option, j){
+							return (
+								<div>
+									<input type="checkbox"
+										id={'c-'+i+'-'+j}
+										value={option.value}
+										checked={option.checked}
+										onChange={handleChangeCheckbox}
+									/>
+									<label htmlFor={'c-'+i+'-'+j} className="check"></label>
+									{option.value}
+								</div>
+							);
 						}
 					);
 					questionBody =
@@ -80,14 +133,18 @@ class Student extends Component {
 				/* Pregunta tipo 2 - opcion multiple*/
 				}else if (value.type == '2') {
 					const r = Math.random().toString(36).substring(7);
-					console.log("random", r);
 					var radios = value.options.map(
-						function iterator(option){
+						function iterator(option, j){
 							return(
-								<Radio
-									value={option}
-									name={r}
-								/>
+								<div>
+									<input type="radio"
+										onChange={handleChangeRadio}
+										id={option + r}
+										value={option}
+										name={r + '-' + i + '-' + j} />
+									<label htmlFor={option+r} className="radio"></label>
+									{option}
+								</div>
 							);
 						}
 					);
@@ -115,7 +172,7 @@ class Student extends Component {
 						<div>
 							<div className="question">
 								<img className="numero" src="/img/circulo.png" />
-								<div className="div-num">{i}</div>
+								<div className="div-num">{i+1}</div>
 								{value.question}
 							</div>
 							{questionBody}
