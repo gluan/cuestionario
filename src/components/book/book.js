@@ -15,8 +15,8 @@ class Book extends Component {
 		}
 	}
     handleChange (event) {
-        var text = event.target.value
-        if(event.target.value.length >= 200){
+        var text = event.target.value;
+		if(document.getElementById("page-1").value.split('\n').length > 16 || event.target.value.length >= 550){
             var component = document.getElementById("page-2");
             component.focus();
         }
@@ -31,23 +31,23 @@ class Book extends Component {
     };
 
     render() {
-		
         return(
             <div className="body-book ">
                 <div className="row col-12 instrucciones">
                     <Instructions title={this.state.instrucciones.title} text={this.state.instrucciones.text} />
                 </div>
 				<div className="row col-12 book">
-					<img className="img-fondo" src="/img/libro-abierto.png"></img>
+					<div className="img-fondo" ></div>
+					<div className="img-fondo-abierto"></div>
 					<div className="row col-12 b">
-						
+
 							<textarea
 								id="page-1"
 								placeholder="Type here ..."
 								className="book-text"
 								onChange={this.handleChange.bind(this)}>
 							</textarea>
-						
+
 							<textarea
 								id="page-2"
 								className="book-text"
