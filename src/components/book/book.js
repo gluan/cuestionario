@@ -16,7 +16,7 @@ class Book extends Component {
 	}
     handleChange (event) {
         var text = event.target.value;
-		if(document.getElementById("page-1").value.split('\n').length > 16 || event.target.value.length >= 550){
+		if(document.getElementById("page-1").value.split('\n').length > 13 || event.target.value.length >= 250){
             var component = document.getElementById("page-2");
             component.focus();
         }
@@ -84,14 +84,14 @@ class Book extends Component {
         );
     }
 }
-var isVisible=false;
+var isVisible=true;
 
 var options = {
   // width: 800,
   // height: 600,
   width:$.width,
   height: $.heigth,
-  autoCenter: false,
+  autoCenter: true,
   display: "double",
   acceleration: true,
   elevation: 50,

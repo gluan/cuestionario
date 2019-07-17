@@ -7,7 +7,8 @@
     -ms-user-select: none;
     user-select: none;
     position: relative;
-    width: 75% !important;
+    width: 80% !important;
+    margin-left: 20%;
     height: 75vh !important;
 }
 .page {
