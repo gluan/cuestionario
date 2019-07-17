@@ -10,8 +10,7 @@ class Book extends Component {
 		this.state={
 			instrucciones:{
 				title: 'Instrucciones',
-				text: 'Responde el cuestionario selecionando la respuesta correcta en las preguntas de opcion multiple,'+
-				'selecionanado las respuestas correctas en las preguntas de sellecion y escribiendo la respuesta en las preguntas abiertas'
+				text: 'Escribe como te sentiste al realizar la actividad'
 			}
 		}
 	}
@@ -31,67 +30,89 @@ class Book extends Component {
         }
     };
 
+	resize = () => {
+		console.log('resize');
+		this.forceUpdate()
+	};
+
+	componentDidMount() {
+		console.log('1')
+	  window.addEventListener('resize', this.resize)
+	};
+
+	componentWillUnmount() {
+		console.log('2')
+	  window.removeEventListener('resize', this.resize)
+	};
+
     render() {
+		var style ={
+			display:isVisible ? 'block' : 'none'
+		}
+		console.log('render')
         return(
             <div className="body-book ">
                 <div className="row col-12 instrucciones">
                     <Instructions title={this.state.instrucciones.title} text={this.state.instrucciones.text} />
                 </div>
 				<div className="row col-12 book">
-				    <Turn options={options} className="magazine">
+					<Turn options={options} className="magazine">
 				      {pages.map((page, index) => (
-				        <div key={index} className="page">
-				          <img src={page} alt="" />
+				        <div key={index} className={index == 0 ? 'hard': ''}>
+				          <img className="image-book" src={page} alt="" />
 				        </div>
 				      ))}
 				    </Turn>
+					<div className="row col-12 b" style={style}>
+							<textarea
+								id="page-1"
+								placeholder="Type here ..."
+								className="book-text"
+								onChange={this.handleChange.bind(this)}>
+							</textarea>
+							<textarea
+								id="page-2"
+								className="book-text"
+								onChange={this.handleChangePage.bind(this)}>
+							</textarea>
 					</div>
-
-
-				{
-				// <div className="row col-12 book">
-				// 	<div className="img-fondo" ></div>
-				// 	<div className="img-fondo-abierto"></div>
-				// 	<div className="row col-12 b">
-				//
-				// 			<textarea
-				// 				id="page-1"
-				// 				placeholder="Type here ..."
-				// 				className="book-text"
-				// 				onChange={this.handleChange.bind(this)}>
-				// 			</textarea>
-				//
-				// 			<textarea
-				// 				id="page-2"
-				// 				className="book-text"
-				// 				onChange={this.handleChangePage.bind(this)}>
-				// 			</textarea>
-				// 	</div>
-				// </div>
-				}
+				</div>
+				<div className="div-btn">
+                    <button onClick={this.handleClickTerminar} className="button-terminar-ejercicio">Terminar</button>
+                </div>
             </div>
         );
     }
 }
-const options = {
-  width: 800,
-  height: 600,
-  autoCenter: true,
+var isVisible=false;
+
+var options = {
+  // width: 800,
+  // height: 600,
+  width:$.width,
+  height: $.heigth,
+  autoCenter: false,
   display: "double",
   acceleration: true,
   elevation: 50,
   gradients: !$.isTouch,
+  duration: 2400,
   when: {
     turned: function(e, page) {
-      console.log("Current view: ", $(this).turn("view"));
+		if($(this).turn("view")[0]==2){
+			isVisible = true;
+		}else{
+			isVisible = false;
+		}
+		console.log(isVisible)
     }
   }
 };
 
 const pages = [
   "img/libro-cerrado.png",
-  "img/libro-abierto.png",
-  "img/libro-abierto.png",
+  "img/pagina-1.png",
+  "img/pagina-2.png",
 ];
 
 export default Book;
