@@ -197,9 +197,9 @@ class CuestionarioTeacher extends Component {
                             />
                             <div className="type-question">
 
-                                <div><input type="radio"  value="3" name={i} className="radio" checked={value.type==3} onChange={handleChangeEventType}/>Respuesta abierta</div>
-                                <div><input type="radio"  value="2" name={i} className="radio" checked={value.type==2} onChange={handleChangeEventType}/>Opcion multiple</div>
-                                <div><input type="radio"  value="1" name={i} className="radio" checked={value.type==1} onChange={handleChangeEventType}/>Selección</div>
+                                <div className="option-teacher"><input type="radio"  value="3" name={i} className="radio" checked={value.type==3} onChange={handleChangeEventType}/>Respuesta abierta</div>
+                                <div className="option-teacher"><input type="radio"  value="2" name={i} className="radio" checked={value.type==2} onChange={handleChangeEventType}/>Opcion multiple</div>
+                                <div className="option-teacher"><input type="radio"  value="1" name={i} className="radio" checked={value.type==1} onChange={handleChangeEventType}/>Selección</div>
                             </div>
                             <div style={styleDisplayOptions} className="questions-options" id={"divOpciones-"+i} >
                                 {options}
@@ -214,14 +214,14 @@ class CuestionarioTeacher extends Component {
         return(
             <div className="body-cuestionario-teacher">
                 <div>Instrucciones de la actividad</div>
-                <input
-                    type="text"
+                <textarea
                     value={this.state.instructions}
                     onChange={handleChangeInstructions}
                     placeholder='Instrucciones ...'
                     id='instructions'
                     className={this.state.errors.instructions || "text-teacher"}
-                />
+                    >
+                </textarea>
                 <div className="header-btn">
                     <div>
                         <label>Preguntas</label><br />

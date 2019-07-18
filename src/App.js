@@ -12,6 +12,7 @@ class App extends Component {
     return (
       <div >
         <Content body={ children }/>
+        
       </div>
     );
   }

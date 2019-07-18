@@ -82,6 +82,8 @@
 	font-size: .7rem;
 }
 .text-teacher {
+	border-color: var(--text-color);
+	border-style: solid;
 	width: 100%;
 	margin-top: 6px;
 	margin-bottom: 20px;
@@ -140,6 +142,9 @@
 }
 .option {
 	display: flex;
+}
+.option-teacher{
+	margin: 10px 15px;
 }
 .div-delete-option {
 	border: none;

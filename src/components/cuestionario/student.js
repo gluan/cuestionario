@@ -63,7 +63,7 @@ class Student extends Component {
             values[i].answer = value.currentTarget.value;
 			values[i].answerOptions = j;
             this.setState({values:values});
-        } 
+        }
 		/*Cambio en checkbox*/
 		this.handleChangeCheckbox = value => {
 			var values = this.state.values;
@@ -73,7 +73,7 @@ class Student extends Component {
 			this.setState({values:values});
 		}
     }
-	
+
 	componentDidMount(){
 		var values = this.state.values.map(
 			function iterator(value, i){
@@ -96,17 +96,17 @@ class Student extends Component {
 		);
 		this.setState({values:values});
 	}
-	
+
     render(){
 		var handleChangeQuestion=this.handleChangeQuestion;
 		var handleChangeAnswer=this.handleChangeAnswer;
 		var handleChangeRadio=this.handleChangeRadio;
 		var handleChangeCheckbox=this.handleChangeCheckbox;
-		
+
         var questions = this.state.values.map(
             function iterator (value, i){
 				var questionBody;
-				
+
 				/*Si la pregunta es tipo 1 es opcion ckeckbox*/
 				if(value.type == '1') {
 					var checks = value.options.map(
@@ -129,7 +129,7 @@ class Student extends Component {
 						<div className="text">
 							{checks}
 						</div>
-				
+
 				/* Pregunta tipo 2 - opcion multiple*/
 				}else if (value.type == '2') {
 					const r = Math.random().toString(36).substring(7);
@@ -141,7 +141,7 @@ class Student extends Component {
 										onChange={handleChangeRadio}
 										id={option + r}
 										value={option}
-										name={r + '-' + i + '-' + j} />
+										name={r + '-' + i} />
 									<label htmlFor={option+r} className="radio"></label>
 									{option}
 								</div>
@@ -152,15 +152,15 @@ class Student extends Component {
 						<div className="text">
 							{radios}
 						</div>
-				
+
 				/*Opcion 3 respuesta abierta*/
 				}else {
 					questionBody =
 						<div className="text">
-							<textarea 
+							<textarea
 								id={'question-'+i}
-								placeholder={value.placeholder} 
-								className="respuesta" 
+								placeholder={value.placeholder}
+								className="respuesta"
 								value={value.answer}
 								onChange={handleChangeQuestion}>
 							</textarea>

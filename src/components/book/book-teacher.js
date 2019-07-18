@@ -46,14 +46,15 @@ class CuestionarioTeacher extends Component {
         return(
             <div className="body-cuestionario-teacher">
                 <div>Instrucciones de la actividad</div>
-                <input
+                <textarea
                     type="textarea"
                     value={this.state.instructions}
                     onChange={handleChangeInstructions}
                     placeholder='Instrucciones ...'
                     id='instructions'
                     className={this.state.errors.instructions || "text-teacher"}
-                />
+                    >
+                </textarea>
 				<div className="div-body"></div>
                 <div className='buttons'>
                     <button onClick={() => this.handleClickInit()} className="button-reset">Volver a empezar</button>
