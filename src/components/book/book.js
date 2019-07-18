@@ -8,6 +8,8 @@ class Book extends Component {
 	constructor(props){
 		super(props);
 		this.state={
+			page1:'',
+			page2:'',
 			instrucciones:{
 				title: 'Instrucciones',
 				text: 'Escribe como te sentiste al realizar la actividad'
@@ -16,6 +18,7 @@ class Book extends Component {
 	}
     handleChange (event) {
         var text = event.target.value;
+		this.setState({page1: text})
 		if(document.getElementById("page-1").value.split('\n').length > 13 || event.target.value.length >= 250){
             var component = document.getElementById("page-2");
             component.focus();
@@ -24,6 +27,7 @@ class Book extends Component {
 
     handleChangePage (event) {
         var text = event.target.value;
+		this.setState({page2: text})
         if(event.target.value == 0){
             var component = document.getElementById("page-1");
             component.focus();
@@ -44,12 +48,16 @@ class Book extends Component {
 		console.log('2')
 	  window.removeEventListener('resize', this.resize)
 	};
+	handleClickTerminar(event){
+		console.log('termino');
+		console.log(this.state);
+		console.log(this.state.page1 +' '+ this.state.page2);
+	}
 
     render() {
 		var style ={
 			display:isVisible ? 'block' : 'none'
 		}
-		console.log('render')
         return(
             <div className="body-book ">
                 <div className="row col-12 instrucciones">
@@ -68,17 +76,19 @@ class Book extends Component {
 								id="page-1"
 								placeholder="Type here ..."
 								className="book-text"
+								defaultValue={this.state.page1}
 								onChange={this.handleChange.bind(this)}>
 							</textarea>
 							<textarea
 								id="page-2"
 								className="book-text"
+								defaultValue={this.state.page2}
 								onChange={this.handleChangePage.bind(this)}>
 							</textarea>
 					</div>
 				</div>
 				<div className="div-btn">
-                    <button onClick={this.handleClickTerminar} className="button-terminar-ejercicio">Terminar</button>
+                    <button onClick={this.handleClickTerminar.bind(this)} className="button-terminar-ejercicio">Terminar</button>
                 </div>
             </div>
         );
@@ -104,7 +114,7 @@ var options = {
 		}else{
 			isVisible = false;
 		}
-		console.log(isVisible)
+		// console.log(isVisible)
     }
   }
 };
