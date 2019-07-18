@@ -41,13 +41,30 @@ class Book extends Component {
 
 	componentDidMount() {
 		console.log('1')
-	  window.addEventListener('resize', this.resize)
+	  window.addEventListener('resize', this.resize);
+
+	  var visible = document.getElementById('1');
+	  var element = visible.parentElement.parentElement;
+	  // console.log(element)
+	  // console.log(visible.parentElement.parentElement);
+	  console.log(element.style.display)
+	  if(element.style.display=='none'){
+		  console.log('1')
+		  this.setState({isVisible:false})
+	  }else{
+		  console.log('1')
+		  this.setState({isVisible:true})
+	  }
+
 	};
 
 	componentWillUnmount() {
 		console.log('2')
 	  window.removeEventListener('resize', this.resize)
 	};
+	handleChangeTurn(){
+		console.log('turn')
+	}
 	handleClickTerminar(event){
 		console.log('termino');
 		console.log(this.state);
@@ -55,41 +72,37 @@ class Book extends Component {
 	}
 
     render() {
-		var style ={
-			display:isVisible ? 'block' : 'none'
-		}
         return(
             <div className="body-book ">
                 <div className="row col-12 instrucciones">
                     <Instructions title={this.state.instrucciones.title} text={this.state.instrucciones.text} />
                 </div>
 				<div className="row col-12 book">
-					<Turn options={options} className="magazine">
+					<Turn
+						options={options}
+						className="magazine"
+						onChange={this.handleChangeTurn.bind(this)}>
 				      {pages.map((page, index) => (
-				        <div key={index} className={index == 0 ? 'hard': ''}>
-				          <img className="image-book" src={page} alt="" />
+				        <div id={index} key={index}
+							className={index == 0 ? 'hard': ''}>
+						<img className="image-book" src={page} alt="" />
+						  <textarea
+							  id={"page-"+index}
+							  placeholder={index==1 ? "Type here ...": ""}
+							  className="book-text"
+							  defaultValue={index == 1 ? this.state.page1: this.state.page2}
+							  onChange={index == 1 ? this.handleChange.bind(this) : this.handleChangePage.bind(this)}>
+						  </textarea>
+
 				        </div>
 				      ))}
 				    </Turn>
-					<div className="row col-12 b" style={style}>
-							<textarea
-								id="page-1"
-								placeholder="Type here ..."
-								className="book-text"
-								defaultValue={this.state.page1}
-								onChange={this.handleChange.bind(this)}>
-							</textarea>
-							<textarea
-								id="page-2"
-								className="book-text"
-								defaultValue={this.state.page2}
-								onChange={this.handleChangePage.bind(this)}>
-							</textarea>
+					<div className="col-12 div-btn">
+						<button onClick={this.handleClickTerminar.bind(this)} className="button-terminar-ejercicio">Terminar</button>
 					</div>
+
 				</div>
-				<div className="div-btn">
-                    <button onClick={this.handleClickTerminar.bind(this)} className="button-terminar-ejercicio">Terminar</button>
-                </div>
+
             </div>
         );
     }
