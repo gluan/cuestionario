@@ -13,6 +13,7 @@
     text-align: left;
 }
 .title {
+    width: 85%;
     /* font-family: Trattatello; */
 	font-weight: bold;
 	text-transform: uppercase;
