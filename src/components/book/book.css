@@ -1,7 +1,7 @@
 .book-text {
 	z-index: 4;
 	font-size: 1rem;
-	margin: 0px 10%;
+	margin: 0px;
     resize: none;
     width: 80%;
     height: 53vh;
@@ -12,12 +12,12 @@
 	box-shadow: 0 0px 0px rgba(0,0,0,0)!important;
 }
 .body-book {
-	justify-content: center;
-    overflow: auto;
+	width: 100%;
+	height: auto;
 	background-repeat: no-repeat;
-    background: url('/img/fondo.jpg');
-    background-size: cover;
-	background-position: center;
+	background: url(/img/fondo.jpg);
+	background-size: cover;
+	background-position: bottom;
 }
 .book {
 	font-size: .7rem;
@@ -37,6 +37,7 @@
 .div-btn {
 	text-align: right;
 	top: 90px;
+    margin-left: 75%;
 	/* margin-top: -300px;
     margin-right: 50px; */
 }
@@ -50,20 +51,23 @@
 }
 .image-book{
     width: 100%;
-    height: 100%;
-	margin-bottom: -13vh;
+    height: 90%!important;
+	/* margin-bottom: -13vh; */
+	/* margin-bottom: -85%; */
+	position: relative;
 }
 #page-0 {
 	display: none;
 }
 #page-1, #page-2 {
-	    margin-top: -86vh;
+	border:none;
+	position: absolute;
+	top: 44%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
-
-@media (min-width: 1500px){
-	.image-book {
-	    margin-bottom: -170px;
-	}
+#page-1:focus, #page-2:focus {
+	border:none;
 }
 /*----------------------------------------------------------------*/
 /*Estilos Teacher*/

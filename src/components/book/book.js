@@ -10,7 +10,7 @@ class Book extends Component {
 		this.state={
 			page1:'',
 			page2:'',
-			instrucciones:{
+			instrucciones: {
 				title: 'Instrucciones',
 				text: 'Escribe como te sentiste al realizar la actividad'
 			}
@@ -73,36 +73,35 @@ class Book extends Component {
 
     render() {
         return(
-            <div className="body-book ">
+            <div className="body-book">
                 <div className="row col-12 instrucciones">
                     <Instructions title={this.state.instrucciones.title} text={this.state.instrucciones.text} />
                 </div>
 				<div className="row col-12 book">
-					<Turn
-						options={options}
-						className="magazine"
-						onChange={this.handleChangeTurn.bind(this)}>
-				      {pages.map((page, index) => (
-				        <div id={index} key={index}
-							className={index == 0 ? 'hard': ''}>
-						<img className="image-book" src={page} alt="" />
-						  <textarea
-							  id={"page-"+index}
-							  placeholder={index==1 ? "Type here ...": ""}
-							  className="book-text"
-							  defaultValue={index == 1 ? this.state.page1: this.state.page2}
-							  onChange={index == 1 ? this.handleChange.bind(this) : this.handleChangePage.bind(this)}>
-						  </textarea>
-
-				        </div>
-				      ))}
-				    </Turn>
-					<div className="col-12 div-btn">
+					<div className="col-12">
+						<Turn
+							options={options}
+							className="magazine"
+							onChange={this.handleChangeTurn.bind(this)}>
+					      {pages.map((page, index) => (
+					        <div id={index} key={index}
+								className={index == 0 ? 'hard': ''}>
+								<img className="image-book" src={page} alt="" />
+								<textarea
+									id={"page-"+index}
+									placeholder={index==1 ? "Type here ...": ""}
+									className="book-text"
+									defaultValue={index == 1 ? this.state.page1: this.state.page2}
+									onChange={index == 1 ? this.handleChange.bind(this) : this.handleChangePage.bind(this)}>
+								</textarea>
+					        </div>
+					      ))}
+					    </Turn>
+					</div>
+					<div className="div-btn">
 						<button onClick={this.handleClickTerminar.bind(this)} className="button-terminar-ejercicio">Terminar</button>
 					</div>
-
 				</div>
-
             </div>
         );
     }
