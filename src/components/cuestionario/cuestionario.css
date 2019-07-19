@@ -218,10 +218,7 @@
 
 /*Errores*/
 .error{
-	border-color: red;
-	border-style: solid;
-
-
+	border: 1px  solid red;
 }
 /*Question*/
 .numero {

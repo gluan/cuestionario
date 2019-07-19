@@ -88,6 +88,7 @@ class CuestionarioTeacher extends Component {
                     options: ['', '', ''],
                 }
             ],
+            errors:{questions:[]}
         });
     }
     /*Agregar pregunta*/

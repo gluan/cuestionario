@@ -57,8 +57,8 @@ class Student extends Component {
 		}
 		/*Cambio radio*/
 		this.handleChangeRadio = value => {
-            var i =value.currentTarget.name.split('-')[1];
-            var j =value.currentTarget.name.split('-')[2];
+            var i =value.currentTarget.id.split('-')[1];
+            var j =value.currentTarget.id.split('-')[2];
             var values=this.state.values;
             values[i].answer = value.currentTarget.value;
 			values[i].answerOptions = j;
@@ -139,10 +139,10 @@ class Student extends Component {
 								<div>
 									<input type="radio"
 										onChange={handleChangeRadio}
-										id={option + r}
+										name={r}
 										value={option}
-										name={r + '-' + i} />
-									<label htmlFor={option+r} className="radio"></label>
+										id={r + '-' + i + '-' + j} />
+									<label htmlFor={r + '-' + i + '-' + j} className="radio"></label>
 									{option}
 								</div>
 							);
