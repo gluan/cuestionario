@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/github.io/cuestionario/static/css/main.7f276789.chunk.css",
-    "main.js": "/github.io/cuestionario/static/js/main.f4b08471.chunk.js",
-    "main.js.map": "/github.io/cuestionario/static/js/main.f4b08471.chunk.js.map",
-    "runtime~main.js": "/github.io/cuestionario/static/js/runtime~main.21f7ae72.js",
-    "runtime~main.js.map": "/github.io/cuestionario/static/js/runtime~main.21f7ae72.js.map",
-    "static/css/2.510409cd.chunk.css": "/github.io/cuestionario/static/css/2.510409cd.chunk.css",
-    "static/js/2.97b57375.chunk.js": "/github.io/cuestionario/static/js/2.97b57375.chunk.js",
-    "static/js/2.97b57375.chunk.js.map": "/github.io/cuestionario/static/js/2.97b57375.chunk.js.map",
-    "index.html": "/github.io/cuestionario/index.html",
-    "precache-manifest.e9da180148f4f6d553f9229c34f5cc56.js": "/github.io/cuestionario/precache-manifest.e9da180148f4f6d553f9229c34f5cc56.js",
-    "service-worker.js": "/github.io/cuestionario/service-worker.js",
-    "static/css/2.510409cd.chunk.css.map": "/github.io/cuestionario/static/css/2.510409cd.chunk.css.map",
-    "static/css/main.7f276789.chunk.css.map": "/github.io/cuestionario/static/css/main.7f276789.chunk.css.map",
-    "static/media/Content.css": "/github.io/cuestionario/static/media/Trattatello.05289e86.ttf"
+    "main.css": "/gluan/cuestionario/static/css/main.affcceb6.chunk.css",
+    "main.js": "/gluan/cuestionario/static/js/main.71ec9fb0.chunk.js",
+    "main.js.map": "/gluan/cuestionario/static/js/main.71ec9fb0.chunk.js.map",
+    "runtime~main.js": "/gluan/cuestionario/static/js/runtime~main.7495ddf4.js",
+    "runtime~main.js.map": "/gluan/cuestionario/static/js/runtime~main.7495ddf4.js.map",
+    "static/css/2.510409cd.chunk.css": "/gluan/cuestionario/static/css/2.510409cd.chunk.css",
+    "static/js/2.97b57375.chunk.js": "/gluan/cuestionario/static/js/2.97b57375.chunk.js",
+    "static/js/2.97b57375.chunk.js.map": "/gluan/cuestionario/static/js/2.97b57375.chunk.js.map",
+    "index.html": "/gluan/cuestionario/index.html",
+    "precache-manifest.1805bd4088956c4ec533a3805b511792.js": "/gluan/cuestionario/precache-manifest.1805bd4088956c4ec533a3805b511792.js",
+    "service-worker.js": "/gluan/cuestionario/service-worker.js",
+    "static/css/2.510409cd.chunk.css.map": "/gluan/cuestionario/static/css/2.510409cd.chunk.css.map",
+    "static/css/main.affcceb6.chunk.css.map": "/gluan/cuestionario/static/css/main.affcceb6.chunk.css.map",
+    "static/media/Content.css": "/gluan/cuestionario/static/media/Trattatello.05289e86.ttf"
   }
 }
