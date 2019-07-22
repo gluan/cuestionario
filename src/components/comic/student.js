@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Instructions from '../instructions/instructions';
 import './comic.css';
 

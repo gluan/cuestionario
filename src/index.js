@@ -4,10 +4,10 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import './index.css';
 import AppRoutes from './routes';
-
+import 'bootstrap/dist/css/bootstrap.css';
 import * as serviceWorker from './serviceWorker';
 
-render(<Router><AppRoutes /></Router>, document.getElementById('root'));
+render(<Router basename={process.env.PUBLIC_URL}><AppRoutes /></Router>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDom from 'react-dom';
 
 class CuestionarioTeacher extends Component {
     constructor(props) {

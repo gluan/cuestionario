@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './comic.css';
 
 class StoryStudent extends Component{
     constructor(props){

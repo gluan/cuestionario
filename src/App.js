@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 // Components
 import Content from './components/Global/Content';
 
-import './App.css';
+// import './App.css';
 
 class App extends Component {
 
@@ -12,7 +12,7 @@ class App extends Component {
     return (
       <div >
         <Content body={ children }/>
-        
+
       </div>
     );
   }

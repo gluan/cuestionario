@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDom from 'react-dom';
 import $ from "jquery";
 import './book.css';
 import Instructions from '../instructions/instructions';

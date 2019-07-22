@@ -1,5 +1,6 @@
 // Dependencies
 import React, { Component } from 'react';
+import ReactDom from 'react-dom';
 import './css/Content.css'
 
 class Content extends Component{

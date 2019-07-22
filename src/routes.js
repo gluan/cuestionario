@@ -21,7 +21,7 @@ const AppRoutes = () =>
             <Route path='/story-student' component={Story} />
 			<Route path='/story-teacher' component={StoryTeacher} />
             <Route path='/i' component={Instructions} />
-            <Route path='/' />
+            <Route path={process.env.PUBLIC_URL+'/'} component={Student}/>
             <Route component={Page404}/>
         </Switch>
     </App>;

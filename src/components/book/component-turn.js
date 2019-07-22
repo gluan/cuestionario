@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import $ from "jquery";
 import "turn.js";
-
 import "./styles.css";
 
 class Turn extends React.Component {

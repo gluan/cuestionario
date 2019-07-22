@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
-//import Question from '../question/question';
 import Instructions from '../instructions/instructions';
 import './cuestionario.css';
-//import Checkbox from '../checkbox/checkbox';
-//import Radio from '../radio/radio';
 
 class Student extends Component {
     constructor(props){
