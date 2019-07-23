@@ -13,11 +13,11 @@
 .story-content{
     width: 100%;
     height: auto;
-    margin-top: 7%;
+    margin-top: 9%;
 }
 .story-border {
     width: 80%;
-    height: 80vh;
+    height: 70vh;
     background-color: #F3EFDD;
     /* border: 2px dashed #806337; */
 
@@ -41,11 +41,16 @@
     /* margin: 0px 10%; */
 }
 .story-text {
+	font-size: 1rem;
+	color: #B5B0A4;
+    width: 100%;
     height: 100%;
-    vertical-align: middle;
-    text-align: center;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    -ms-transform: translateY(-50%);
 }
-/* #B5B0A4  */
 .div-btn {
 	text-align: right;
 	top: 90px;
@@ -57,4 +62,95 @@
 	border: none;
 	color: #ffffff;
 	font-size: 1rem;
+}
+.menu {
+	background: url(/img/ico-editar.svg);
+    width: 60px;
+    height: 60px;
+    border: none;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.nav-bar-menu {
+	position: absolute !important;
+    left: 82%;
+    top: -5%;
+}
+/* .fondo-menu {
+	background: url(/img/fondo-elementos.svg);
+	background-repeat: no-repeat;
+    background-position: left;
+	background-size: cover;
+} */
+.btn-menu {
+	position: absolute;
+	left:  88%;
+    top: -3%;
+}
+.btn-menu-fondo{
+	width: 35%;
+	height: 50vh;
+	margin: 2px;
+	position: absolute;
+	left: 60%;
+	top: 40px;
+	background: url(/img/fondo-elementos.svg);
+	background-repeat: no-repeat;
+	background-position: left;
+	background-size: cover;
+	z-index: 10;
+}
+.iconos {
+	width: 90%;
+	margin: 10px 5%;
+	display: flex;
+	justify-content: space-around;
+}
+.personajes {
+	width: 18%;
+	height: 6vh;
+	display: inline-flex;
+	background: url(/img/ico-personajes.svg);
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+.fondos {
+	width: 20%;
+	height: 6vh;
+	display: inline-flex;
+	background: url(/img/ico-fondos.svg);
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+.textos {
+	width: 18%;
+	height: 6vh;
+	display: inline-flex;
+	background: url(/img/ico-texto.svg);
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+.objetos {
+	width: 16%;
+	height: 6vh;
+	display: inline-flex;
+	background: url(/img/ico-objetos.svg);
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+.imagenes{
+	overflow: auto;
+	border: black;
+	width: 90%;
+	height: 80%;
+	border-style: dashed;
+	margin: 10px;
+	justify-content: space-between;
+	display: flex;
+	flex-wrap: wrap;
+}
+.img-elementos{
+	width: 95px;
+	height: auto;
+    margin: 10px 20px;
 }

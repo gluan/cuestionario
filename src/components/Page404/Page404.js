@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReacDom from 'react-dom';
+import ReactDom from 'react-dom';
 
 class Page404 extends Component {
     render() {

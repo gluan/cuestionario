@@ -2,12 +2,12 @@
   "name": "cuestionario",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://gluan.github.io/cuestionario",
   "dependencies": {
     "bootstrap": "^4.3.1",
     "gh-pages": "^2.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-drag-drop-container": "^6.1.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "turn.js": "https://github.com/rizalibnu/turn.js.git"

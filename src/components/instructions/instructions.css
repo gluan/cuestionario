@@ -14,16 +14,16 @@
 }
 .title {
     width: 85%;
-    /* font-family: Trattatello; */
+    font-family: Trattatello;
 	font-weight: bold;
 	text-transform: uppercase;
 }
 .text_instructions h3 {
-    /* font-family: Trattatello; */
+    font-family: Trattatello;
     font-size: 18pt;
 }
 .title_instructions{
-    /* font-family: Trattatello; */
+    font-family: Trattatello;
     height: 175px !important;
     width : 100% !important;
 }
