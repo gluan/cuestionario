@@ -5,15 +5,19 @@
     top: -45px;
 }
 .text_instructions{
-    font-family: Trattatello;
-    font-size: 1rem;
+    /* font-family: Montserrat; */
     margin-top: -164px;
     width: 76%;
     margin-left: 200px;
     text-align: left;
 }
+.instructions-text {
+    font-size: .8rem;
+    font-family: Montserrat;
+}
 .title {
     width: 85%;
+    font-size: 1rem;
     font-family: Trattatello;
 	font-weight: bold;
 	text-transform: uppercase;

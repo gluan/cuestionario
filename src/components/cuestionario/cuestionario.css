@@ -11,8 +11,8 @@
 .cuestionario{
 	text-align:left;
 	margin-left: 5px;
-	width: 100%;
-	height: 65vh;
+	width: 98%;
+	height: 70vh;
 	overflow: auto;
 }
 .div-btn {
@@ -39,34 +39,32 @@
 }
 
 .cuestionario::-webkit-scrollbar {
-	width: 15px;
+	width: 10px;
 	margin: 10px;
+	right: -100px;
 	border-radius: 20px;
 	background-color: #f0ce9fbd;
+	/* background:none; */
 }
 
 .cuestionario::-webkit-scrollbar-thumb{
+	/* width: 60px; */
 	/* border-radius: 10px; */
 	/* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); */
 	/* background-color: #f0ce9fbd; */
 	background: url('/img/scroll.svg');
 	background-repeat: no-repeat;
-	background-size: auto;
+	background-size: cover;
 }
 
 /*Estilos Teacher*/
-.body-cuestionario-teacher {
-  --text-color: #3f88d7;
-}
-/*---------*/
-
 .body-cuestionario-teacher{
-	color: var(--text-color);
+	color: #1B586D !important;;
 	width: 96%;
 	margin-left: 2%;
 }
 .letter-red {
-	color: red;
+	color: #F06522;;
 	font-size: .6rem;
 }
 .header-btn {
@@ -81,7 +79,7 @@
 	font-size: .7rem;
 }
 .text-teacher {
-	border-color: var(--text-color);
+	border-color: #1B586D;;
 	border-style: solid;
 	width: 100%;
 	margin-top: 6px;
@@ -93,11 +91,12 @@
 	display: flex;
 }
 .question-text-admin {
-	color: var(--text-color);
+	color: #1B586D;
+	padding-left: 3%;
 	width: 100%;
-	border: #007bff;
-	border-style: solid;
-	border-width: thin;
+	border: none;
+	/* border-style: solid; */
+	/* border-width: thin; */
 }
 .radio{
 	display: inline-flex !important;
@@ -108,7 +107,7 @@
 }
 .questions-options{
 	width: 100%;
-	border: #007bff;
+	border: #1B586D;
 	border-style: solid;
 	border-width: thin;
 	border-top: none;
@@ -116,7 +115,7 @@
 .type-question{
 	display: flex;
 	width: 100%;
-	border: #007bff;
+	border: #1B586D;
 	border-style: solid;
 	border-width: thin;
 	border-top: none;
@@ -136,14 +135,15 @@
 .question-option {
 	width: 80%;
 	margin-left: 3%;
-	color: var(--text-color);
+	color: #1B586D;;
 	border: none;
 }
 .option {
 	display: flex;
 }
 .option-teacher{
-	margin: 10px 15px;
+	margin: 10px 0px;
+	margin-right: 20px;
 }
 .div-delete-option {
 	border: none;
@@ -159,7 +159,7 @@
 }
 .button-reset {
 	margin: 10px 20px;
-	background-color: #165e6a;
+	background-color: #1B586D;;
 	border: none;
 	color: #ffffff;
 	font-size: .8rem;
@@ -167,7 +167,7 @@
 
 .button-terminar {
 	margin: 10px 20px;
-	background-color: #f8730a;
+	background-color: #F06522;;
 	border: none;
 	color: #ffffff;
 	font-size: .8rem;
@@ -217,7 +217,7 @@
 
 /*Errores*/
 .error{
-	border: 1px  solid red;
+	border: 1px  solid #F06522;;
 }
 /*Question*/
 .numero {
@@ -241,7 +241,7 @@
     background-size: cover;
 }
 .body-question{
-	width: 90%;
+	width: 95%;
 	margin: 10px;
 }
 .respuesta {
@@ -307,4 +307,37 @@ input[type="radio"]:checked + label {
 	cursor: pointer;
 	background-image: url('/img/Diamanteblue.png');
 	background-size: cover;
+}
+.general-instructions{
+	color: #1B586D;
+	margin: 20px 0px;
+    line-height: 1rem;
+    text-align: justify;
+	width: 97%;
+}
+.separador {
+	margin: 0px;
+	width: 80%;
+    margin-left: 3%;
+	border-top: 1px solid rgba(0, 0, 0, 0.22);
+}
+.collapse-div {
+	width: 20px;
+    margin: 0px 10px;
+	background: url(/img/down_icon.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+.pregunta {
+	display: inline-flex;
+	width: 100%;
+	color: #1B586D;
+	padding-left: 3%;
+	border: #1B586D;
+	border-style: solid;
+	border-width: thin;
+}
+.x {
+	width: 9%;
 }

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Instructions from '../instructions/instructions';
 import './comic.css';
+// import AppPrueba from './prueba';
 
 import { DragDropContainer, DropTarget } from 'react-drag-drop-container';
 import AppDragDropDemo from './drag';
@@ -83,7 +84,9 @@ class StoryStudent extends Component{
                 <div className="div-btn">
                     <button onClick={this.handleClickTerminar} className="button-terminar-ejercicio">Terminar</button>
                 </div>
-                <AppDragDropDemo />
+                {// <AppPrueba />
+                // <AppDragDropDemo />
+                }
 
             </div>
         )

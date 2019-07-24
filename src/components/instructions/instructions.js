@@ -13,7 +13,7 @@ class Instructions extends Component {
                 <img className="title_instructions" src={"/img/fondo-instrucciones.png"} alt="background_instrucciones"/>
                 <div className="text_instructions">
                     <div className="title">{this.props.title}:</div>
-					<div>{this.props.text}</div>
+					<div className="instructions-text">{this.props.text}</div>
                 </div>
             </div>
         );

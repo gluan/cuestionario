@@ -68,6 +68,8 @@ class CuestionarioTeacher extends Component {
         }
         /*this state*/
         this.state={
+            generalInstructions:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore'+
+            ' magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             errors:{questions:[]},
             instructions:'',
             questions:[
@@ -170,17 +172,20 @@ class CuestionarioTeacher extends Component {
                        var styleOption = j > 1  && j != tam ? {display:'block'} : {display:'none'};
                        var styleOptionAdd = j === tam ? {display:'block'} : {display:'none'};
                        return(
-                            <div className="option">
-                                <input
-                                    placeholder='Opcion ..'
-                                    value={option}
-                                    onChange={handleChangeEventOption}
-                                    type="text"
-                                    id={'option-'+i+'-'+j}
-                                    className={errors.questions && errors.questions[i] && errors.questions[i].options && errors.questions[i].options[j]  && errors.questions[i].options[j] != errors.questions[i].options.length ? errors.questions[i].options[j] : "question-option"}
-                                />
-                                <button className="div-delete-option" id={i+'-'+j} style={styleOption} onClick={deleteOption}></button>
-                                <button className="div-add-option" id={i+'-'+j} style={styleOptionAdd} onClick={addOption}></button>
+                           <div>
+                                <div className="option">
+                                    <input
+                                        placeholder='Opcion ..'
+                                        value={option}
+                                        onChange={handleChangeEventOption}
+                                        type="text"
+                                        id={'option-'+i+'-'+j}
+                                        className={errors.questions && errors.questions[i] && errors.questions[i].options && errors.questions[i].options[j]  && errors.questions[i].options[j] != errors.questions[i].options.length ? errors.questions[i].options[j] : "question-option"}
+                                    />
+                                    <button className="div-delete-option" id={i+'-'+j} style={styleOption} onClick={deleteOption}></button>
+                                    <button className="div-add-option" id={i+'-'+j} style={styleOptionAdd} onClick={addOption}></button>
+                                </div>
+                                <hr className="separador" />
                             </div>
                        );
                    }
@@ -188,23 +193,28 @@ class CuestionarioTeacher extends Component {
                 return(
                     <div className="question-admin">
                         <div className="div-question">
-                            <div>Pregunta {i+1}</div>
-                            <input
-                                value={value.question}
-                                onChange={handleChangeEventQuestion}
-                                type="text"
-                                className={errors.questions && errors.questions[i] && errors.questions[i].question ? errors.questions[i].question : "question-text-admin"}
-                                id={'question-'+i}
-                                placeholder='Pregunta ...'
-                            />
-                            <div className="type-question">
-
-                                <div className="option-teacher"><input type="radio"  value="3" name={i} className="radio" checked={value.type==3} onChange={handleChangeEventType}/>Respuesta abierta</div>
-                                <div className="option-teacher"><input type="radio"  value="2" name={i} className="radio" checked={value.type==2} onChange={handleChangeEventType}/>Opcion multiple</div>
-                                <div className="option-teacher"><input type="radio"  value="1" name={i} className="radio" checked={value.type==1} onChange={handleChangeEventType}/>Selección</div>
+                            <div className="">Pregunta {i+1}</div>
+                            <div className="pregunta">
+                                <input
+                                    value={value.question}
+                                    onChange={handleChangeEventQuestion}
+                                    type="text"
+                                    className={errors.questions && errors.questions[i] && errors.questions[i].question ? errors.questions[i].question : "question-text-admin"}
+                                    id={'question-'+i}
+                                    placeholder='Pregunta ...'
+                                />
+                                <div className="collapse-div" data-toggle="collapse" data-target={"#collapse-"+i} aria-expanded="false" aria-controls={"collapse-"+i}></div>
                             </div>
-                            <div style={styleDisplayOptions} className="questions-options" id={"divOpciones-"+i} >
-                                {options}
+                            <div class="collapse" id={"collapse-"+i}>
+                                <div className="type-question">
+
+                                    <div className="option-teacher"><input type="radio"  value="3" name={i} className="radio" checked={value.type==3} onChange={handleChangeEventType}/>Respuesta abierta</div>
+                                    <div className="option-teacher"><input type="radio"  value="2" name={i} className="radio" checked={value.type==2} onChange={handleChangeEventType}/>Opcion multiple</div>
+                                    <div className="option-teacher"><input type="radio"  value="1" name={i} className="radio" checked={value.type==1} onChange={handleChangeEventType}/>Selección</div>
+                                </div>
+                                <div style={styleDisplayOptions} className="questions-options" id={"divOpciones-"+i} >
+                                    {options}
+                                </div>
                             </div>
                         </div>
                         <button className="div-delete" onClick={click} id={i} style={style}></button>
@@ -215,6 +225,9 @@ class CuestionarioTeacher extends Component {
 
         return(
             <div className="body-cuestionario-teacher">
+                <div className="general-instructions">
+                    {this.state.generalInstructions}
+                </div>
                 <div>Instrucciones de la actividad</div>
                 <textarea
                     value={this.state.instructions}

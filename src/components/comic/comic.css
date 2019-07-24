@@ -13,7 +13,7 @@
 .story-content{
     width: 100%;
     height: auto;
-    margin-top: 9%;
+    /* margin-top: 9%; */
 }
 .story-border {
     width: 80%;
@@ -43,8 +43,8 @@
 .story-text {
 	font-size: 1rem;
 	color: #B5B0A4;
-    width: 100%;
-    height: 100%;
+    /* width: 100%;
+    height: 100%; */
     margin: 0;
     position: absolute;
     top: 50%;

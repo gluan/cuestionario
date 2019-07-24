@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Instructions from '../instructions/instructions';
 import './cuestionario.css';
+import domtoimage from 'dom-to-image';
+import html2canvas from 'html2canvas';
 
 class Student extends Component {
     constructor(props){
@@ -11,6 +13,7 @@ class Student extends Component {
 			'selecionanado las respuestas correctas en las preguntas de sellecion y escribiendo la respuesta en las preguntas abiertas'
 		};
         this.state={
+            btn: true,
             values:[
                 {
                     question: '¿Cuál es el río más largo del mundo?',
@@ -30,15 +33,15 @@ class Student extends Component {
                     options: [ 'Misisipi', 'Amazonas', 'Nilo' ],
                     type: '2',
                 }
-                ,{
-                    question: 'Las tres ciudades más grandes y pobladas del país son:',
-                    options: [ 'Ciudad de México', 'Guadalajara ', 'Monterrey', 'Cancún' ],
-                    type: '1',
-                },{
-                    question: '¿Qué nombre científico recibe el detector de mentiras?',
-                    type: '3',
-					placeholder: 'Escribe tu respuesta',
-                }
+                // ,{
+                //     question: 'Las tres ciudades más grandes y pobladas del país son:',
+                //     options: [ 'Ciudad de México', 'Guadalajara ', 'Monterrey', 'Cancún' ],
+                //     type: '1',
+                // },{
+                //     question: '¿Qué nombre científico recibe el detector de mentiras?',
+                //     type: '3',
+				// 	placeholder: 'Escribe tu respuesta',
+                // },
             ]
         };
 		/*Cambios pregunta abierta*/
@@ -49,6 +52,7 @@ class Student extends Component {
 		}
 		/*Terminar formulario*/
 		this.handleClickTerminar = value => {
+            this.setState({btn:false})
 			console.log('terminar');
 			console.log(this.state);
 		}
@@ -69,7 +73,12 @@ class Student extends Component {
 			values[i].options[j].checked=!values[i].options[j].checked;
 			this.setState({values:values});
 		}
+        /*Descargar*/
+        this.handleClickDescargar= value => {
+            console.log('descargar');
+        }
     }
+
 
 	componentDidMount(){
 		var values = this.state.values.map(
@@ -99,6 +108,9 @@ class Student extends Component {
 		var handleChangeAnswer=this.handleChangeAnswer;
 		var handleChangeRadio=this.handleChangeRadio;
 		var handleChangeCheckbox=this.handleChangeCheckbox;
+        var handleClickDescargar= this.handleClickDescargar;
+        var btnStyleT = this.state.btn ? {display:'initial'} : {display:'none'};
+        var btnStyleD = this.state.btn ? {display:'none'} : {display:'initial'};
 
         var questions = this.state.values.map(
             function iterator (value, i){
@@ -179,7 +191,7 @@ class Student extends Component {
             }
         );
         return(
-            <div className="body-cuestionario">
+            <div className="body-cuestionario" id="cuestionario">
 				<div className="row col-12 instrucciones">
 					<Instructions title={this.instrucciones.title} text={this.instrucciones.text} />
 				</div>
@@ -189,7 +201,8 @@ class Student extends Component {
                     </div>
 				</div>
                 <div className="div-btn">
-                    <button onClick={this.handleClickTerminar} className="button-terminar-ejercicio">Terminar</button>
+                    <button style={btnStyleD} onClick={this.handleClickDescargar} className="button-terminar-ejercicio">Descargar</button>
+                    <button style={btnStyleT} onClick={this.handleClickTerminar} className="button-terminar-ejercicio">Terminar</button>
                 </div>
             </div>
         );
