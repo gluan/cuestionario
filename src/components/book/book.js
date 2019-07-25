@@ -4,11 +4,13 @@ import $ from "jquery";
 import './book.css';
 import Instructions from '../instructions/instructions';
 import Turn from './component-turn';
+import domtoimage from 'dom-to-image';
 
 class Book extends Component {
 	constructor(props){
 		super(props);
 		this.state={
+			btn: true,
 			page1:'',
 			page2:'',
 			instrucciones: {
@@ -41,14 +43,9 @@ class Book extends Component {
 	};
 
 	componentDidMount() {
-		console.log('1')
 	  window.addEventListener('resize', this.resize);
-
 	  var visible = document.getElementById('1');
 	  var element = visible.parentElement.parentElement;
-	  // console.log(element)
-	  // console.log(visible.parentElement.parentElement);
-	  console.log(element.style.display)
 	  if(element.style.display=='none'){
 		  console.log('1')
 		  this.setState({isVisible:false})
@@ -56,7 +53,6 @@ class Book extends Component {
 		  console.log('1')
 		  this.setState({isVisible:true})
 	  }
-
 	};
 
 	componentWillUnmount() {
@@ -66,15 +62,36 @@ class Book extends Component {
 	handleChangeTurn(){
 		console.log('turn')
 	}
-	handleClickTerminar(event){
+	handleClickTerminarB(event){
 		console.log('termino');
-		console.log(this.state);
-		console.log(this.state.page1 +' '+ this.state.page2);
+		var text = this.state.page1 +' '+ this.state.page2;
+		if(text == '' || text == ' ' || text.length <2){
+			console.log('tienes que completar el ejercicio')
+		}else{
+			this.setState({btn:false});
+			console.log(this.state);
+			console.log(this.state.page1 +' '+ this.state.page2);
+		}
+	}
+	handleClickDescargar(event){
+		console.log('Descargar');
+		domtoimage.toJpeg(document.getElementById('book'), { quality: 0.95 })
+	    .then(function (dataUrl) {
+	        var link = document.createElement('a');
+	        link.download = 'my-image.jpeg';
+	        link.href = dataUrl;
+	        link.click();
+	    });
 	}
 
     render() {
+		console.log('render');
+		var btnStyleT = this.state.btn ? {display:'initial'} : {display:'none'};
+        var btnStyleD = this.state.btn ? {display:'none'} : {display:'initial'};
+		var handleClickTerminarB = this.handleClickTerminarB;
+
         return(
-            <div className="body-book">
+            <div className="body-book" id='book'>
                 <div className="row col-12 instrucciones">
                     <Instructions title={this.state.instrucciones.title} text={this.state.instrucciones.text} />
                 </div>
@@ -99,8 +116,9 @@ class Book extends Component {
 					      ))}
 					    </Turn>
 					</div>
-					<div className="div-btn">
-						<button onClick={this.handleClickTerminar.bind(this)} className="button-terminar-ejercicio">Terminar</button>
+					<div className="div-btn-b">
+						<button style={btnStyleT} onClick={this.handleClickTerminarB.bind(this)} className="button-terminar-ejercicio-b">Terminar</button>
+						<button style={btnStyleD} onClick={this.handleClickDescargar.bind(this)} className="button-terminar-ejercicio-b">Descargar</button>
 					</div>
 				</div>
             </div>

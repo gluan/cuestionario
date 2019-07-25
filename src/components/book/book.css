@@ -33,15 +33,18 @@
 .instrucciones{
 	justify-content:center;
 }
-.div-btn {
+.div-btn-b {
+    z-index: 10;
+	margin-top: -5%;
+	margin-bottom: 15px;
 	text-align: right;
 	top: 90px;
     margin-left: 75%;
 	/* margin-top: -300px;
     margin-right: 50px; */
 }
-.button-terminar-ejercicio{
-	margin: 20px;
+.button-terminar-ejercicio-b {
+	/* margin: 20px; */
 	padding: 10px 20px;
 	background-color: #f8730a;
 	border: none;
@@ -71,7 +74,7 @@
 /*----------------------------------------------------------------*/
 /*Estilos Teacher*/
 .body-cuestionario-teacher {
-  --text-color: #3f88d7;
+  --text-color: #1B586D;
 }
 .body-cuestionario-teacher{
 	color: var(--text-color);
@@ -98,4 +101,11 @@
 	border: none;
 	color: #ffffff;
 	font-size: .8rem;
+}
+.general-instructions{
+	color: var(--text-color);
+	margin: 20px 0px;
+    line-height: 1rem;
+    text-align: justify;
+	width: 97%;
 }
