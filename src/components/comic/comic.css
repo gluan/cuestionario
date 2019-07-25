@@ -88,11 +88,10 @@
     top: -3%;
 }
 .btn-menu-fondo{
-	width: 35%;
-	height: 50vh;
+    width: 350px;
 	margin: 2px;
 	position: absolute;
-	left: 60%;
+	right: 5%;
 	top: 40px;
 	background: url(/img/fondo-elementos.svg);
 	background-repeat: no-repeat;

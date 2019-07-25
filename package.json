@@ -7,10 +7,12 @@
     "dom-to-image": "^2.6.0",
     "gh-pages": "^2.0.1",
     "html2canvas": "^1.0.0-rc.3",
+    "konva": "^3.4.1",
     "react": "^16.8.6",
     "react-beautiful-dnd": "^11.0.5",
     "react-dom": "^16.8.6",
     "react-drag-drop-container": "^6.1.1",
+    "react-konva": "^16.8.7-3",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "turn.js": "https://github.com/rizalibnu/turn.js.git"
