@@ -33,15 +33,15 @@ class Student extends Component {
                     options: [ 'Misisipi', 'Amazonas', 'Nilo' ],
                     type: '2',
                 }
-                // ,{
-                //     question: 'Las tres ciudades más grandes y pobladas del país son:',
-                //     options: [ 'Ciudad de México', 'Guadalajara ', 'Monterrey', 'Cancún' ],
-                //     type: '1',
-                // },{
-                //     question: '¿Qué nombre científico recibe el detector de mentiras?',
-                //     type: '3',
-				// 	placeholder: 'Escribe tu respuesta',
-                // },
+                ,{
+                    question: 'Las tres ciudades más grandes y pobladas del país son:',
+                    options: [ 'Ciudad de México', 'Guadalajara ', 'Monterrey', 'Cancún' ],
+                    type: '1',
+                },{
+                    question: '¿Qué nombre científico recibe el detector de mentiras?',
+                    type: '3',
+					placeholder: 'Escribe tu respuesta',
+                },
             ]
         };
 		/*Cambios pregunta abierta*/

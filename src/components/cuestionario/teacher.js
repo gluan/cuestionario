@@ -205,7 +205,7 @@ class CuestionarioTeacher extends Component {
                                 />
                                 <div className="collapse-div" data-toggle="collapse" data-target={"#collapse-"+i} aria-expanded="false" aria-controls={"collapse-"+i}></div>
                             </div>
-                            <div class="collapse" id={"collapse-"+i}>
+                            <div className="collapse" id={"collapse-"+i}>
                                 <div className="type-question">
 
                                     <div className="option-teacher"><input type="radio"  value="3" name={i} className="radio" checked={value.type==3} onChange={handleChangeEventType}/>Respuesta abierta</div>
