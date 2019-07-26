@@ -141,15 +141,15 @@ class StoryStudent extends Component{
                             layer.add(tr1);
                             tr1.add(imageDel);
                             tr1.on('transform', () => {
-                              imageDel.x(10);
+                              imageDel.x(0);
                             })
                             imageDel.draggable(false);
                             imageDel.size({
-                                width: 15,
-                                height: 15
+                                width: 25,
+                                height: 25
                             });
                             imageDel.setAttr('del', 'true');
-                            imageDel.position({x: 10, y: -25})
+                            imageDel.position({x: 0, y: -25})
                             imageDel.on("click", function(e) {
                                 var transform = layer.getChildren(function(node){
                                    return node.getClassName() === 'Transformer';
