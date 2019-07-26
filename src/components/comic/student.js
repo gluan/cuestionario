@@ -20,7 +20,7 @@ class StoryStudent extends Component{
                 { url:'/img/elementos/fondos/castillo-interior.jpg', id:'castillo-interior', status:false, tag:'triste'},
                 { url:'/img/elementos/fondos/castillo-noche.jpg', id:'castillo-noche', status:false, tag:'triste'}
             ],
-            elementsImg:[]
+
         }
         this.instrucciones={
             image:'Arrastra las imágenes aqui',
@@ -40,15 +40,14 @@ class StoryStudent extends Component{
 		this.handleClickTerminar = value => {
 			console.log('terminar');
 			console.log(this.state);
-		}
+		};
     }
     componentDidMount(){
         /*Drag and drop*/
-        var state= this.state;
-        var elementos=[];
+        // var elementos=[{}];
 
-        var width = document.getElementById('container-story').offsetWidth;
-        var height = document.getElementById('container-story').offsetHeight;
+        var width = document.getElementById('container-story').offsetWidth - 5;
+        var height = document.getElementById('container-story').offsetHeight - 5;
 
         var stage = new Konva.Stage({
             container: 'container-story',
@@ -57,23 +56,30 @@ class StoryStudent extends Component{
         });
 
         var layer = new Konva.Layer();
-        stage.add(layer);
 
-        // what is url of dragging element?
+        stage.add(layer);
+        stage.on("click", function(e) {
+            var transform = layer.getChildren(function(node){
+               return node.getClassName() === 'Transformer';
+            });
+            transform.destroy();
+            var del = layer.getChildren(function(node){
+               return node.getAttr('del') === 'true';
+            });
+            del.destroy();
+            layer.draw();
+        });
+
         var itemURL = '';
         var itemKey = '';
         var itemTag = '';
-        var isBack = '';
+        var dataset = '';
         document.getElementById('navbarFondos')
         .addEventListener('dragstart', function(e) {
           itemURL = e.target.src;
           itemKey = e.target.id;
-          itemKey = e.target.name;
-          console.log(e.target.data)
-          // state.fondos.map((image, index)=>{
-          //     if(itemKey == )
-          //     console.log(image)
-          // })
+          itemTag = e.target.name;
+          dataset= e.target.dataset.options;
         });
 
         var con = stage.container();
@@ -84,29 +90,92 @@ class StoryStudent extends Component{
 
         con.addEventListener('drop', function(e) {
             console.log('drop');
-            console.log(e)
             e.preventDefault();
-            // now we need to find pointer position
-            // we can't use stage.getPointerPosition() here, because that event
-            // is not registered by Konva.Stage
-            // we can register it manually:
             stage.setPointersPositions(e);
             Konva.Image.fromURL((itemURL), function(image) {
                 layer.add(image);
-                var status= true;
-                console.log('status: ' + status)
-                if(status){
-                    console.log('fondo');
+                image.setAttr('id', itemKey);
+                image.setAttr('tag', itemTag);
+                image.setAttr('url', itemURL);
+                /*Valida si es un fondo*/
+                if(dataset == 'true'){
                     image.position({});
                     image.draggable(false);
                     image.size({
                         width: width,
                         height: height
                     });
-
+                    var fondo = layer.getChildren(function(node){
+                       return node.getAttr('fondo') === 'true';
+                    });
+                    image.zIndex(fondo.getAbsoluteZIndex());
+                    fondo.destroy();
+                    image.on("click", function(e) {
+                        var transform = layer.getChildren(function(node){
+                           return node.getClassName() === 'Transformer';
+                        });
+                        transform.destroy();
+                        var del = layer.getChildren(function(node){
+                           return node.getAttr('del') === 'true';
+                        });
+                        del.destroy();
+                        layer.draw();
+                    });
+                /*Si es un elemento*/
                 }else{
-                    console.log('elemento');
+                    image.on("click", function(e) {
+                        var transform = layer.getChildren(function(node){
+                           return node.getClassName() === 'Transformer';
+                        });
+                        transform.destroy();
+                        var del = layer.getChildren(function(node){
+                           return node.getAttr('del') === 'true';
+                        });
+                        del.destroy();
+                        var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
+                        Konva.Image.fromURL(newURL, function(imageDel) {
+                            var tr1 = new Konva.Transformer({
+                                node: image,
+                                keepRatio: true,
+                            });
+                            layer.add(tr1);
+                            tr1.add(imageDel);
+                            tr1.on('transform', () => {
+                              imageDel.x(10);
+                            })
+                            imageDel.draggable(false);
+                            imageDel.size({
+                                width: 15,
+                                height: 15
+                            });
+                            imageDel.setAttr('del', 'true');
+                            imageDel.position({x: 10, y: -25})
+                            imageDel.on("click", function(e) {
+                                var transform = layer.getChildren(function(node){
+                                   return node.getClassName() === 'Transformer';
+                                });
+                                transform.destroy();
+                                var del = layer.getChildren(function(node){
+                                   return node.getAttr('del') === 'true';
+                                });
+                                del.destroy();
+                                imageDel.destroy();
+                                image.destroy();
+                                layer.draw();
+                            });
 
+                            // imageDel.x(tr1.getWidth())
+
+                            layer.draw();
+                        });
+
+
+
+
+                        // image.destroy();
+                        layer.draw();
+                    });
+                    image.setAttr('position', stage.getPointerPosition());
                     image.position(stage.getPointerPosition());
                     image.draggable(true);
                     image.size({
@@ -114,28 +183,20 @@ class StoryStudent extends Component{
                         height: 200
                     });
                 }
-
-                console.log(image.getAttrs())
-                elementos.push({
-                    key: itemKey,
-                    atributes: image.getAttrs(),
-                });
-                console.log(elementos);
-
+                image.setAttr('fondo', dataset);
                 layer.draw();
-
             });
-
+            console.log('stage');
+            console.log(stage);
         });
-
-
+        this.setState({stage:stage});
     }
 
     render(){
         var style = this.state.elements ? {display:'block'} : {display:'none'};
         var imagenes = this.state.fondos.map((image, index)=>{
             return (
-                <img data={image.status} name={image.tag} id={image.key} className='img-elementos' src={image.url} draggable="true"/>
+                <img data-options={image.status} name={image.tag} id={image.id} className='img-elementos' src={image.url} draggable="true"/>
             )
         })
 
