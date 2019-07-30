@@ -97,6 +97,7 @@ class StoryStudent extends Component{
             height: height,
             stage: stage,
         });
+        layer.draw();
         // this.forceUpdate();
 	};
 	componentWillUnmount() {
@@ -330,8 +331,6 @@ class StoryStudent extends Component{
                 )
             })
         }
-
-
         return(
             <div className="body-story" id='body-story'>
                 <div className="row col-12 instrucciones">
@@ -346,14 +345,16 @@ class StoryStudent extends Component{
                         onClick={this.handleClick}>
                     </button>
                     <div className="btn-menu-fondo" style={style}>
-                        <div className="iconos">
-                            <button className='fondos' id='fondos' onClick={this.handleClickElements.bind(this)}></button>
-                            <button className='personajes' id='personajes' onClick={this.handleClickElements.bind(this)}></button>
-                            <button className='textos' id='textos' onClick={this.handleClickElements.bind(this)}></button>
-                            <button className='objetos' id='objetos' onClick={this.handleClickElements.bind(this)}></button>
-                        </div>
-                        <div id="navbarFondos" className="imagenes elementos">
-                            {imagenes}
+                        <div className="fondoo">
+                            <div className="iconos">
+                                <button className='fondos' id='fondos' onClick={this.handleClickElements.bind(this)}></button>
+                                <button className='personajes' id='personajes' onClick={this.handleClickElements.bind(this)}></button>
+                                <button className='textos' id='textos' onClick={this.handleClickElements.bind(this)}></button>
+                                <button className='objetos' id='objetos' onClick={this.handleClickElements.bind(this)}></button>
+                            </div>
+                            <div id="navbarFondos" className="imagenes elementos">
+                                {imagenes}
+                            </div>
                         </div>
                     </div>
                     <div className="story-border">
