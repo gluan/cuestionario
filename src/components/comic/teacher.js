@@ -124,7 +124,7 @@ class StoryStudent extends Component{
     }
     handleClickCancel(){
         console.log('Cancel')
-        this.setState({view: true,})
+        this.setState({view: true, restrictLabel:false})
     }
 
     render(){
@@ -171,7 +171,7 @@ class StoryStudent extends Component{
                                 <label className="nombre-elemento">fondo.eldventir1.jpg</label>
                                 <label className="peso-elemento">400 KB</label>
                                 <img src="/img/tag.svg" className="img-tag"/>
-                                <input className="input-tag" / >
+                                <input className="input-tag" />
                             </div>
                             <hr className="separador-elemento"/>
                         </div>
@@ -201,7 +201,7 @@ class StoryStudent extends Component{
         }
 
         var body ='';
-        var btnStyle = this.state.restrictLabel ? {display:'none'} : {display:'initial'};
+        var btnStyle = this.state.restrictLabel ? {display:'initial'} : {display:'none'};
 
         if(this.state.view){
             body =
