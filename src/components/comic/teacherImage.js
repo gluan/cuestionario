@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './comic.css';
 import DragAndDrop from './DragDrop';
-// import Files from "react-butterfiles";
 
 class StoryStudent extends Component{
     constructor(props){
@@ -13,8 +12,7 @@ class StoryStudent extends Component{
         /*this state*/
         this.state = {
             restrictLabel:false,
-            files: [
-            ],
+            files: [],
             errorsD:[],
             predefinidas: false,
             restrict:'*El máximo de elementos que puedes agregar por sección son 10.',
@@ -113,7 +111,10 @@ class StoryStudent extends Component{
     }
     handleClickSelecionar(){
         console.log('Seleccionar imagenes...');
-        this.setState({predefinidas:false,});
+        this.setState({
+            predefinidas:false,
+            // imagenes:imagenes,
+        });
     }
     handleDrop = (files) => {
         console.log('files ..........')

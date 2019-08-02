@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './comic.css';
 import StoryTeacherImage from './teacherImage';
+import DragAndDrop from './DragDrop';
 
 class StoryStudent extends Component{
     constructor(props){
@@ -11,6 +12,8 @@ class StoryStudent extends Component{
         }
         /*this state*/
         this.state = {
+            restrictLabel:false,
+            files: [],
             view:true,
             predefinidas: false,
             restrict:'El máximo de elementos que puedes agregar por sección son 10.',
@@ -43,6 +46,29 @@ class StoryStudent extends Component{
                     { url:'/img/elementos/personajes/S_Narrator_01.png', id:'diablito'},
                 ]
             }
+        }
+        this.handleAdd= value =>{
+            console.log('add')
+            console.log(value)
+            console.log(value.currentTarget)
+            console.log(value.currentTarget.id);
+            console.log(value.target.checked)
+            var images = this.state.imagenes;
+            images[value.target.id].isAdd= value.target.checked
+            var count=0;
+            var restrictLabel=false;
+            images.map((item, key) =>{
+                if(item.isAdd){
+                    count ++;
+                }
+            });
+            if (count > 3){
+                images[value.target.id].isAdd= false
+                document.getElementById(value.target.id).checked=false;
+                restrictLabel=true;
+            }
+            console.log('count '+ count)
+            this.setState({imagenes:images, restrictLabel:restrictLabel})
         }
     }
     /*Validaciones cuestionario*/
@@ -96,8 +122,13 @@ class StoryStudent extends Component{
         console.log('handleCancelUploadImage ..........')
         console.log(event)
     }
+    handleClickCancel(){
+        console.log('Cancel')
+        this.setState({view: true,})
+    }
 
     render(){
+        console.log('Estado .....');
         console.log(this.state)
         var errors =this.state.errors;
         var btnStyleDefault = this.state.btn ? {display:'initial'} : {display:'none'};
@@ -170,6 +201,8 @@ class StoryStudent extends Component{
         }
 
         var body ='';
+        var btnStyle = this.state.restrictLabel ? {display:'none'} : {display:'initial'};
+
         if(this.state.view){
             body =
             <div className="body-story-teacher">
@@ -227,7 +260,58 @@ class StoryStudent extends Component{
                 </div>
             </div>
         }else{
-            body = <StoryTeacherImage imagenes={this.state.imagenes} />
+            // var btnStyle = this.state.restrictLabel ? {display:'none'} : {display:'initial'};
+            var handleAdd = this.handleAdd;
+            var imagenes = this.state.imagenes.map(
+                function iterator (value, i){
+                    return (
+                        <div className="div-image-upload">
+
+                            <input type="checkbox" className="radio-naranja" name='imagenes' id={i} onClick={handleAdd}/>
+                            <label htmlFor={i}></label>
+                            <img className="image-upload" src={value.url} />
+                        </div>
+                    )
+                }
+            );
+            var handleDelete=this.handleDelete;
+            var imagenesUpload = this.state.files.map(
+                function iterator (file, i){
+                    return (
+                        <div>
+                            <div key={i}>{file.name}
+                                <img src='/img/tache.svg' id={'img-'+i} className="img-borrar" onClick={this.handleDelete}/>
+                            </div>
+                        </div>
+                    )
+                }
+            )
+
+            body =
+                <div className="body-story-images">
+                    <div className="general-instructions">
+                        {this.state.generalInstructions}
+                    </div>
+                    <div>
+                        <div className="subir-imagenes">
+
+                            <DragAndDrop handleDrop={this.handleDrop}>
+                              <div>
+                                { imagenesUpload }
+                              </div>
+                            </DragAndDrop>
+
+                        </div>
+                        <label className="col-12 max-img" style={btnStyle}>{this.state.restrict}</label>
+                        <div className="imagenes-div">
+                            {imagenes}
+                        </div>
+                    </div>
+                    <div className='buttons-images'>
+                        <button onClick={() => this.handleClickCancel()} className="button-cancelar">Cancelar</button>
+                        <button onClick={() => this.handleClickSelecionar()} className="button-aceptar">Seleccionar</button>
+                    </div>
+                </div>
         }
 
         return(
