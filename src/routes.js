@@ -11,7 +11,8 @@ import Book from './components/book/book';
 import BookTeacher from './components/book/book-teacher';
 import Story from './components/comic/student';
 import StoryTeacher from './components/comic/teacher';
-
+import StoryTeacherImage from './components/comic/teacherImage';
+import ImageUpload from './components/comic/x';
 const AppRoutes = () =>
     <App>
         <Switch>
@@ -21,6 +22,9 @@ const AppRoutes = () =>
     		<Route path='/book-teacher' component={BookTeacher} />
             <Route path='/story-student' component={Story} />
     		<Route path='/story-teacher' component={StoryTeacher} />
+            <Route path='/story-teacher-i' component={StoryTeacherImage} />
+            <Route path='/i' component={ImageUpload} />
+
             <Route path={process.env.PUBLIC_URL+'/'} component={Inicio}/>
             <Route component={Page404}/>
         </Switch>

@@ -123,6 +123,7 @@ class Student extends Component {
 							return (
 								<div>
 									<input type="checkbox"
+                                    className="check-cuestionario"
 										id={'c-'+i+'-'+j}
 										value={option.value}
 										checked={option.checked}
