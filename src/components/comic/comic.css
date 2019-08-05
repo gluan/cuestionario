@@ -338,10 +338,26 @@
     height: 10px;
     z-index: 1000;
 }
+.btn-add-img-inactive{
+	margin: 10px 0px;
+	padding: 5px 20px;
+	background-color: #b7bec5;
+	border: none;
+	color: #ffffff;
+	font-size: .8rem;
+}
 .btn-add-img{
 	margin: 10px 0px;
 	padding: 5px 20px;
 	background-color: #f8730a;
+	border: none;
+	color: #ffffff;
+	font-size: .8rem;
+}
+.btn-default-img-inactive{
+	margin: 15px;
+	padding: 5px 20px;
+	background-color: #b7bec5;
 	border: none;
 	color: #ffffff;
 	font-size: .8rem;
@@ -467,8 +483,11 @@
 	border-radius: 20px;
 }
 .subir-imagenes{
-	height: 100px;
+	overflow: auto;
+	height: 150px;
 	border: dashed 1px red;
+	justify-content: center;
+	display: flex;
 }
 .img-borrar{
 	width: 10px;
@@ -480,6 +499,9 @@
 	margin-bottom: 0px;
 	font-size: .7rem;
 	color: #F06522;
+}
+.input-file{
+	margin: 57px 0px;
 }
 @media (max-width: 1024px) {
 	.div-image-upload {

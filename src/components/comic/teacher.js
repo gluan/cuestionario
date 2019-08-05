@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './comic.css';
 import StoryTeacherImage from './teacherImage';
 import DragAndDrop from './DragDrop';
+const maxImg = 10;
 
 class StoryStudent extends Component{
     constructor(props){
@@ -12,8 +13,12 @@ class StoryStudent extends Component{
         }
         /*this state*/
         this.state = {
+            imgSelect: 0,
+            imgFaltan:maxImg,
             restrictLabel:false,
             files: [],
+            filesURL: [],
+            imagesUpload:[],
             view:true,
             predefinidas: false,
             restrict:'El máximo de elementos que puedes agregar por sección son 10.',
@@ -21,6 +26,7 @@ class StoryStudent extends Component{
             ' magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             errors:{},
             instructions:'',
+            /*Cambiarlo por imagenes que regrese el servicio de imagenes predefinidas*/
             imagenesPredefinidas:{
                 fondos:[
                     { url:'/img/elementos/fondos/atardecer.jpg', id:'atardecer'},
@@ -47,35 +53,58 @@ class StoryStudent extends Component{
                 ]
             },
             nuevasImagenes:{
-                fondos:[
-                    { url:'/img/elementos/fondos/atardecer.jpg', id:'atardecer'},
-                ],
-                objetos:[
-                    { url:'/img/elementos/objetos/caldero.png', id:'diablito'},
-                ],
-                personajes: [
-                    { url:'/img/elementos/personajes/Diabillo-1.png', id:'diablito'},
-                ]
+                fondos:[],
+                objetos:[],
+                personajes: []
             },
+            imagenes:[],
         }
         this.handleAdd= value =>{
+            console.log('----- handle add -----')
             var images = this.state.imagenes;
-            images[value.target.id].isAdd= value.target.checked
-            var count=0;
-            var restrictLabel=false;
-            images.map((item, key) =>{
-                if(item.isAdd){
-                    count ++;
+            // var imagesUpload=this.state.imagesUpload;
+            var id = value.target.id;
+            console.log('tamaño  ' + this.state.imagenes.length);
+            console.log('id  ' + id);
+            var x = id.split('-');
+            console.log(x)
+
+            if(id.split('-').length == 1){
+                console.log('en 1')
+                id = id.split('-')[0];
+                images[id].isAdd= value.target.checked;
+                var count=this.state.imgSelect;
+                console.log('imagenes select '+ this.state.imgSelect)
+                var restrictLabel=false;
+                images.map((item, key) =>{
+                    if(item.isAdd){
+                        count ++;
+                    }
+                });
+                if (count > maxImg){
+                    count=maxImg
+                    images[value.target.id].isAdd= false
+                    document.getElementById(value.target.id).checked=false;
+                    restrictLabel=true;
                 }
-            });
-            if (count > 10){
-                images[value.target.id].isAdd= false
-                document.getElementById(value.target.id).checked=false;
-                restrictLabel=true;
+            }else{
+                console.log('en 2')
+                id = id.split('-')[1];
+                images.push({
+                    file:this.state.files[id],
+                    url: this.state.filesURL[id],
+                    isAdd:true,
+                });
             }
-            this.setState({imagenes:images, restrictLabel:restrictLabel})
+            this.setState({
+                imagenes:images,
+                restrictLabel:restrictLabel,
+                imgSelect: count,
+                // imagesUpload:imagesUpload,
+            })
         }
         this.handleClickDeleteImage= (e) =>{
+            console.log('borrar ...');
             var name = e.target.name.split('-')
             var imagenesAll = this.state.nuevasImagenes;
             var imagenes = []
@@ -103,6 +132,9 @@ class StoryStudent extends Component{
             }
             this.setState({nuevasImagenes:imagenesAll});
         }
+        this.handleDelete = event =>{
+            console.log('borrar')
+        }
     }
     /*Validaciones cuestionario*/
     validate(){
@@ -118,7 +150,6 @@ class StoryStudent extends Component{
     }
     /*Finalizar cuestionario*/
     handleClickFinish(){
-        // this.validate();
         if(!this.state.errors.error){
             //TODO: Enviar datos
             console.log('enviar datos ....');
@@ -127,22 +158,51 @@ class StoryStudent extends Component{
     }
 	/*Reiniciar cuestionario*/
     handleClickInit(){
-        this.setState({instructions:'',});
+        this.setState({
+            instructions:'',
+            nuevasImagenes:{
+                fondos:[],
+                objetos:[],
+                personajes: []
+            },
+            imagenes:[],
+            imgSelect: 0,
+            imgFaltan:maxImg,
+            restrictLabel:false,
+            files: [],
+            view:true,
+            predefinidas: false,
+        });
     }
     /*Imagenes predefinidas*/
     handleClickImagenes(){
         this.setState({predefinidas:true,});
     }
     handleClickSelecionar(e){
+        this.setState({files:[], filesURL:[]})
         var imagenes=[];
+        var imgFaltan = 0;
+        var imgSelect = 0;
+        /*TODO: Cambiarlo por imagenes que regrese el servicio de galerio*/
         if (e=='fondos'){
             imagenes = this.state.imagenesPredefinidas.fondos;
+            imgFaltan = maxImg - this.state.nuevasImagenes.fondos.length;
+            imgSelect= this.state.nuevasImagenes.fondos.length;
         }else if(e == 'personajes'){
-            imagenes = this.state.imagenesPredefinidas.personajes
+            imagenes = this.state.imagenesPredefinidas.personajes;
+            imgFaltan = maxImg - this.state.nuevasImagenes.personajes.length;
+            imgSelect= this.state.nuevasImagenes.personajes.length;
         }else{
             imagenes = this.state.imagenesPredefinidas.objetos;
+            imgFaltan = maxImg - this.state.nuevasImagenes.objetos.length;
+            imgSelect= this.state.nuevasImagenes.objetos.length;
         }
+        imagenes.map((item, i) =>{
+            imagenes[i].isAdd=false;
+        });
         this.setState({
+            imgSelect: imgSelect,
+            imgFaltan: imgFaltan,
             select:e,
             predefinidas:false,
             imagenes: imagenes,
@@ -150,22 +210,30 @@ class StoryStudent extends Component{
         });
     }
     handleClickSelecionarAccept(e){
+        console.log('Aceptar ... ')
         var imagenes = this.state.imagenes;
         var img =  this.state.nuevasImagenes;
-        if (e=='fondos'){
-            imagenes.map((item, key) =>{
+        console.log('imagenes');
+        console.log(imagenes)
+
+        var count = img.length;
+
+        if (e == 'fondos'){
+            imagenes.map((item) =>{
+                // console.log('item');
+                // console.log(item)
                 if(item.isAdd){
                     img.fondos.push(item);
                 }
             });
         }else if(e == 'personajes'){
-            imagenes.map((item, key) =>{
+            imagenes.map((item) =>{
                 if(item.isAdd){
                     img.personajes.push(item);
                 }
             });
         }else{
-            imagenes.map((item, key) =>{
+            imagenes.map((item) =>{
                 if(item.isAdd){
                     img.objetos.push(item);
                 }
@@ -177,12 +245,34 @@ class StoryStudent extends Component{
     handleClickCancel(){
         this.setState({view: true, restrictLabel:false})
     }
-
+    handleDrop = (files) => {
+        let fileList = this.state.files;
+        var urls = this.state.filesURL;
+        for (var i = 0; i < files.length; i++) {
+            var url = URL.createObjectURL(files[i]);
+            urls.push(url)
+            fileList.push(files[i])
+        }
+        this.setState({files: fileList, filesURL:urls})
+    }
+    handleAddImages= (e) => {
+        let fileList = this.state.files;
+        var urls = this.state.filesURL;
+        var files = document.getElementById(e).files;
+        for (var i = 0; i < files.length; i++) {
+            var url = URL.createObjectURL(files[i]);
+            urls.push(url)
+            fileList.push(files[i])
+        }
+        this.setState({files: fileList, filesURL:urls})
+    }
 
     render(){
+        console.log(this.state);
         var errors =this.state.errors;
         var btnStyleDefault = this.state.btn ? {display:'initial'} : {display:'none'};
         var btnStyleImg = this.state.btn ? {display:'none'} : {display:'initial'};
+        var btnStyleDef = this.state.predefinidas ? {display:'none'} : {display:'initial'};
         var handleChangeInstructions = this.handleChangeInstructions;
         var fondos = [];
         var objetos = [];
@@ -343,8 +433,8 @@ class StoryStudent extends Component{
                             <div className="div-botones">
                                 <div>Fondos </div>
                                 <div>
-                                <button className="btn-default-img" onClick={() => this.handleClickImagenes()}>Imagenes Predefinidas</button>
-                                <button className="btn-add-img" onClick={() => this.handleClickSelecionar('fondos')}>Seleccionar imagen</button>
+                                <button className={this.state.predefinidas ? "btn-default-img": "btn-default-img-inactive"} onClick={() => this.handleClickImagenes()}>Imagenes Predefinidas</button>
+                                <button className={this.state.predefinidas ? "btn-add-img-inactive": "btn-add-img"} onClick={() => this.handleClickSelecionar('fondos')}>Seleccionar imagen</button>
                                 </div>
                              </div>
                             <div className="div-elementos">
@@ -354,7 +444,7 @@ class StoryStudent extends Component{
                         <div className="div-seccion">
                             <div className="div-botones">
                                 <label>Personajes </label>
-                                <button className="btn-add-img" onClick={() => this.handleClickSelecionar('personajes')}>Seleccionar imagen</button>
+                                <button className={this.state.predefinidas ? "btn-add-img-inactive": "btn-add-img"} onClick={() => this.handleClickSelecionar('personajes')}>Seleccionar imagen</button>
                              </div>
                             <div className="div-elementos">
                                 {personajes}
@@ -363,7 +453,7 @@ class StoryStudent extends Component{
                         <div className="div-seccion">
                             <div className="div-botones">
                                 <label>Objetos </label>
-                                <button className="btn-add-img" onClick={() => this.handleClickSelecionar('objetos')}>Seleccionar imagen</button>
+                                <button className={this.state.predefinidas ? "btn-add-img-inactive": "btn-add-img"} onClick={() => this.handleClickSelecionar('objetos')}>Seleccionar imagen</button>
                              </div>
                             <div className="div-elementos">
                                 {objetos}
@@ -377,13 +467,22 @@ class StoryStudent extends Component{
                 </div>
             </div>
         }else{
-            // var btnStyle = this.state.restrictLabel ? {display:'none'} : {display:'initial'};
             var handleAdd = this.handleAdd;
+            var newimagenes = this.state.filesURL.map(
+                function iterator (value, i){
+                    return (
+                        <div className="div-image-upload">
+                            <input type="checkbox" className="radio-naranja" name='imagenes' id={'i-'+i} onClick={handleAdd}/>
+                            <label htmlFor={'i-'+i}></label>
+                            <img className="image-upload" src={value} />
+                        </div>
+                    )
+                }
+            );
             var imagenes = this.state.imagenes.map(
                 function iterator (value, i){
                     return (
                         <div className="div-image-upload">
-
                             <input type="checkbox" className="radio-naranja" name='imagenes' id={i} onClick={handleAdd}/>
                             <label htmlFor={i}></label>
                             <img className="image-upload" src={value.url} />
@@ -396,9 +495,12 @@ class StoryStudent extends Component{
                 function iterator (file, i){
                     return (
                         <div>
+                            <input className="input-file" name="file-input" id="file-input" type="file" />
+                        {/*
                             <div key={i}>{file.name}
-                                <img src='/img/tache.svg' id={'img-'+i} className="img-borrar" onClick={this.handleDelete}/>
+                                 <img src='/img/tache.svg' id={'img-'+i} className="img-borrar" onClick={handleDelete}/>
                             </div>
+                        */}
                         </div>
                     )
                 }
@@ -411,17 +513,22 @@ class StoryStudent extends Component{
                     </div>
                     <div>
                         <div className="subir-imagenes">
-
                             <DragAndDrop handleDrop={this.handleDrop}>
-                              <div>
-                                { imagenesUpload }
-                              </div>
+                                <input
+                                    name="file-input"
+                                    id="file-input"
+                                    type="file"
+                                    multiple="true"
+                                    onChange={() => this.handleAddImages('file-input')}
+                                    accept="image/*"
+                                    />
                             </DragAndDrop>
 
                         </div>
                         <label className="col-12 max-img" style={btnStyle}>{this.state.restrict}</label>
                         <div className="imagenes-div">
-                            {imagenes}
+                            { newimagenes }
+                            { imagenes }
                         </div>
                     </div>
                     <div className='buttons-images'>
