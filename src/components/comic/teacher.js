@@ -45,14 +45,20 @@ class StoryStudent extends Component{
                     { url:'/img/elementos/personajes/S_TweenEvilFlame_01.png', id:'flame'},
                     { url:'/img/elementos/personajes/S_Narrator_01.png', id:'diablito'},
                 ]
-            }
+            },
+            nuevasImagenes:{
+                fondos:[
+                    { url:'/img/elementos/fondos/atardecer.jpg', id:'atardecer'},
+                ],
+                objetos:[
+                    { url:'/img/elementos/objetos/caldero.png', id:'diablito'},
+                ],
+                personajes: [
+                    { url:'/img/elementos/personajes/Diabillo-1.png', id:'diablito'},
+                ]
+            },
         }
         this.handleAdd= value =>{
-            console.log('add')
-            console.log(value)
-            console.log(value.currentTarget)
-            console.log(value.currentTarget.id);
-            console.log(value.target.checked)
             var images = this.state.imagenes;
             images[value.target.id].isAdd= value.target.checked
             var count=0;
@@ -62,13 +68,40 @@ class StoryStudent extends Component{
                     count ++;
                 }
             });
-            if (count > 3){
+            if (count > 10){
                 images[value.target.id].isAdd= false
                 document.getElementById(value.target.id).checked=false;
                 restrictLabel=true;
             }
-            console.log('count '+ count)
             this.setState({imagenes:images, restrictLabel:restrictLabel})
+        }
+        this.handleClickDeleteImage= (e) =>{
+            var name = e.target.name.split('-')
+            var imagenesAll = this.state.nuevasImagenes;
+            var imagenes = []
+            if (name[0]=='fondos'){
+                this.state.nuevasImagenes.fondos.map((item, i) =>{
+                    if(i != name[1]){
+                        imagenes.push(item);
+                    }
+                })
+                imagenesAll.fondos=imagenes
+            }else if(name[0] == 'personajes'){
+                this.state.nuevasImagenes.personajes.map((item, i) =>{
+                    if(i != name[1]){
+                        imagenes.push(item);
+                    }
+                })
+                imagenesAll.personajes=imagenes
+            }else{
+                this.state.nuevasImagenes.objetos.map((item, i) =>{
+                    if(i != name[1]){
+                        imagenes.push(item);
+                    }
+                })
+                imagenesAll.objetos=imagenes
+            }
+            this.setState({nuevasImagenes:imagenesAll});
         }
     }
     /*Validaciones cuestionario*/
@@ -98,12 +131,9 @@ class StoryStudent extends Component{
     }
     /*Imagenes predefinidas*/
     handleClickImagenes(){
-        console.log('imagenes predefinidas...');
         this.setState({predefinidas:true,});
     }
     handleClickSelecionar(e){
-        console.log('Seleccionar imagenes...');
-        console.log(e);
         var imagenes=[];
         if (e=='fondos'){
             imagenes = this.state.imagenesPredefinidas.fondos;
@@ -113,23 +143,43 @@ class StoryStudent extends Component{
             imagenes = this.state.imagenesPredefinidas.objetos;
         }
         this.setState({
+            select:e,
             predefinidas:false,
             imagenes: imagenes,
             view: false,
         });
     }
-    handleCancelUploadImage = (event) => {
-        console.log('handleCancelUploadImage ..........')
-        console.log(event)
+    handleClickSelecionarAccept(e){
+        var imagenes = this.state.imagenes;
+        var img =  this.state.nuevasImagenes;
+        if (e=='fondos'){
+            imagenes.map((item, key) =>{
+                if(item.isAdd){
+                    img.fondos.push(item);
+                }
+            });
+        }else if(e == 'personajes'){
+            imagenes.map((item, key) =>{
+                if(item.isAdd){
+                    img.personajes.push(item);
+                }
+            });
+        }else{
+            imagenes.map((item, key) =>{
+                if(item.isAdd){
+                    img.objetos.push(item);
+                }
+            });
+        }
+        this.setState({view: true,nuevasImagenes:img});
     }
+
     handleClickCancel(){
-        console.log('Cancel')
         this.setState({view: true, restrictLabel:false})
     }
 
+
     render(){
-        console.log('Estado .....');
-        console.log(this.state)
         var errors =this.state.errors;
         var btnStyleDefault = this.state.btn ? {display:'initial'} : {display:'none'};
         var btnStyleImg = this.state.btn ? {display:'none'} : {display:'initial'};
@@ -192,6 +242,73 @@ class StoryStudent extends Component{
                                 <label className="peso-elemento">400 KB</label>
                                 <img src="/img/tag.svg" className="img-tag"/>
                                 <input className="input-tag" / >
+                            </div>
+                            <hr className="separador-elemento"/>
+                        </div>
+                    )
+                }
+            );
+        } else{
+            var handleClickDeleteImage = this.handleClickDeleteImage;
+            fondos = this.state.nuevasImagenes.fondos.map(
+                function iterator (value, i){
+                    return (
+                        <div>
+                            <div className="elemento">
+                                <label className="identificador-elemento">{i+1}</label>
+                                <div className="div-image-elemento">
+                                    <img className="image-elemento" src={value.url} />
+                                </div>
+                                <label className="nombre-elemento">fondo.eldventir1.jpg</label>
+                                <label className="peso-elemento">400 KB</label>
+                                <img src="/img/tag.svg" className="img-tag"/>
+                                <input className="input-tag" / >
+                                <img className="image-elemento-bote" src='/img/bote.svg' name={'fondos-'+i}
+                                    onClick={handleClickDeleteImage}/>
+                            </div>
+                            <hr className="separador-elemento"/>
+                        </div>
+                    )
+                }
+            );
+
+            objetos = this.state.nuevasImagenes.objetos.map(
+                function iterator (value, i){
+                    return (
+                        <div>
+                            <div className="elemento">
+                                <label className="identificador-elemento">{i+1}</label>
+                                <div className="div-image-elemento">
+                                    <img className="image-elemento" src={value.url} />
+                                </div>
+                                <label className="nombre-elemento">fondo.eldventir1.jpg</label>
+                                <label className="peso-elemento">400 KB</label>
+                                <img src="/img/tag.svg" className="img-tag"/>
+                                <input className="input-tag" />
+                                <img className="image-elemento-bote" src='/img/bote.svg' name={'objetos-'+i}
+                                    onClick={handleClickDeleteImage}/>
+                            </div>
+                            <hr className="separador-elemento"/>
+                        </div>
+                    )
+                }
+            );
+
+            personajes = this.state.nuevasImagenes.personajes.map(
+                function iterator (value, i){
+                    return (
+                        <div>
+                            <div className="elemento">
+                                <label className="identificador-elemento">{i+1}</label>
+                                <div className="div-image-elemento">
+                                    <img className="image-elemento" src={value.url} />
+                                </div>
+                                <label className="nombre-elemento">fondo.eldventir1.jpg</label>
+                                <label className="peso-elemento">400 KB</label>
+                                <img src="/img/tag.svg" className="img-tag"/>
+                                <input className="input-tag" / >
+                                <img className="image-elemento-bote" src='/img/bote.svg' name={'personajes-'+i}
+                                    onClick={handleClickDeleteImage}/>
                             </div>
                             <hr className="separador-elemento"/>
                         </div>
@@ -309,7 +426,7 @@ class StoryStudent extends Component{
                     </div>
                     <div className='buttons-images'>
                         <button onClick={() => this.handleClickCancel()} className="button-cancelar">Cancelar</button>
-                        <button onClick={() => this.handleClickSelecionar()} className="button-aceptar">Seleccionar</button>
+                        <button onClick={() => this.handleClickSelecionarAccept(this.state.select)} className="button-aceptar">Seleccionar</button>
                     </div>
                 </div>
         }
