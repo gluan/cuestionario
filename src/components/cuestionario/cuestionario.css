@@ -54,7 +54,7 @@
 	/* background-color: #f0ce9fbd; */
 	background: url('/img/scroll.svg');
 	background-repeat: no-repeat;
-	background-size: cover;
+	background-size: contain;
 }
 
 /*Estilos Teacher*/

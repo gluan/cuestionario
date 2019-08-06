@@ -14,7 +14,7 @@ class StoryStudent extends Component{
         /*this state*/
         this.state = {
             imgSelect: 0,
-            imgFaltan:maxImg,
+            // imgFaltan:maxImg,
             restrictLabel:false,
             files: [],
             filesURL: [],
@@ -62,49 +62,58 @@ class StoryStudent extends Component{
         this.handleAdd= value =>{
             console.log('----- handle add -----')
             var images = this.state.imagenes;
-            // var imagesUpload=this.state.imagesUpload;
+            var imagesUpload=this.state.imagesUpload;
             var id = value.target.id;
-            console.log('tamaño  ' + this.state.imagenes.length);
-            console.log('id  ' + id);
-            var x = id.split('-');
-            console.log(x)
+            var count = this.state.imgSelect;
+            console.log('imagenes actuales '+ count)
 
+            console.log(id)
             if(id.split('-').length == 1){
-                console.log('en 1')
                 id = id.split('-')[0];
                 images[id].isAdd= value.target.checked;
-                var count=this.state.imgSelect;
-                console.log('imagenes select '+ this.state.imgSelect)
                 var restrictLabel=false;
-                images.map((item, key) =>{
-                    if(item.isAdd){
-                        count ++;
-                    }
-                });
+                // images.map((item, key) =>{
+                //     if(item.isAdd){
+                //         count ++;
+                //     }
+                // });
+                count++ ;
                 if (count > maxImg){
                     count=maxImg
-                    images[value.target.id].isAdd= false
+                    images[id].isAdd= false
                     document.getElementById(value.target.id).checked=false;
                     restrictLabel=true;
                 }
             }else{
-                console.log('en 2')
                 id = id.split('-')[1];
-                images.push({
-                    file:this.state.files[id],
-                    url: this.state.filesURL[id],
-                    isAdd:true,
-                });
+                count ++;
+                if (count > maxImg){
+                    count=maxImg
+                    document.getElementById(value.target.id).checked=false;
+                    restrictLabel=true;
+                }else{
+                    var i = images.Upload.map((item, i) =>{
+                        return item.url == this.state.filesURL[id] ? i : -1;
+                    })
+                    imagesUpload.push({
+                        file:this.state.files[id],
+                        url: this.state.filesURL[id],
+                        isAdd:true,
+                    });
+                }
             }
+            console.log('imagenes actuales despues'+ count)
+
+            console.log('imagenes actuales despues ... '+ count)
+
             this.setState({
                 imagenes:images,
                 restrictLabel:restrictLabel,
                 imgSelect: count,
-                // imagesUpload:imagesUpload,
+                imagesUpload:imagesUpload,
             })
         }
         this.handleClickDeleteImage= (e) =>{
-            console.log('borrar ...');
             var name = e.target.name.split('-')
             var imagenesAll = this.state.nuevasImagenes;
             var imagenes = []
@@ -165,9 +174,10 @@ class StoryStudent extends Component{
                 objetos:[],
                 personajes: []
             },
+            imagesUpload:[],
             imagenes:[],
             imgSelect: 0,
-            imgFaltan:maxImg,
+            // imgFaltan:maxImg,
             restrictLabel:false,
             files: [],
             view:true,
@@ -179,22 +189,22 @@ class StoryStudent extends Component{
         this.setState({predefinidas:true,});
     }
     handleClickSelecionar(e){
-        this.setState({files:[], filesURL:[]})
+        this.setState({files:[], filesURL:[], imagesUpload:[]})
         var imagenes=[];
-        var imgFaltan = 0;
+        // var imgFaltan = 0;
         var imgSelect = 0;
         /*TODO: Cambiarlo por imagenes que regrese el servicio de galerio*/
         if (e=='fondos'){
             imagenes = this.state.imagenesPredefinidas.fondos;
-            imgFaltan = maxImg - this.state.nuevasImagenes.fondos.length;
+            // imgFaltan = maxImg - this.state.nuevasImagenes.fondos.length;
             imgSelect= this.state.nuevasImagenes.fondos.length;
         }else if(e == 'personajes'){
             imagenes = this.state.imagenesPredefinidas.personajes;
-            imgFaltan = maxImg - this.state.nuevasImagenes.personajes.length;
+            // imgFaltan = maxImg - this.state.nuevasImagenes.personajes.length;
             imgSelect= this.state.nuevasImagenes.personajes.length;
         }else{
             imagenes = this.state.imagenesPredefinidas.objetos;
-            imgFaltan = maxImg - this.state.nuevasImagenes.objetos.length;
+            // imgFaltan = maxImg - this.state.nuevasImagenes.objetos.length;
             imgSelect= this.state.nuevasImagenes.objetos.length;
         }
         imagenes.map((item, i) =>{
@@ -202,7 +212,7 @@ class StoryStudent extends Component{
         });
         this.setState({
             imgSelect: imgSelect,
-            imgFaltan: imgFaltan,
+            // imgFaltan: imgFaltan,
             select:e,
             predefinidas:false,
             imagenes: imagenes,
@@ -220,8 +230,11 @@ class StoryStudent extends Component{
 
         if (e == 'fondos'){
             imagenes.map((item) =>{
-                // console.log('item');
-                // console.log(item)
+                if(item.isAdd){
+                    img.fondos.push(item);
+                }
+            });
+            this.state.imagesUpload.map((item) =>{
                 if(item.isAdd){
                     img.fondos.push(item);
                 }
@@ -232,8 +245,18 @@ class StoryStudent extends Component{
                     img.personajes.push(item);
                 }
             });
+            this.state.imagesUpload.map((item) =>{
+                if(item.isAdd){
+                    img.personajes.push(item);
+                }
+            });
         }else{
             imagenes.map((item) =>{
+                if(item.isAdd){
+                    img.objetos.push(item);
+                }
+            });
+            this.state.imagesUpload.map((item) =>{
                 if(item.isAdd){
                     img.objetos.push(item);
                 }
