@@ -37,7 +37,24 @@ class StoryStudent extends Component{
                 { url:'/img/elementos/personajes/S_CharmingCharacterSchoo_01.png', id:'arlina', status:false, tag:'feliz'},
                 { url:'/img/elementos/personajes/S_Arlinaangry_01.png', id:'flame', status:false, tag:'enojado'}
             ],
-            textos:[],
+            textos:[
+                { url:'/img/elementos/globos/text.png', id:'diablito', status:false, tag:'enojado'},
+                { url:'/img/elementos/globos/2.png', id:'diablito', status:false, tag:'enojado'},
+                { url:'/img/elementos/globos/3.png', id:'diablito', status:false, tag:'enojado'},
+                { url:'/img/elementos/globos/4.png', id:'diablito', status:false, tag:'enojado'},
+                { url:'/img/elementos/globos/5.png', id:'diablito', status:false, tag:'enojado'},
+                { url:'/img/elementos/globos/6.png', id:'diablito', status:false, tag:'enojado'},
+                { url:'/img/elementos/globos/7.png', id:'diablito', status:false, tag:'enojado'},
+                { url:'/img/elementos/globos/8.png', id:'diablito', status:false, tag:'enojado'},
+                { url:'/img/elementos/globos/9.png', id:'diablito', status:false, tag:'enojado'},
+                { url:'/img/elementos/globos/10.png', id:'diablito', status:false, tag:'enojado'},
+                { url:'/img/elementos/globos/11.png', id:'diablito', status:false, tag:'enojado'},
+                { url:'/img/elementos/globos/12.png', id:'diablito', status:false, tag:'enojado'},
+                { url:'/img/elementos/globos/13.png', id:'diablito', status:false, tag:'enojado'},
+                { url:'/img/elementos/globos/14.png', id:'diablito', status:false, tag:'enojado'},
+                { url:'/img/elementos/globos/15.png', id:'diablito', status:false, tag:'enojado'},
+
+            ],
             objetos:[
                 { url:'/img/elementos/objetos/caldero.png', id:'diablito', status:false, tag:'enojado'},
                 { url:'/img/elementos/objetos/cofre.png', id: 'alberick', status:false, tag:'sorpresa'},
@@ -187,8 +204,9 @@ class StoryStudent extends Component{
                     });
                 /*Si es un elemento*/
                 }else{
-                    image.on("click", function(e) {
+                    image.draggable(true);
 
+                    image.on("click", function(e) {
                         var transform = layer.getChildren(function(node){
                            return node.getClassName() === 'Transformer';
                         });
@@ -197,15 +215,26 @@ class StoryStudent extends Component{
                            return node.getAttr('del') === 'true';
                         });
                         del.destroy();
-
-
                         var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
+                        // var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
+
                         Konva.Image.fromURL(newURL, function(imageDel) {
                             var tr1 = new Konva.Transformer({
                                 node: image,
                                 keepRatio: true,
                             });
                             if(image.draggable()){
+
+                                var textNode = new Konva.Text({
+                                    text: 'Some text here',
+                                    x: 50,
+                                    y: 80,
+                                    fontSize: 20,
+                                    draggable: false,
+                                    width: 200
+                                });
+                                image.add(textNode);
+
                                 layer.add(tr1);
                                 tr1.add(imageDel);
                                 tr1.on('transform', () => {
@@ -232,14 +261,11 @@ class StoryStudent extends Component{
                                     image.destroy();
                                     layer.draw();
                                 });
-
                                 layer.draw();
                             }
                         });
                         layer.draw();
-
                     });
-                    // image.setAttr('position', stage.getPointerPosition());
                     image.position(stage.getPointerPosition());
                     image.draggable(true);
                     image.size({
