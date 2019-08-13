@@ -10,6 +10,7 @@ class StoryStudent extends Component{
     constructor(props){
         super(props);
         this.state={
+            herramientas:true,
             btn:true,
             elements:false,
             fondos:[
@@ -104,7 +105,7 @@ class StoryStudent extends Component{
 	  window.removeEventListener('resize', this.resize)
 	};
     componentDidMount(){
-         window.addEventListener('resize', this.resize);
+        window.addEventListener('resize', this.resize);
         this.state.width = document.getElementById('container-story').offsetWidth - 5;
         this.state.height = document.getElementById('container-story').offsetHeight - 5;
 
@@ -115,6 +116,7 @@ class StoryStudent extends Component{
         });
 
         var layer = new Konva.Layer();
+
 
         this.state.stage.add(layer);
 
@@ -186,6 +188,7 @@ class StoryStudent extends Component{
                 /*Si es un elemento*/
                 }else{
                     image.on("click", function(e) {
+
                         var transform = layer.getChildren(function(node){
                            return node.getClassName() === 'Transformer';
                         });
@@ -194,42 +197,47 @@ class StoryStudent extends Component{
                            return node.getAttr('del') === 'true';
                         });
                         del.destroy();
+
+
                         var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
                         Konva.Image.fromURL(newURL, function(imageDel) {
                             var tr1 = new Konva.Transformer({
                                 node: image,
                                 keepRatio: true,
                             });
-                            layer.add(tr1);
-                            tr1.add(imageDel);
-                            tr1.on('transform', () => {
-                              imageDel.x(10);
-                            })
-                            imageDel.draggable(false);
-                            imageDel.size({
-                                width: 25,
-                                height: 25
-                            });
-                            imageDel.setAttr('del', 'true');
+                            if(image.draggable()){
+                                layer.add(tr1);
+                                tr1.add(imageDel);
+                                tr1.on('transform', () => {
+                                  imageDel.x(10);
+                                })
+                                imageDel.draggable(false);
+                                imageDel.size({
+                                    width: 25,
+                                    height: 25
+                                });
+                                imageDel.setAttr('del', 'true');
 
-                            imageDel.position({x: 0, y: -25})
-                            imageDel.on("click", function(e) {
-                                var transform = layer.getChildren(function(node){
-                                   return node.getClassName() === 'Transformer';
+                                imageDel.position({x: 0, y: -25})
+                                imageDel.on("click", function(e) {
+                                    var transform = layer.getChildren(function(node){
+                                       return node.getClassName() === 'Transformer';
+                                    });
+                                    transform.destroy();
+                                    var del = layer.getChildren(function(node){
+                                       return node.getAttr('del') === 'true';
+                                    });
+                                    del.destroy();
+                                    imageDel.destroy();
+                                    image.destroy();
+                                    layer.draw();
                                 });
-                                transform.destroy();
-                                var del = layer.getChildren(function(node){
-                                   return node.getAttr('del') === 'true';
-                                });
-                                del.destroy();
-                                imageDel.destroy();
-                                image.destroy();
+
                                 layer.draw();
-                            });
-
-                            layer.draw();
+                            }
                         });
                         layer.draw();
+
                     });
                     // image.setAttr('position', stage.getPointerPosition());
                     image.position(stage.getPointerPosition());
@@ -249,8 +257,22 @@ class StoryStudent extends Component{
         this.setState({ element:event.target.id });
     }
     handleClickTerminar(value){
-        console.log('terminar');
-        this.setState({btn:false});
+        console.log('terminar')
+        console.log(this.state)
+        let stage = this.state.stage;
+        stage.draggable(false);
+        let layer = stage.getChildren(function(node){ //layer
+            node.draggable(false);
+            node.getChildren(function(node1){
+                node1.draggable(false);
+            });
+        });
+        var transform = layer.getChildren(function(node){
+           return node.getClassName() === 'Transformer';
+        });
+        transform.destroy();
+        // layer.stopDrag();
+        this.setState({btn:false, herramientas:false, stage:stage});
         this.handleDelete();
         /*TODO: Falta dar formato a respuestA*/
     };
@@ -341,6 +363,7 @@ class StoryStudent extends Component{
                 <div className="row col-12 story-content">
                     <button
                         className="menu btn-menu"
+                        disabled={!this.state.herramientas}
                         type="button"
                         onClick={this.handleClick}>
                     </button>
