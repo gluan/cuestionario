@@ -60,52 +60,53 @@ class StoryStudent extends Component{
             imagenes:[],
         }
         this.handleAdd= value =>{
-            console.log('----- handle add -----')
             var images = this.state.imagenes;
             var imagesUpload=this.state.imagesUpload;
             var id = value.target.id;
             var count = this.state.imgSelect;
-            console.log('imagenes actuales '+ count)
 
-            console.log(id)
             if(id.split('-').length == 1){
                 id = id.split('-')[0];
                 images[id].isAdd= value.target.checked;
                 var restrictLabel=false;
-                // images.map((item, key) =>{
-                //     if(item.isAdd){
-                //         count ++;
-                //     }
-                // });
-                count++ ;
+                if (value.target.checked)
+                    count++;
+                else{
+                    count--;
+                }
+
                 if (count > maxImg){
                     count=maxImg
                     images[id].isAdd= false
                     document.getElementById(value.target.id).checked=false;
                     restrictLabel=true;
                 }
+
             }else{
                 id = id.split('-')[1];
-                count ++;
-                if (count > maxImg){
-                    count=maxImg
-                    document.getElementById(value.target.id).checked=false;
-                    restrictLabel=true;
+                // if (value.target.checked)
+                if (value.target.checked){
+                    count++;
+                    if (count > maxImg){
+                        count  =maxImg
+                        document.getElementById(value.target.id).checked=false;
+                        restrictLabel=true;
+                    }else{
+                        imagesUpload.push({
+                            file:this.state.files[id],
+                            url: this.state.filesURL[id],
+                            isAdd:true,
+                        });
+                    }
                 }else{
-                    var i = images.Upload.map((item, i) =>{
-                        return item.url == this.state.filesURL[id] ? i : -1;
-                    })
-                    imagesUpload.push({
-                        file:this.state.files[id],
-                        url: this.state.filesURL[id],
-                        isAdd:true,
+                    count--;
+                    imagesUpload.map((item) => {
+                        if (item.file == this.state.files[id]){
+                            item.isAdd = false;
+                        }
                     });
                 }
             }
-            console.log('imagenes actuales despues'+ count)
-
-            console.log('imagenes actuales despues ... '+ count)
-
             this.setState({
                 imagenes:images,
                 restrictLabel:restrictLabel,
@@ -186,7 +187,14 @@ class StoryStudent extends Component{
     }
     /*Imagenes predefinidas*/
     handleClickImagenes(){
-        this.setState({predefinidas:true,});
+        this.setState({
+            predefinidas:true,
+            nuevasImagenes:{
+                fondos:[],
+                objetos:[],
+                personajes: []
+            },
+        });
     }
     handleClickSelecionar(e){
         this.setState({files:[], filesURL:[], imagesUpload:[]})
@@ -220,14 +228,8 @@ class StoryStudent extends Component{
         });
     }
     handleClickSelecionarAccept(e){
-        console.log('Aceptar ... ')
         var imagenes = this.state.imagenes;
         var img =  this.state.nuevasImagenes;
-        console.log('imagenes');
-        console.log(imagenes)
-
-        var count = img.length;
-
         if (e == 'fondos'){
             imagenes.map((item) =>{
                 if(item.isAdd){
@@ -291,7 +293,11 @@ class StoryStudent extends Component{
     }
 
     render(){
+        console.log('Render ...................')
         console.log(this.state);
+        console.log('count ' + this.state.nuevasImagenes.fondos.length)
+        console.log('maxImg ' + maxImg)
+        console.log(this.state.nuevasImagenes.fondos.length < maxImg)
         var errors =this.state.errors;
         var btnStyleDefault = this.state.btn ? {display:'initial'} : {display:'none'};
         var btnStyleImg = this.state.btn ? {display:'none'} : {display:'initial'};
@@ -457,7 +463,12 @@ class StoryStudent extends Component{
                                 <div>Fondos </div>
                                 <div>
                                 <button className={this.state.predefinidas ? "btn-default-img": "btn-default-img-inactive"} onClick={() => this.handleClickImagenes()}>Imagenes Predefinidas</button>
-                                <button className={this.state.predefinidas ? "btn-add-img-inactive": "btn-add-img"} onClick={() => this.handleClickSelecionar('fondos')}>Seleccionar imagen</button>
+                                <button
+                                    className={this.state.predefinidas || !(this.state.nuevasImagenes.fondos.length < maxImg) ? "btn-add-img-inactive": "btn-add-img"}
+                                    onClick={() => this.handleClickSelecionar('fondos')}
+                                    disabled = {this.state.nuevasImagenes.fondos.length >= maxImg}
+                                    >Seleccionar imagen
+                                </button>
                                 </div>
                              </div>
                             <div className="div-elementos">
@@ -495,9 +506,13 @@ class StoryStudent extends Component{
                 function iterator (value, i){
                     return (
                         <div className="div-image-upload">
+                            <div className="image-upload" style={{backgroundImage: "url(" + value + ")"}}>
                             <input type="checkbox" className="radio-naranja" name='imagenes' id={'i-'+i} onClick={handleAdd}/>
-                            <label htmlFor={'i-'+i}></label>
-                            <img className="image-upload" src={value} />
+                            <label htmlFor={'i-'+i}>
+                            {// <img className="image-upload" src={value} />
+                        }
+                            </label>
+                            </div>
                         </div>
                     )
                 }
