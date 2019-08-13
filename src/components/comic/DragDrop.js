@@ -62,7 +62,7 @@ class DragAndDrop extends Component {
   render() {
     return (
       <div name="0"
-        style={{display: 'inline-block', position: 'relative'}}
+        style={{display: 'table-cell', position: 'relative', verticalAlign: 'middle'}}
         ref={this.dropRef}
       >
         {this.state.dragging &&

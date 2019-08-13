@@ -93,7 +93,6 @@
 	position: absolute;
 	right: 5%;
 	top: 40px;
-	/* background-color:red; */
 	background: url(/img/fondo-elementos.svg);
 	background-attachment: fixed;
 	background-repeat: no-repeat;
@@ -325,6 +324,7 @@
 	border-radius: 25px;
 	border: none;
 	margin: 10px 15px;
+	padding-left: 25px;
 }
 .input-tag:focus{
 	outline: none;
@@ -429,15 +429,17 @@
 .image-upload{
 	width: 100%;
 	height: auto;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
 }
 .div-image-upload{
 	border-style: outset;
     justify-content: flex-end;
     display: inline-flex;
-    width: 21%;
+    width: 23%;
     height: 200px;
-    margin: 15px;
-    /* padding: 10px; */
+    margin: 1%;
 }
 .radio-naranja + label {
 	z-index: 100;
@@ -467,8 +469,11 @@
 	display: flex;
     justify-content: start;
     flex-wrap: wrap;
-    margin-left: 5%;
-	height: 470px;
+	height: 435px;
+    margin-top: 10px;
+}
+.imagenes-div-dos{
+	width: 96%;
 }
 /*Scroll galeria*/
 .imagenes-div::-webkit-scrollbar {
@@ -485,9 +490,13 @@
 .subir-imagenes{
 	overflow: auto;
 	height: 150px;
-	border: dashed 1px red;
+	border: dashed 1px #6c757d;
 	justify-content: center;
-	display: flex;
+	display: table;
+	text-align: center;
+	width: 94%;
+	font-size: .8rem;
+	margin: 1%;
 }
 .img-borrar{
 	width: 10px;
@@ -501,16 +510,20 @@
 	color: #F06522;
 }
 .input-file{
-	margin: 57px 0px;
+    padding: 15px 20px;
+	border:none;
+	background-color: #F06522;
+	color: #ffffff;
 }
-@media (max-width: 1024px) {
+input[type="file"] {
+    display: none;
+}
+@media (max-width: 900px) {
 	.div-image-upload {
-	    border-style: outset;
-	    justify-content: flex-end;
-	    display: inline-flex;
-		width: 27%;
-		height: 165px;
-	    margin: 15px;
-	    /* padding: 10px; */
+		width: 31.33%;
 	}
+}
+/*Error*/
+.error-story{
+	border: 1px  solid #F06522;
 }

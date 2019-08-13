@@ -14,7 +14,6 @@ class StoryStudent extends Component{
         /*this state*/
         this.state = {
             imgSelect: 0,
-            // imgFaltan:maxImg,
             restrictLabel:false,
             files: [],
             filesURL: [],
@@ -24,9 +23,42 @@ class StoryStudent extends Component{
             restrict:'El máximo de elementos que puedes agregar por sección son 10.',
             generalInstructions:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore'+
             ' magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            errors:{},
+            errors:{
+                instructions:null,
+                fondos:null,
+                personajes: null,
+                objetos:null,
+                fondosTag:[],
+                personajesTag: [],
+                objetosTag:[]
+            },
             instructions:'',
             /*Cambiarlo por imagenes que regrese el servicio de imagenes predefinidas*/
+            imagenesPredefinidas2:{
+                fondos:[
+                    { url:'/img/elementos/fondos/atardecer.jpg', id:'atardecer'},
+                    { url:'/img/elementos/fondos/cabaña.jpg', id: 'cabaña'},
+                    { url:'/img/elementos/fondos/castillo-dia.jpg', id:'castillo-dia'},
+                    { url:'/img/elementos/fondos/castillo-interior.jpg', id:'castillo-interior'},
+                    { url:'/img/elementos/fondos/castillo-noche.jpg', id:'castillo-noche'}
+                ],
+                objetos:[
+                    { url:'/img/elementos/objetos/caldero.png', id:'diablito'},
+                    { url:'/img/elementos/objetos/cofre.png', id: 'alberick'},
+                    { url:'/img/elementos/objetos/escoba.png', id:'argus'},
+                    { url:'/img/elementos/objetos/Escudo Corazon.png', id:'arlina'},
+                    { url:'/img/elementos/objetos/Escudo Morado Amarillo.png', id:'flame'},
+                    { url:'/img/elementos/objetos/letrero.png', id:'diablito', },
+                ],
+                personajes: [
+                    { url:'/img/elementos/personajes/Diabillo-1.png', id:'diablito'},
+                    { url:'/img/elementos/personajes/S_AlberickSorprised_01.png', id: 'alberick'},
+                    { url:'/img/elementos/personajes/S_argus-diciendo-yo.png', id:'argus'},
+                    { url:'/img/elementos/personajes/S_Arlinaleyendo.png', id:'arlina'},
+                    { url:'/img/elementos/personajes/S_TweenEvilFlame_01.png', id:'flame'},
+                    { url:'/img/elementos/personajes/S_Narrator_01.png', id:'diablito'},
+                ]
+            },
             imagenesPredefinidas:{
                 fondos:[
                     { url:'/img/elementos/fondos/atardecer.jpg', id:'atardecer'},
@@ -62,49 +94,106 @@ class StoryStudent extends Component{
         this.handleAdd= value =>{
             var images = this.state.imagenes;
             var imagesUpload=this.state.imagesUpload;
-            var id = value.target.id;
             var count = this.state.imgSelect;
 
-            if(id.split('-').length == 1){
-                id = id.split('-')[0];
-                images[id].isAdd= value.target.checked;
-                var restrictLabel=false;
-                if (value.target.checked)
-                    count++;
-                else{
-                    count--;
-                }
+            /* Click en imagen */
+            if (value.currentTarget.dataset.inputid){
+                let idAll = value.currentTarget.dataset.inputid;
+                var id = value.currentTarget.dataset.inputid;
 
-                if (count > maxImg){
-                    count=maxImg
-                    images[id].isAdd= false
-                    document.getElementById(value.target.id).checked=false;
-                    restrictLabel=true;
-                }
+                if(id.split('-').length == 1){
+                    id = id.split('-')[0];
+                    var restrictLabel=false;
+                    images[id].isAdd= !images[id].isAdd;
 
-            }else{
-                id = id.split('-')[1];
-                // if (value.target.checked)
-                if (value.target.checked){
-                    count++;
-                    if (count > maxImg){
-                        count  =maxImg
-                        document.getElementById(value.target.id).checked=false;
-                        restrictLabel=true;
+                    if (images[id].isAdd){
+                        count++;
+                        document.getElementById(idAll).checked=true;
                     }else{
-                        imagesUpload.push({
-                            file:this.state.files[id],
-                            url: this.state.filesURL[id],
-                            isAdd:true,
+                        count--;
+                        document.getElementById(idAll).checked=false;
+                    }
+
+                    if (count > maxImg){
+                        count=maxImg
+                        images[id].isAdd= false
+                        document.getElementById(idAll).checked=false;
+                        restrictLabel=true;
+                    }
+
+                }else{
+                    id = id.split('-')[1];
+                    let checked = document.getElementById(idAll).checked;
+                    if (!checked){
+                        count++;
+                        if (count > maxImg){
+                            count  =maxImg
+                            document.getElementById(idAll).checked=false;
+                            restrictLabel=true;
+                        }else{
+                            document.getElementById(idAll).checked=true;
+                            imagesUpload.push({
+                                file:this.state.files[id],
+                                url: this.state.filesURL[id],
+                                isAdd:true,
+                            });
+                        }
+                    }else{
+                        count--;
+                        document.getElementById(idAll).checked=false;
+                        imagesUpload.map((item) => {
+                            if (item.file == this.state.files[id]){
+                                item.isAdd = false;
+                            }
                         });
                     }
+                }
+
+
+            /* Click en radio */
+            }else {
+                var id = value.target.id;
+
+                if(id.split('-').length == 1){
+                    id = id.split('-')[0];
+                    images[id].isAdd= value.target.checked;
+                    var restrictLabel=false;
+                    if (value.target.checked)
+                        count++;
+                    else{
+                        count--;
+                    }
+
+                    if (count > maxImg){
+                        count=maxImg
+                        images[id].isAdd= false
+                        document.getElementById(value.target.id).checked=false;
+                        restrictLabel=true;
+                    }
+
                 }else{
-                    count--;
-                    imagesUpload.map((item) => {
-                        if (item.file == this.state.files[id]){
-                            item.isAdd = false;
+                    id = id.split('-')[1];
+                    if (value.target.checked){
+                        count++;
+                        if (count > maxImg){
+                            count  =maxImg
+                            document.getElementById(value.target.id).checked=false;
+                            restrictLabel=true;
+                        }else{
+                            imagesUpload.push({
+                                file:this.state.files[id],
+                                url: this.state.filesURL[id],
+                                isAdd:true,
+                            });
                         }
-                    });
+                    }else{
+                        count--;
+                        imagesUpload.map((item) => {
+                            if (item.file == this.state.files[id]){
+                                item.isAdd = false;
+                            }
+                        });
+                    }
                 }
             }
             this.setState({
@@ -113,6 +202,29 @@ class StoryStudent extends Component{
                 imgSelect: count,
                 imagesUpload:imagesUpload,
             })
+        }
+        this.handleEditTag = (e) => {
+            let id = e.currentTarget.id.split('-');
+            let imagenes = [];
+            if(id[0] == 'pre'){
+                imagenes= this.state.imagenesPredefinidas2;
+                if(id[1] == 'fondos')
+                    imagenes.fondos[id[2]].tag = e.currentTarget.value;
+                if(id[1] == 'personajes')
+                    imagenes.personajes[id[2]].tag = e.currentTarget.value;
+                if(id[1] == 'objetos')
+                    imagenes.objetos[id[2]].tag = e.currentTarget.value;
+                this.setState({imagenesPredefinidas2: imagenes})
+            }else{
+                imagenes= this.state.nuevasImagenes;
+                if(id[1] == 'fondos')
+                    imagenes.fondos[id[2]].tag = e.currentTarget.value;
+                if(id[1] == 'personajes')
+                    imagenes.personajes[id[2]].tag = e.currentTarget.value;
+                if(id[1] == 'objetos')
+                    imagenes.objetos[id[2]].tag = e.currentTarget.value;
+                this.setState({nuevasImagenes: imagenes})
+            }
         }
         this.handleClickDeleteImage= (e) =>{
             var name = e.target.name.split('-')
@@ -148,23 +260,115 @@ class StoryStudent extends Component{
     }
     /*Validaciones cuestionario*/
     validate(){
-        var errors= {questions:[]};
-        errors.error=false;
-        if (this.state.instructions == null || this.state.instructions == '' || this.state.instructions == ''){
-            errors.instructions = 'text-teacher-story error';
+        var errors= {
+            error:false,
+            fondosTag:[],
+            personajesTag: [],
+            objetosTag:[]
+        };
+        if (this.state.instructions == null || this.state.instructions == '' || this.state.instructions == ' '){
+            errors.instructions = 'text-teacher-story error-story';
             errors.error=true;
         }else {
-            errors.instructions = 'text-teacher-story';
+            errors.instructions = null;
+        }
+        if (this.state.predefinidas){
+            if (this.state.imagenesPredefinidas.fondos.length == 0){
+                errors.fondos = 'div-elementos error-story';
+                errors.error=true;
+            }else {
+                errors.fondos = null;
+                this.state.imagenesPredefinidas.fondos.map((item, i) =>{
+                    if(!item.tag){
+                        errors.error=true;
+                        errors.fondosTag.push('input-tag error-story');
+                    }else{
+                        errors.fondosTag.push(null);
+                    }
+                })
+            }
+            if (this.state.imagenesPredefinidas.personajes.length == 0){
+                errors.personajes = 'div-elementos error-story';
+                errors.error=true;
+            }else {
+                errors.personajes = null;
+                this.state.imagenesPredefinidas.personajes.map((item, i) =>{
+                    if(!item.tag){
+                        errors.error=true;
+                        errors.personajesTag.push('input-tag error-story');
+                    }else{
+                        errors.personajesTag.push(null);
+                    }
+                })
+            }
+            if (this.state.imagenesPredefinidas.objetos.length == 0){
+                errors.objetos = 'div-elementos error-story';
+                errors.error=true;
+            }else {
+                errors.objetos = null;
+                this.state.imagenesPredefinidas.objetos.map((item, i) =>{
+                    if(!item.tag){
+                        errors.error=true;
+                        errors.objetosTag.push('input-tag error-story');
+                    }else{
+                        errors.objetosTag.push(null);
+                    }
+                })
+            }
+        }else{
+            if (this.state.nuevasImagenes.fondos.length == 0){
+                errors.fondos = 'div-elementos error-story';
+                errors.error=true;
+            }else {
+                errors.fondos = null;
+                this.state.nuevasImagenes.fondos.map((item, i) =>{
+                    if(!item.tag){
+                        errors.error=true;
+                        errors.fondosTag.push('input-tag error-story');
+                    }else{
+                        errors.fondosTag.push(null);
+                    }
+                })
+            }
+            if (this.state.nuevasImagenes.personajes.length == 0){
+                errors.personajes = 'div-elementos error-story';
+                errors.error=true;
+            }else {
+                errors.personajes = null;
+                this.state.nuevasImagenes.personajes.map((item, i) =>{
+                    if(!item.tag){
+                        errors.error=true;
+                        errors.personajesTag.push('input-tag error-story');
+                    }else{
+                        errors.personajesTag.push(null);
+                    }
+                })
+            }
+            if (this.state.nuevasImagenes.objetos.length == 0){
+                errors.objetos = 'div-elementos error-story';
+                errors.error=true;
+            }else {
+                errors.objetos = null;
+                this.state.nuevasImagenes.objetos.map((item, i) =>{
+                    if(!item.tag){
+                        errors.error=true;
+                        errors.objetosTag.push('input-tag error-story');
+                    }else{
+                        errors.objetosTag.push(null);
+                    }
+                })
+            }
         }
         this.setState({errors:errors});
     }
     /*Finalizar cuestionario*/
     handleClickFinish(){
-        if(!this.state.errors.error){
-            //TODO: Enviar datos
-            console.log('enviar datos ....');
+            this.validate();
             console.log(this.state);
-        }
+            if(this.state.errors.error)
+                console.log('enviar datos ....');
+            else
+                console.log('error ....');
     }
 	/*Reiniciar cuestionario*/
     handleClickInit(){
@@ -178,11 +382,20 @@ class StoryStudent extends Component{
             imagesUpload:[],
             imagenes:[],
             imgSelect: 0,
-            // imgFaltan:maxImg,
             restrictLabel:false,
             files: [],
             view:true,
             predefinidas: false,
+            errors:{
+                error:false,
+                instructions:null,
+                fondos:null,
+                personajes: null,
+                objetos:null,
+                fondosTag:[],
+                personajesTag: [],
+                objetosTag:[]
+            },
         });
     }
     /*Imagenes predefinidas*/
@@ -197,22 +410,21 @@ class StoryStudent extends Component{
         });
     }
     handleClickSelecionar(e){
-        this.setState({files:[], filesURL:[], imagesUpload:[]})
+        this.setState({
+            files:[], filesURL:[], imagesUpload:[],
+            imagenesPredefinidas2: Object.assign({}, this.state.imagenesPredefinidas)
+        })
         var imagenes=[];
-        // var imgFaltan = 0;
         var imgSelect = 0;
         /*TODO: Cambiarlo por imagenes que regrese el servicio de galerio*/
         if (e=='fondos'){
             imagenes = this.state.imagenesPredefinidas.fondos;
-            // imgFaltan = maxImg - this.state.nuevasImagenes.fondos.length;
             imgSelect= this.state.nuevasImagenes.fondos.length;
         }else if(e == 'personajes'){
             imagenes = this.state.imagenesPredefinidas.personajes;
-            // imgFaltan = maxImg - this.state.nuevasImagenes.personajes.length;
             imgSelect= this.state.nuevasImagenes.personajes.length;
         }else{
             imagenes = this.state.imagenesPredefinidas.objetos;
-            // imgFaltan = maxImg - this.state.nuevasImagenes.objetos.length;
             imgSelect= this.state.nuevasImagenes.objetos.length;
         }
         imagenes.map((item, i) =>{
@@ -220,7 +432,6 @@ class StoryStudent extends Component{
         });
         this.setState({
             imgSelect: imgSelect,
-            // imgFaltan: imgFaltan,
             select:e,
             predefinidas:false,
             imagenes: imagenes,
@@ -265,6 +476,7 @@ class StoryStudent extends Component{
             });
         }
         this.setState({view: true,nuevasImagenes:img});
+        // this.validate();
     }
 
     handleClickCancel(){
@@ -295,14 +507,13 @@ class StoryStudent extends Component{
     render(){
         console.log('Render ...................')
         console.log(this.state);
-        console.log('count ' + this.state.nuevasImagenes.fondos.length)
-        console.log('maxImg ' + maxImg)
-        console.log(this.state.nuevasImagenes.fondos.length < maxImg)
         var errors =this.state.errors;
         var btnStyleDefault = this.state.btn ? {display:'initial'} : {display:'none'};
         var btnStyleImg = this.state.btn ? {display:'none'} : {display:'initial'};
         var btnStyleDef = this.state.predefinidas ? {display:'none'} : {display:'initial'};
         var handleChangeInstructions = this.handleChangeInstructions;
+        var handleEditTag = this.handleEditTag;
+        var errors = this.state.errors;
         var fondos = [];
         var objetos = [];
         var personajes = [];
@@ -320,7 +531,8 @@ class StoryStudent extends Component{
                                 <label className="nombre-elemento">fondo.eldventir1.jpg</label>
                                 <label className="peso-elemento">400 KB</label>
                                 <img src="/img/tag.svg" className="img-tag"/>
-                                <input className="input-tag" / >
+                                <input id={'pre-fondos-'+i} onChange={handleEditTag} value={value.tag}
+                                    className={errors.fondosTag[i] ? errors.fondosTag[i] : "input-tag"} />
                             </div>
                             <hr className="separador-elemento"/>
                         </div>
@@ -340,7 +552,8 @@ class StoryStudent extends Component{
                                 <label className="nombre-elemento">fondo.eldventir1.jpg</label>
                                 <label className="peso-elemento">400 KB</label>
                                 <img src="/img/tag.svg" className="img-tag"/>
-                                <input className="input-tag" />
+                                <input id={'pre-objetos-'+i} onChange={handleEditTag} value={value.tag}
+                                    className={errors.objetosTag[i] ? errors.objetosTag[i] : "input-tag"} />
                             </div>
                             <hr className="separador-elemento"/>
                         </div>
@@ -360,7 +573,8 @@ class StoryStudent extends Component{
                                 <label className="nombre-elemento">fondo.eldventir1.jpg</label>
                                 <label className="peso-elemento">400 KB</label>
                                 <img src="/img/tag.svg" className="img-tag"/>
-                                <input className="input-tag" / >
+                                <input id={'pre-personajes-'+i} onChange={handleEditTag} value={value.tag}
+                                    className={errors.personajesTag[i] ? errors.personajesTag[i] : "input-tag"} />
                             </div>
                             <hr className="separador-elemento"/>
                         </div>
@@ -381,7 +595,8 @@ class StoryStudent extends Component{
                                 <label className="nombre-elemento">fondo.eldventir1.jpg</label>
                                 <label className="peso-elemento">400 KB</label>
                                 <img src="/img/tag.svg" className="img-tag"/>
-                                <input className="input-tag" / >
+                                <input id={'new-fondos-'+i} onChange={handleEditTag} value={value.tag}
+                                    className={errors.fondosTag[i] ? errors.fondosTag[i] : "input-tag"} />
                                 <img className="image-elemento-bote" src='/img/bote.svg' name={'fondos-'+i}
                                     onClick={handleClickDeleteImage}/>
                             </div>
@@ -403,7 +618,8 @@ class StoryStudent extends Component{
                                 <label className="nombre-elemento">fondo.eldventir1.jpg</label>
                                 <label className="peso-elemento">400 KB</label>
                                 <img src="/img/tag.svg" className="img-tag"/>
-                                <input className="input-tag" />
+                                <input id={'new-objetos-'+i} onChange={handleEditTag} value={value.tag}
+                                    className={errors.objetosTag[i] ? errors.objetosTag[i] : "input-tag"} />
                                 <img className="image-elemento-bote" src='/img/bote.svg' name={'objetos-'+i}
                                     onClick={handleClickDeleteImage}/>
                             </div>
@@ -425,7 +641,8 @@ class StoryStudent extends Component{
                                 <label className="nombre-elemento">fondo.eldventir1.jpg</label>
                                 <label className="peso-elemento">400 KB</label>
                                 <img src="/img/tag.svg" className="img-tag"/>
-                                <input className="input-tag" / >
+                                <input id={'new-personajes-'+i} onChange={handleEditTag} value={value.tag}
+                                    className={errors.personajesTag[i] ? errors.personajesTag[i] : "input-tag"} />
                                 <img className="image-elemento-bote" src='/img/bote.svg' name={'personajes-'+i}
                                     onClick={handleClickDeleteImage}/>
                             </div>
@@ -467,29 +684,36 @@ class StoryStudent extends Component{
                                     className={this.state.predefinidas || !(this.state.nuevasImagenes.fondos.length < maxImg) ? "btn-add-img-inactive": "btn-add-img"}
                                     onClick={() => this.handleClickSelecionar('fondos')}
                                     disabled = {this.state.nuevasImagenes.fondos.length >= maxImg}
-                                    >Seleccionar imagen
-                                </button>
+                                >Seleccionar imagen</button>
                                 </div>
                              </div>
-                            <div className="div-elementos">
+                            <div className={this.state.errors.fondos ? this.state.errors.fondos : "div-elementos"}>
                                 {fondos}
                             </div>
                         </div>
                         <div className="div-seccion">
                             <div className="div-botones">
                                 <label>Personajes </label>
-                                <button className={this.state.predefinidas ? "btn-add-img-inactive": "btn-add-img"} onClick={() => this.handleClickSelecionar('personajes')}>Seleccionar imagen</button>
+                                <button
+                                    className={this.state.predefinidas || !(this.state.nuevasImagenes.personajes.length < maxImg) ? "btn-add-img-inactive": "btn-add-img"}
+                                    onClick={() => this.handleClickSelecionar('personajes')}
+                                    disabled = {this.state.nuevasImagenes.personajes.length >= maxImg}
+                                >Seleccionar imagen</button>
                              </div>
-                            <div className="div-elementos">
+                            <div className={this.state.errors.personajes ? this.state.errors.personajes : "div-elementos"}>
                                 {personajes}
                             </div>
                         </div>
                         <div className="div-seccion">
                             <div className="div-botones">
                                 <label>Objetos </label>
-                                <button className={this.state.predefinidas ? "btn-add-img-inactive": "btn-add-img"} onClick={() => this.handleClickSelecionar('objetos')}>Seleccionar imagen</button>
+                                <button
+                                    className={this.state.predefinidas || !(this.state.nuevasImagenes.objetos.length < maxImg) ? "btn-add-img-inactive": "btn-add-img"}
+                                    onClick={() => this.handleClickSelecionar('objetos')}
+                                    disabled = {this.state.nuevasImagenes.objetos.length >= maxImg}
+                                >Seleccionar imagen</button>
                              </div>
-                            <div className="div-elementos">
+                            <div className={this.state.errors.objetos ? this.state.errors.objetos : "div-elementos"}>
                                 {objetos}
                             </div>
                         </div>
@@ -506,13 +730,9 @@ class StoryStudent extends Component{
                 function iterator (value, i){
                     return (
                         <div className="div-image-upload">
-                            <div className="image-upload" style={{backgroundImage: "url(" + value + ")"}}>
                             <input type="checkbox" className="radio-naranja" name='imagenes' id={'i-'+i} onClick={handleAdd}/>
-                            <label htmlFor={'i-'+i}>
-                            {// <img className="image-upload" src={value} />
-                        }
-                            </label>
-                            </div>
+                            <label htmlFor={'i-'+i}></label>
+                            <img data-inputId={'i-'+i} className="image-upload" src={value} onClick={handleAdd}/>
                         </div>
                     )
                 }
@@ -523,27 +743,12 @@ class StoryStudent extends Component{
                         <div className="div-image-upload">
                             <input type="checkbox" className="radio-naranja" name='imagenes' id={i} onClick={handleAdd}/>
                             <label htmlFor={i}></label>
-                            <img className="image-upload" src={value.url} />
+                            <img data-inputId={i} className="image-upload" src={value.url} onClick={handleAdd}/>
                         </div>
                     )
                 }
             );
             var handleDelete=this.handleDelete;
-            var imagenesUpload = this.state.files.map(
-                function iterator (file, i){
-                    return (
-                        <div>
-                            <input className="input-file" name="file-input" id="file-input" type="file" />
-                        {/*
-                            <div key={i}>{file.name}
-                                 <img src='/img/tache.svg' id={'img-'+i} className="img-borrar" onClick={handleDelete}/>
-                            </div>
-                        */}
-                        </div>
-                    )
-                }
-            )
-
             body =
                 <div className="body-story-images">
                     <div className="general-instructions">
@@ -552,7 +757,14 @@ class StoryStudent extends Component{
                     <div>
                         <div className="subir-imagenes">
                             <DragAndDrop handleDrop={this.handleDrop}>
+                                <div className='col-12 text-center'>
+                                    Arrastrar Archivo
+                                </div>
+                                <label for="file-input" class="input-file">
+                                    Subir Archivo
+                                </label>
                                 <input
+                                    className="input-file"
                                     name="file-input"
                                     id="file-input"
                                     type="file"
@@ -565,8 +777,10 @@ class StoryStudent extends Component{
                         </div>
                         <label className="col-12 max-img" style={btnStyle}>{this.state.restrict}</label>
                         <div className="imagenes-div">
-                            { newimagenes }
-                            { imagenes }
+                            <div className="imagenes-div-dos">
+                                { newimagenes }
+                                { imagenes }
+                            </div>
                         </div>
                     </div>
                     <div className='buttons-images'>
