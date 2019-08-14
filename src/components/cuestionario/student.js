@@ -82,10 +82,9 @@ class Student extends Component {
 			this.setState({values:values});
 		}
         /*Descargar*/
-        this.handleClickDescargar= value => {
+        this.handleClickDescargar2= value => {
             var today = new Date().toLocaleDateString();
             var instrucciones = this.instrucciones.text;
-            console.log(today)
             var preguntas = this.state.values.map(
                 function iterator(question, item) {
                     var respuestas = '';
@@ -112,7 +111,7 @@ class Student extends Component {
                     <h4>Programa:</h4>
                     <h4>Habilidad:</h4>
                     <h4>Lección:</h4>
-                    <h4>Instrucciones: {instrucciones}</h4>
+                    <h4 style={{width:'100%'}}>Instrucciones: {instrucciones}</h4>
                 </div>
                 <div>
                     {preguntas}
@@ -127,6 +126,161 @@ class Student extends Component {
             // };
             // print();
         }
+        this.handleClickDescargar= value => {
+            var today = new Date().toLocaleDateString();
+            var instrucciones = this.instrucciones.text;
+            var programa = ''
+            var habilidad = ''
+            var leccion = ''
+            var preguntas = this.state.values.map(
+                function iterator(question, item) {
+                    var respuestas = '';
+                    if (question.type == '1'){
+                        question.options.map((option) =>{
+                            if(option.checked)
+                                respuestas = respuestas +option.value +', '
+                        })
+                    }
+    				return(
+                        <div style={{margin:'10%'}}>
+                            <h3 style={{color:'#F06522'}}>{item+1}{'. '+question.question}</h3>
+                            <div>{question.answer ? question.answer : respuestas}</div>
+                        </div>
+                    )
+            })
+            var color = '#1B586D'
+            const Prints = () => (
+              <div>
+                <div>
+                    <div className='col-11' style={{width:'80%'}}>
+                    {//<img stule={{width:'50px'}} src='https://drive.google.com/file/d/13d1zu9xG6fW5yWt834w8bLZt4O_Pqnrc/view' />
+                    }
+
+                    </div>
+                    <div  className='col-1' style={{textAling:'rigth', width:'20%'}}><label>{'Fecha:' + today}</label></div>
+                </div>
+                <div >
+                    <div style={{color:color}}>Programa:<label style={{color:'#000'}}>{' '+programa}</label></div>
+                    <div style={{color:'#1B586C'}}>Habilidad:<label style={{color:'#000'}}>{' '+habilidad}</label></div>
+                    <div style={{color:color}}>Lección:<label style={{color:'#000'}}>{' '+leccion}</label></div>
+                    <br/>
+                    <div style={{color:'#1B586C'}}>Instrucciones:
+                        <label style={{color:'#000'}}>{' '+instrucciones}</label>
+                    </div>
+                </div>
+                <div>
+                    {preguntas}
+                </div>
+              </div>
+            );
+            // const print = () => {
+            const string = renderToString(<Prints />);
+            const doc = new jsPDF()
+            const width = 170
+            const elementHandlers = {
+              '#ignorePDF': (element,renderer)=>{
+                return true
+              }
+            }
+            doc.fromHTML(string,15,15,{width,elementHandlers},()=>{
+              const pdf = doc.output('datauristring')
+              if (typeof(pdf)==='string'&&pdf.length>0) {
+                this.setState({pdf})
+              }
+            })
+            doc.save('sample.pdf')
+            //   setup() {
+            //     const doc = new jsPDF()
+            //     const el = document.getElementById('content')
+            //     if (typeof(el)==='object'&&el!==null) {
+            //       const width = 170
+            //       const elementHandlers = {
+            //         '#ignorePDF': (element,renderer)=>{
+            //           return true
+            //         }
+            //       }
+            //       doc.fromHTML(el,15,15,{width,elementHandlers},()=>{
+            //         const pdf = doc.output('datauristring')
+            //         if (typeof(pdf)==='string'&&pdf.length>0) {
+            //           this.setState({pdf})
+            //         }
+            //       })
+            //     }
+            //     this.doc = doc
+            //   }
+            //   renderPreview() {
+            //     const {pdf} = this.state
+            //     if (typeof(pdf)==='string'&&pdf.length>0) {
+            //       return (
+            //         <div style={{
+            //             height:'650px',
+            //             position:'relative',
+            //             zIndex:999,
+            //             border: '1px solid #000',
+            //           }}>
+            //           <embed className="pdfobject" src={pdf} type="application/pdf" style={{
+            //               overflow: 'auto',
+            //               width: '100%',
+            //               height: '100%',
+            //             }} internalinstanceid="30"></embed>
+            //           {/*
+            //             <iframe title="preview" src={pdf} style={{
+            //                 width: '100%',
+            //                 height: '700px',
+            //               }} frameBorder="0"></iframe>
+            //           */}
+            //         </div>
+            //       )
+            //     }
+            //     return null
+            //   }
+            //   renderData() {
+            //     const keys = Object.keys(data)
+            //     return (
+            //       <div class="row">
+            //         {
+            //           keys.map((e,i)=>(
+            //             <div class="col">
+            //               <label>{e}</label>
+            //               <div className="data">{data[e]}</div>
+            //             </div>
+            //           ))
+            //         }
+            //       </div>
+            //     )
+            //   }
+            //   render() {
+            //     return (
+            //       <div className="container">
+            //         <h1>ReactJS: jsPDF</h1>
+            //
+            //         <div className="row">
+            //           <div className="col-6">
+            //             <div className="mb-3">
+            //               <button className="btn btn-outline-primary" onClick={this.download}>Save as PDF</button>
+            //             </div>
+            //             <div id="content">
+            //               <h2>Title</h2>
+            //               <p className="lead">Lead</p>
+            //               {this.renderData()}
+            //             </div>
+            //           </div>
+            //           <div className="col-6">
+            //             {this.renderPreview()}
+            //           </div>
+            //         </div>
+            //       </div>
+            //     )
+            //   }
+            // }
+            //
+            //
+            // download=event=>{
+            //     this.doc.save('sample.pdf')
+            //   }
+
+        }
+
     }
 
     validate(){

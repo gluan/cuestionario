@@ -113,3 +113,6 @@
     text-align: justify;
 	width: 97%;
 }
+.error-book{
+	border: 1px  solid #F06522 !important;
+}

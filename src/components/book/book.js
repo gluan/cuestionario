@@ -10,6 +10,9 @@ class Book extends Component {
 	constructor(props){
 		super(props);
 		this.state={
+			change: 0,
+			error:false,
+			active:true,
 			btn: true,
 			page1:'',
 			page2:'',
@@ -39,7 +42,19 @@ class Book extends Component {
 
 	resize = () => {
 		console.log('resize');
-		this.forceUpdate()
+		this.setState({change : this.state.change++})
+		options = {
+		  width:'100px',
+		  height: '100px',
+		  autoCenter: true,
+		  display: "double",
+		  acceleration: true,
+		  elevation: 50,
+		  gradients: !$.isTouch,
+		  duration: 2400,
+		};
+
+		// this.forceUpdate()
 	};
 
 	componentDidMount() {
@@ -53,22 +68,21 @@ class Book extends Component {
 		  console.log('1')
 		  this.setState({isVisible:true})
 	  }
-	};
-
+  };
 	componentWillUnmount() {
 		console.log('2')
 	  window.removeEventListener('resize', this.resize)
 	};
-	handleChangeTurn(){
-		console.log('turn')
-	}
 	handleClickTerminarB(event){
 		console.log('termino');
+		var error = false;
 		var text = this.state.page1 +' '+ this.state.page2;
 		if(text == '' || text == ' ' || text.length <2){
+			error= true;
 			console.log('tienes que completar el ejercicio')
+			this.setState({error:error});
 		}else{
-			this.setState({btn:false});
+			this.setState({btn:false, active:false, error:error});
 			console.log(this.state);
 			console.log(this.state.page1 +' '+ this.state.page2);
 		}
@@ -86,29 +100,33 @@ class Book extends Component {
 
     render() {
 		console.log('render');
+		console.log(options)
 		var btnStyleT = this.state.btn ? {display:'initial'} : {display:'none'};
         var btnStyleD = this.state.btn ? {display:'none'} : {display:'initial'};
 		var handleClickTerminarB = this.handleClickTerminarB;
-
+		var active = this.state.active;
+		var change = this.state.change;
         return(
             <div className="body-book" id='book'>
                 <div className="row col-12 instrucciones">
                     <Instructions title={this.state.instrucciones.title} text={this.state.instrucciones.text} />
                 </div>
 				<div className="row col-12 book">
-					<div className="col-12">
+					<div className="col-12" id='contenedor'>
 						<Turn
 							options={options}
 							className="magazine"
-							onChange={this.handleChangeTurn.bind(this)}>
+							change={change}
+							>
 					      {pages.map((page, index) => (
 					        <div id={index} key={index}
-								className={index == 0 ? 'hard': ''}>
+								className={index == 0 ? 'hard': ''} style={{width:'100%'}}>
 								<img className="image-book" src={page} alt="" />
 								<textarea
+									disabled={!active}
 									id={"page-"+index}
 									placeholder={index==1 ? "Type here ...": ""}
-									className="book-text"
+									className={this.state.error ? 'error-book book-text' :"book-text"}
 									defaultValue={index == 1 ? this.state.page1: this.state.page2}
 									onChange={index == 1 ? this.handleChange.bind(this) : this.handleChangePage.bind(this)}>
 								</textarea>
@@ -125,11 +143,8 @@ class Book extends Component {
         );
     }
 }
-var isVisible=true;
 
 var options = {
-  // width: 800,
-  // height: 600,
   width:$.width,
   height: $.heigth,
   autoCenter: true,
@@ -138,16 +153,6 @@ var options = {
   elevation: 50,
   gradients: !$.isTouch,
   duration: 2400,
-  when: {
-    turned: function(e, page) {
-		if($(this).turn("view")[0]==2){
-			isVisible = true;
-		}else{
-			isVisible = false;
-		}
-		// console.log(isVisible)
-    }
-  }
 };
 
 const pages = [
@@ -155,5 +160,4 @@ const pages = [
   "img/pagina-1.png",
   "img/pagina-2.png",
 ];
-
 export default Book;
