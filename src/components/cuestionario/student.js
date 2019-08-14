@@ -3,6 +3,9 @@ import Instructions from '../instructions/instructions';
 import './cuestionario.css';
 import domtoimage from 'dom-to-image';
 import html2canvas from 'html2canvas';
+import { render } from "react-dom";
+import { renderToString } from "react-dom/server";
+import jsPDF from "jspdf";
 
 class Student extends Component {
     constructor(props){
@@ -10,9 +13,14 @@ class Student extends Component {
 		this.instrucciones={
 			title: 'Instrucciones',
 			text: 'Responde el cuestionario selecionando la respuesta correcta en las preguntas de opcion multiple,'+
-			'selecionanado las respuestas correctas en las preguntas de sellecion y escribiendo la respuesta en las preguntas abiertas'
+			'selecionando las respuestas correctas en las preguntas de seleccion y escribiendo la respuesta en las preguntas abiertas'
 		};
         this.state={
+            errors:{
+                error:false,
+                questions:[]
+            },
+            active:true,
             btn: true,
             values:[
                 {
@@ -28,20 +36,21 @@ class Student extends Component {
                     question: '¿Qué nombre científico recibe el detector de mentiras?',
                     type: '3',
 					placeholder: 'Escribe tu respuesta',
-                },{
-                    question: '¿Cuál es el río más largo del mundo?',
-                    options: [ 'Misisipi', 'Amazonas', 'Nilo' ],
-                    type: '2',
-                }
-                ,{
-                    question: 'Las tres ciudades más grandes y pobladas del país son:',
-                    options: [ 'Ciudad de México', 'Guadalajara ', 'Monterrey', 'Cancún' ],
-                    type: '1',
-                },{
-                    question: '¿Qué nombre científico recibe el detector de mentiras?',
-                    type: '3',
-					placeholder: 'Escribe tu respuesta',
                 },
+                // {
+                //     question: '¿Cuál es el río más largo del mundo?',
+                //     options: [ 'Misisipi', 'Amazonas', 'Nilo' ],
+                //     type: '2',
+                // }
+                // ,{
+                //     question: 'Las tres ciudades más grandes y pobladas del país son:',
+                //     options: [ 'Ciudad de México', 'Guadalajara ', 'Monterrey', 'Cancún' ],
+                //     type: '1',
+                // },{
+                //     question: '¿Qué nombre científico recibe el detector de mentiras?',
+                //     type: '3',
+				// 	placeholder: 'Escribe tu respuesta',
+                // },
             ]
         };
 		/*Cambios pregunta abierta*/
@@ -52,9 +61,8 @@ class Student extends Component {
 		}
 		/*Terminar formulario*/
 		this.handleClickTerminar = value => {
-            this.setState({btn:false})
-			console.log('terminar');
-			console.log(this.state);
+            console.log('terminar');
+            this.validate();
 		}
 		/*Cambio radio*/
 		this.handleChangeRadio = value => {
@@ -75,10 +83,95 @@ class Student extends Component {
 		}
         /*Descargar*/
         this.handleClickDescargar= value => {
-            console.log('descargar');
+            var today = new Date().toLocaleDateString();
+            var instrucciones = this.instrucciones.text;
+            console.log(today)
+            var preguntas = this.state.values.map(
+                function iterator(question, item) {
+                    var respuestas = '';
+                    if (question.type == '1'){
+                        question.options.map((option) =>{
+                            console.log('option  ' + option)
+                            if(option.checked)
+                                respuestas = respuestas +option.value +', '
+                        })
+                    }
+    				return(
+                        <div style={{margin:'10%'}}>
+                            <h3>{item+1}{'. '+question.question}</h3>
+                            <div>{question.answer ? question.answer : respuestas}</div>
+                        </div>
+                    )
+            })
+            const Prints = () => (
+              <div>
+                <div>
+                    <div style={{textAling:'rigth'}}>{'Fecha:' + today}</div>
+                </div>
+                <div>
+                    <h4>Programa:</h4>
+                    <h4>Habilidad:</h4>
+                    <h4>Lección:</h4>
+                    <h4>Instrucciones: {instrucciones}</h4>
+                </div>
+                <div>
+                    {preguntas}
+                </div>
+              </div>
+            );
+            // const print = () => {
+              const string = renderToString(<Prints />);
+              const pdf = new jsPDF("p", "mm", "a4");
+              pdf.fromHTML(string);
+              pdf.save("pdf");
+            // };
+            // print();
         }
     }
 
+    validate(){
+        let errors ={
+            error:false,
+            questions:[]
+        }
+        this.state.values.map( (value, item) => {
+            if(value.type == '1') { // multiple
+                let count = 0;
+                value.options.map((option, item) => {
+                    if (option.checked)
+                        count++;
+                })
+                if (count > 0){
+                    errors.questions.push(null)
+                }else{
+                    errors.error=true;
+                    errors.questions.push('text error-question')
+                }
+
+            }else if(value.type == '2') { // radio
+                if (value.answer && value.answer != 'undefined' && value.answer != null && value.answer.trim() != ''){
+                    errors.questions.push(null)
+                }else{
+                    errors.error=true;
+                    errors.questions.push('text error-question')
+                }
+            } else{//abierta
+                if (value.answer && value.answer != null && value.answer.trim() != ''){
+                    errors.questions.push(null)
+                }else{
+                    errors.error=true;
+                    errors.questions.push('text error-question')
+                }
+            }
+        })
+        if (errors.error){
+            console.log('Error ......')
+            this.setState({ errors:errors });
+        }else{
+            console.log('ok .........')
+            this.setState({btn:false, active:false, errors:errors})
+        }
+    }
 
 	componentDidMount(){
 		var values = this.state.values.map(
@@ -111,6 +204,8 @@ class Student extends Component {
         var handleClickDescargar= this.handleClickDescargar;
         var btnStyleT = this.state.btn ? {display:'initial'} : {display:'none'};
         var btnStyleD = this.state.btn ? {display:'none'} : {display:'initial'};
+        var active = this.state.active
+        var errors = this.state.errors
 
         var questions = this.state.values.map(
             function iterator (value, i){
@@ -124,6 +219,7 @@ class Student extends Component {
 								<div>
 									<input type="checkbox"
                                     className="check-cuestionario"
+                                    disabled={!active}
 										id={'c-'+i+'-'+j}
 										value={option.value}
 										checked={option.checked}
@@ -136,7 +232,7 @@ class Student extends Component {
 						}
 					);
 					questionBody =
-						<div className="text">
+						<div className={errors.questions[i] ? errors.questions[i] : "text"}>
 							{checks}
 						</div>
 
@@ -148,6 +244,7 @@ class Student extends Component {
 							return(
 								<div>
 									<input type="radio"
+                                        disabled={!active}
 										onChange={handleChangeRadio}
 										name={r}
 										value={option}
@@ -159,15 +256,16 @@ class Student extends Component {
 						}
 					);
 					questionBody =
-						<div className="text">
+						<div className={errors.questions[i] ? errors.questions[i] : "text"}>
 							{radios}
 						</div>
 
 				/*Opcion 3 respuesta abierta*/
 				}else {
 					questionBody =
-						<div className="text">
+						<div className={errors.questions[i] ? errors.questions[i] : "text"}>
 							<textarea
+                                disabled={!active}
 								id={'question-'+i}
 								placeholder={value.placeholder}
 								className="respuesta"
@@ -180,7 +278,7 @@ class Student extends Component {
                 return(
 					<div className="body-question">
 						<div>
-							<div className="question">
+							<div className= "question">
 								<img className="numero" src="/img/circulo.png" />
 								<div className="div-num">{i+1}</div>
 								{value.question}

@@ -3,6 +3,7 @@
 }
 
 .body-cuestionario {
+    padding: 20px;
 	background-repeat: no-repeat;
     background: url(/img/fondo.jpg);
     background-size: cover;
@@ -212,10 +213,7 @@
 	background-repeat: no-repeat;
 }
 
-/*Errores*/
-.error{
-	border: 1px  solid #F06522;;
-}
+
 /*Question*/
 .numero {
 	width: 40px;
@@ -335,4 +333,12 @@ input[type="radio"]:checked + label {
 	border: #1B586D;
 	border-style: solid;
 	border-width: thin;
+}
+/*Errores*/
+
+.error-question {
+	border: 1px  solid #F06522;;
+}
+.error{
+	border: 1px  solid #F06522;;
 }
