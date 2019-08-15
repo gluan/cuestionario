@@ -1,13 +1,13 @@
 .magazine {
 	display: table-cell;
 	width: 522px!important;
-    height: 600px!important;
+    height: 500px!important;
 }
 @media (max-width: 768px) {
  .magazine {
 	display: table-cell;
 	width: 522px!important;
-    height: 600px!important;
+    height: 500px!important;
   }
   .book {
     font-size: .7rem;

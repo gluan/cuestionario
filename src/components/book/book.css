@@ -118,23 +118,3 @@
 .error-book{
 	border: 1px  solid #F06522 !important;
 }
-
-@media (max-width: 768px) {
- .magazine {
-	display: table-cell;
-	width: 522px!important;
-    height: 600px!important;
-  }
-  .book {
-    font-size: .7rem;
-    width: 90%;
-    margin-left: 8%;
-  }
-}
-.page {
-    margin: 10px 0px;
-}
-#contenedor {
-	display: flex;
-    justify-content: center;
-}

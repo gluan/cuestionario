@@ -45,7 +45,7 @@ class Book extends Component {
 		this.setState({change : this.state.change++})
 		options = {
 		  width: '550px',
-		  height: '600px',
+		  height: '500px',
 		  autoCenter: true,
 		  display: "double",
 		  acceleration: true,
@@ -146,7 +146,7 @@ class Book extends Component {
 
 var options = {
   width:'550px',
-  height: '600px',
+  height: '500px',
   autoCenter: true,
   display: "double",
   acceleration: true,
