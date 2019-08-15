@@ -50,9 +50,7 @@ class StoryStudent extends Component{
                 { url:'/img/elementos/globos/10.png', id:'diablito', status:false, tag:'enojado'},
                 { url:'/img/elementos/globos/11.png', id:'diablito', status:false, tag:'enojado'},
                 { url:'/img/elementos/globos/12.png', id:'diablito', status:false, tag:'enojado'},
-                { url:'/img/elementos/globos/13.png', id:'diablito', status:false, tag:'enojado'},
-                { url:'/img/elementos/globos/14.png', id:'diablito', status:false, tag:'enojado'},
-                { url:'/img/elementos/globos/15.png', id:'diablito', status:false, tag:'enojado'},
+                { url:'/img/elementos/globos/13.png', id:'diablito', status:false, tag:'enojado'}
 
             ],
             objetos:[
@@ -170,19 +168,16 @@ class StoryStudent extends Component{
 
         con.addEventListener('drop', function(e) {
             e.preventDefault();
-            // var stage =this.state.stage;
-
             stage.setPointersPositions(e);
-            // this.setState({stage:stage})
+			var textarea = document.createElement('textarea');
+			textarea.setAttribute("id", "textEdit");
             Konva.Image.fromURL((itemURL), function(image) {
-                var group = new Konva.Group();
-                layer.add(group);
-                group.add(image);
                 image.setAttr('id', itemKey);
                 image.setAttr('tag', itemTag);
                 image.setAttr('url', itemURL);
                 /*Valida si es un fondo*/
                 if(dataset == 'true'){
+					layer.add(image)
                     image.position({});
                     image.draggable(false);
                     image.size({
@@ -194,40 +189,71 @@ class StoryStudent extends Component{
                     });
                     image.zIndex(fondo.getAbsoluteZIndex());
                     fondo.destroy();
-                    image.on("click", function(e) {
-                        var transform = layer.getChildren(function(node){
-                           return node.getClassName() === 'Transformer';
-                        });
-                        transform.destroy();
-                        var del = layer.getChildren(function(node){
-                           return node.getAttr('del') === 'true';
-                        });
-                        del.destroy();
-                        layer.draw();
-                    });
-                /*Si es un elemento*/
+					image.on("click", function(e) {
+						if(document.getElementById('textEdit'))
+							document.getElementById('textEdit').remove();
+					});
                 }else{
-                    // image.draggable(false)
-                    console.log('text.... '+text)
+				/*Si es un elemento*/
+					image.draggable(false);
+					var group = new Konva.Group({ width:100, height:100, draggable:true });
+					group.add(image);
+					layer.add(group);
+					
                     if(text == 'true'){
                         var textNode = new Konva.Text({
                             text: 'Este es mi texto de prueba ..... a ver si funciona .........',
-                            // x: 5,
-                            // y: 8,
-                            fontSize: 10,
-                            draggable: true,
-                            width: 85
+                            x: 15,
+                            y: 15,
+                            fontSize: 14,
+                            draggable: false,
+                            width: group.width(),
+							height: group.height(),
+							align: 'center',
+							
                         });
-                        console.log(stage.getPointerPosition())
-                        var pos = stage.getPointerPosition()
-                        pos.x= pos.x + 250;
-                        pos.y = pos.y + 20;
-                        console.log(pos)
-                        // textNode.setAttr('position', pos);
                         group.add(textNode);
+						
+						textNode.on('dblclick', () => {
+							var textPosition = textNode.getAbsolutePosition();
+							var stageBox = stage.container().getBoundingClientRect();
+
+							var areaPosition = {
+							  x: stageBox.left + textPosition.x,
+							  y: stageBox.top + textPosition.y
+							};
+
+							// create textarea and style it
+							
+							document.body.appendChild(textarea);
+
+							textarea.value = textNode.text();
+							textarea.style.position = 'absolute';
+							textarea.style.top = areaPosition.y + 'px';
+							textarea.style.left = areaPosition.x + 'px';
+							textarea.style.width = textNode.width();
+							textarea.maxLength = 50;
+
+							textarea.focus();
+
+							textarea.addEventListener('keydown', function(e) {
+							  // hide on enter
+
+							  if (e.keyCode === 13) {
+								textNode.text(textarea.value);
+								layer.draw();
+								document.body.removeChild(textarea);
+							  }
+							});
+						});
+						
                     }
+                    group.position(stage.getPointerPosition());
 
                     group.on("click", function(e) {
+						if(document.getElementById('textEdit'))
+							document.getElementById('textEdit').remove();
+						
                         var transform = layer.getChildren(function(node){
                            return node.getClassName() === 'Transformer';
                         });
@@ -238,57 +264,64 @@ class StoryStudent extends Component{
                         del.destroy();
                         var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
                         // var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
+						
+						if(group.draggable()){
 
-                        Konva.Image.fromURL(newURL, function(imageDel) {
-                            var tr1 = new Konva.Transformer({
-                                node: image,
-                                keepRatio: true,
-                            });
+							Konva.Image.fromURL(newURL, function(imageDel) {
+								var tr1 = new Konva.Transformer({
+									node: group,
+									keepRatio: true,
+								});
 
-                            layer.add(tr1);
-                            tr1.add(imageDel);
-                            tr1.on('transform', () => {
-                              imageDel.x(10);
-                            })
-                            imageDel.draggable(false);
-                            imageDel.size({
-                                width: 25,
-                                height: 25
-                            });
-                            imageDel.setAttr('del', 'true');
+								layer.add(tr1);
+								tr1.add(imageDel);
+								tr1.on('transform', () => {
+								  imageDel.x(10);
+								})
+								imageDel.draggable(false);
+								imageDel.size({
+									width: 25,
+									height: 25
+								});
+								imageDel.setAttr('del', 'true');
 
-                            imageDel.position({x: 0, y: -25})
-                            imageDel.on("click", function(e) {
-                                var transform = layer.getChildren(function(node){
-                                   return node.getClassName() === 'Transformer';
-                                });
-                                transform.destroy();
-                                var del = layer.getChildren(function(node){
-                                   return node.getAttr('del') === 'true';
-                                });
-                                del.destroy();
-                                imageDel.destroy();
-                                group.destroy();
-                                layer.draw();
-                            });
-                            layer.draw();
-                            // }
-                        });
+								imageDel.position({x: 0, y: -25})
+								imageDel.on("click", function(e) {
+									if(document.getElementById('textEdit'))
+										document.getElementById('textEdit').remove();
+									var transform = layer.getChildren(function(node){
+									   return node.getClassName() === 'Transformer';
+									});
+									transform.destroy();
+									var del = layer.getChildren(function(node){
+									   return node.getAttr('del') === 'true';
+									});
+									del.destroy();
+									imageDel.destroy();
+									group.destroy();
+									layer.draw();
+								});
+								layer.draw();
+							});
+						}
                         layer.draw();
                     });
-                    image.position(stage.getPointerPosition());
-                    image.draggable(true);
+					
+                    //image.draggable(true);
                     image.size({
-                        width: 100,
-                        height: 100
+                        width: 150,
+                        height: 150
                     });
                     group.size({
-                        width: 100,
-                        height: 100
+                        width: 150,
+                        height: 150
                     });
                     // group.setAttr('position', stage.getPointerPosition());
-                    image.setAttr('position', stage.getPointerPosition());
+                    //image.setAttr('position', stage.getPointerPosition());
                 }
+				//document.body.removeChild(textarea);
+				if(document.getElementById('textEdit'))
+					document.getElementById('textEdit').remove();
                 image.setAttr('fondo', dataset);
                 layer.draw();
             });
@@ -306,6 +339,12 @@ class StoryStudent extends Component{
             node.draggable(false);
             node.getChildren(function(node1){
                 node1.draggable(false);
+				node1.getChildren(function(node2){
+					node2.draggable(false);
+					node2.getChildren(function(node3){
+						node3.draggable(false);
+					});
+				});
             });
         });
         var transform = layer.getChildren(function(node){
