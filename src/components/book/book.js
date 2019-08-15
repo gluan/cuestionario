@@ -44,8 +44,8 @@ class Book extends Component {
 		console.log('resize');
 		this.setState({change : this.state.change++})
 		options = {
-		  width:'100px',
-		  height: '100px',
+		  width: '550px',
+		  height: '600px',
 		  autoCenter: true,
 		  display: "double",
 		  acceleration: true,
@@ -145,8 +145,8 @@ class Book extends Component {
 }
 
 var options = {
-  width:$.width,
-  height: $.heigth,
+  width:'550px',
+  height: '600px',
   autoCenter: true,
   display: "double",
   acceleration: true,

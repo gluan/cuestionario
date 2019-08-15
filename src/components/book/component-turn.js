@@ -50,7 +50,7 @@ class Turn extends React.Component {
     return (
       <div
         className={this.props.className}
-        style={{width:'100%'}}
+        //style={{width:'100%'}}
         ref={el => (this.el = el)}
       >
         {this.props.children}

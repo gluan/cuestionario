@@ -4,7 +4,7 @@
 	margin: 0px;
     resize: none;
     width: 80%;
-    height: 53vh;
+    height: 430px;
     overflow: hidden;
     background-color: rgba(255, 255, 255, 0);
 }
@@ -14,7 +14,7 @@
 .body-book {
 	padding: 20px;
 	width: 100%;
-	height: auto;
+	height: 100%;
 	background-repeat: no-repeat;
 	background: url(/img/fondo.jpg);
 	background-size: cover;
@@ -22,8 +22,8 @@
 }
 .book {
 	font-size: .7rem;
-    width: 90%;
-    margin-left: 10%;
+    width: 80%;
+    margin-left: 15%;
 }
 .b{
 	z-index: 4;
@@ -68,13 +68,15 @@
 #page-1, #page-2 {
 	border:none;
 	position: absolute;
-	top: 44%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	/*top: 600px;
+	left: 550px;
+	transform: translate(-300px, -250px);*/
+	transform: translate(-235px, 45px);
 }
 #page-1:focus, #page-2:focus {
 	border:none;
 }
+
 /*----------------------------------------------------------------*/
 /*Estilos Teacher*/
 .body-cuestionario-teacher {
@@ -115,4 +117,24 @@
 }
 .error-book{
 	border: 1px  solid #F06522 !important;
+}
+
+@media (max-width: 768px) {
+ .magazine {
+	display: table-cell;
+	width: 522px!important;
+    height: 600px!important;
+  }
+  .book {
+    font-size: .7rem;
+    width: 90%;
+    margin-left: 8%;
+  }
+}
+.page {
+    margin: 10px 0px;
+}
+#contenedor {
+	display: flex;
+    justify-content: center;
 }
