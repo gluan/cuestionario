@@ -1,6 +1,9 @@
 .instrucciones {
 	justify-content: center;
 }
+button:click{
+	border:none
+}
 
 .body-story {
 	padding: 20px;

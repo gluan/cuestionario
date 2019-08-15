@@ -10,6 +10,7 @@ class StoryStudent extends Component{
     constructor(props){
         super(props);
         this.state={
+			element:'fondos',
             herramientas:true,
             btn:true,
             elements:false,
@@ -47,8 +48,8 @@ class StoryStudent extends Component{
                 { url:'/img/elementos/globos/7.png', id:'diablito', status:false, tag:'enojado'},
                 { url:'/img/elementos/globos/8.png', id:'diablito', status:false, tag:'enojado'},
                 { url:'/img/elementos/globos/9.png', id:'diablito', status:false, tag:'enojado'},
-                { url:'/img/elementos/globos/10.png', id:'diablito', status:false, tag:'enojado'},
-                { url:'/img/elementos/globos/11.png', id:'diablito', status:false, tag:'enojado'},
+                //{ url:'/img/elementos/globos/10.png', id:'diablito', status:false, tag:'enojado'},
+                //{ url:'/img/elementos/globos/11.png', id:'diablito', status:false, tag:'enojado'},
                 { url:'/img/elementos/globos/12.png', id:'diablito', status:false, tag:'enojado'},
                 { url:'/img/elementos/globos/13.png', id:'diablito', status:false, tag:'enojado'}
 
@@ -180,68 +181,13 @@ class StoryStudent extends Component{
                 image.setAttr('url', itemURL);
 				console.log(texto)
 				if(texto == 'true'){
-					//var group = new Konva.Group({ width:100, height:100, draggable:true });
-					//group.add(image);
-					//layer.add(group);
-					
-                    //if(text == 'true'){
 					var textNode = new Konva.Text({
 						text: 'Texto ...',
 						fontSize: 14,
 						draggable: true,
 						visible: true,
-						//width: 100,
-						//height: 100,
 					});
 					layer.add(textNode);
-					
-					/*textNode.on("click", function(e) {
-						console.log('click');
-						if(document.getElementById('textEdit'))
-							document.getElementById('textEdit').remove();
-						
-                        var transform = layer.getChildren(function(node){
-                           return node.getClassName() === 'Transformer';
-                        });
-                        transform.destroy();
-                        var del = layer.getChildren(function(node){
-                           return node.getAttr('del') === 'true';
-                        });
-                        del.destroy();
-                        var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
-                        // var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
-						
-						if(textNode.draggable()){
-							console.log('entro')
-					
-							var tr = new Konva.Transformer({
-								node: textNode,
-								enabledAnchors: ['middle-left', 'middle-right'],
-								// set minimum width of text
-								boundBoxFunc: function(oldBox, newBox) {
-								  newBox.width = Math.max(30, newBox.width);
-								  return newBox;
-								}
-								
-							});
-							//layer.add(tr);
-							//layer.draw();
-
-							textNode.on('transform', function() {
-								console.log('transform')
-								// reset scale, so only with is changing by transformer
-								textNode.setAttrs({
-								  width: textNode.width() * textNode.scaleX(),
-								  scaleX: 1
-								});
-							});
-							layer.add(tr);
-							layer.draw();
-						layer.draw();
-						}
-					});
-					*/
-					
 					
 					textNode.on('dblclick', () => {
 						var textPosition = textNode.getAbsolutePosition();
@@ -262,17 +208,14 @@ class StoryStudent extends Component{
 						  if (e.keyCode === 13) {
 							textNode.text(textarea.value);
 							layer.draw();
-							document.body.removeChild(textarea);
+							if(document.getElementById('textEdit'))
+								document.body.removeChild(textarea);
 						  }
 						});
 						layer.draw();
 					});
                     textNode.position(stage.getPointerPosition());
-					
-					
-
-					
-
+				
                     textNode.on("click", function(e) {
 						if(document.getElementById('textEdit'))
 							document.getElementById('textEdit').remove();
@@ -376,7 +319,7 @@ class StoryStudent extends Component{
 							var textNode = new Konva.Text({
 								text: 'Texto ...',
 								x: 15,
-								y: 15,
+								y: 20,
 								fontSize: 14,
 								draggable: false,
 								width: group.width(),
@@ -556,8 +499,15 @@ class StoryStudent extends Component{
         var btnStyleT = this.state.btn ? {display:'initial'} : {display:'none'};
         var btnStyleD = this.state.btn ? {display:'none'} : {display:'initial'};
         var style = this.state.elements ? {display:'block'} : {display:'none'};
+		var back = {
+		}
         var imagenes = [];
         if(this.state.element == 'personajes'){
+			 back = {
+				backgroundImage: 'url(/img/ico-personajes0.svg)',
+				backgroundRepeat: 'no-repeat',
+				backgroundSize: 'contain'
+			 }
             imagenes = this.state.personajes.map((image, index)=>{
                 return (
                     <img
@@ -571,6 +521,11 @@ class StoryStudent extends Component{
                 )
             })
         }else if(this.state.element == 'objetos'){
+			 back = {
+				backgroundImage: 'url(/img/ico-objetos0.svg)',
+				backgroundRepeat: 'no-repeat',
+				backgroundSize: 'contain'
+			}
             imagenes = this.state.objetos.map((image, index)=>{
                 return (
                     <img
@@ -584,6 +539,11 @@ class StoryStudent extends Component{
                 )
             })
         }else if(this.state.element == 'textos'){
+			back = {
+				backgroundImage: 'url(/img/ico-texto0.svg)',
+				backgroundRepeat: 'no-repeat',
+				backgroundSize: 'contain'
+			}
             imagenes = this.state.textos.map((image, index)=>{
                 return (
                     <img
@@ -598,6 +558,11 @@ class StoryStudent extends Component{
                 )
             })
         }else {
+			back = {
+				backgroundImage: 'url(/img/ico-fondos0.svg)',
+				backgroundRepeat: 'no-repeat',
+				backgroundSize: 'contain'
+			}
             imagenes = this.state.fondos.map((image, index)=>{
                 return (
                     <img
@@ -628,10 +593,14 @@ class StoryStudent extends Component{
                     <div className="btn-menu-fondo" style={style}>
                         <div className="fondoo">
                             <div className="iconos">
-                                <button className='fondos' id='fondos' onClick={this.handleClickElements.bind(this)}></button>
-                                <button className='personajes' id='personajes' onClick={this.handleClickElements.bind(this)}></button>
-                                <button className='textos' id='textos' onClick={this.handleClickElements.bind(this)}></button>
-                                <button className='objetos' id='objetos' onClick={this.handleClickElements.bind(this)}></button>
+                                <button className='fondos' id='fondos' onClick={this.handleClickElements.bind(this)} 
+									style={this.state.element == 'fondos' ? back : {}}></button>
+                                <button className='personajes' id='personajes' onClick={this.handleClickElements.bind(this)}
+									style={this.state.element == 'personajes' ? back : {}}></button>
+                                <button className='textos' id='textos' onClick={this.handleClickElements.bind(this)}
+									style={this.state.element == 'textos' ? back : {}}></button>
+                                <button className='objetos' id='objetos' onClick={this.handleClickElements.bind(this)}
+									style={this.state.element == 'objetos' ? back : {}}></button>
                             </div>
                             <div id="navbarFondos" className="imagenes elementos">
                                 {imagenes}
