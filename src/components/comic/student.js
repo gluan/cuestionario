@@ -151,6 +151,7 @@ class StoryStudent extends Component{
         var itemTag = '';
         var dataset = '';
         var text = '';
+		var texto='';
         document.getElementById('navbarFondos')
         .addEventListener('dragstart', function(e) {
           itemURL = e.target.src;
@@ -158,6 +159,7 @@ class StoryStudent extends Component{
           itemTag = e.target.name;
           dataset= e.target.dataset.options;
           text= e.target.dataset.text;
+		  texto = e.target.dataset.primer;
         });
 
         var con = this.state.stage.container();
@@ -171,86 +173,30 @@ class StoryStudent extends Component{
             stage.setPointersPositions(e);
 			var textarea = document.createElement('textarea');
 			textarea.setAttribute("id", "textEdit");
+			console.log(itemURL)
             Konva.Image.fromURL((itemURL), function(image) {
                 image.setAttr('id', itemKey);
                 image.setAttr('tag', itemTag);
                 image.setAttr('url', itemURL);
-                /*Valida si es un fondo*/
-                if(dataset == 'true'){
-					layer.add(image)
-                    image.position({});
-                    image.draggable(false);
-                    image.size({
-                        width: stage.attrs.width,
-                        height: stage.attrs.height
-                    });
-                    var fondo = layer.getChildren(function(node){
-                       return node.getAttr('fondo') === 'true';
-                    });
-                    image.zIndex(fondo.getAbsoluteZIndex());
-                    fondo.destroy();
-					image.on("click", function(e) {
-						if(document.getElementById('textEdit'))
-							document.getElementById('textEdit').remove();
-					});
-                }else{
-				/*Si es un elemento*/
-					image.draggable(false);
-					var group = new Konva.Group({ width:100, height:100, draggable:true });
-					group.add(image);
-					layer.add(group);
+				console.log(texto)
+				if(texto == 'true'){
+					//var group = new Konva.Group({ width:100, height:100, draggable:true });
+					//group.add(image);
+					//layer.add(group);
 					
-                    if(text == 'true'){
-                        var textNode = new Konva.Text({
-                            text: 'Este es mi texto de prueba ..... a ver si funciona .........',
-                            x: 15,
-                            y: 15,
-                            fontSize: 14,
-                            draggable: false,
-                            width: group.width(),
-							height: group.height(),
-							align: 'center',
-							
-                        });
-                        group.add(textNode);
-						
-						textNode.on('dblclick', () => {
-							var textPosition = textNode.getAbsolutePosition();
-							var stageBox = stage.container().getBoundingClientRect();
-
-							var areaPosition = {
-							  x: stageBox.left + textPosition.x,
-							  y: stageBox.top + textPosition.y
-							};
-
-							// create textarea and style it
-							
-							document.body.appendChild(textarea);
-
-							textarea.value = textNode.text();
-							textarea.style.position = 'absolute';
-							textarea.style.top = areaPosition.y + 'px';
-							textarea.style.left = areaPosition.x + 'px';
-							textarea.style.width = textNode.width();
-							textarea.maxLength = 50;
-
-							textarea.focus();
-
-							textarea.addEventListener('keydown', function(e) {
-							  // hide on enter
-
-							  if (e.keyCode === 13) {
-								textNode.text(textarea.value);
-								layer.draw();
-								document.body.removeChild(textarea);
-							  }
-							});
-						});
-						
-                    }
-                    group.position(stage.getPointerPosition());
-
-                    group.on("click", function(e) {
+                    //if(text == 'true'){
+					var textNode = new Konva.Text({
+						text: 'Texto ...',
+						fontSize: 14,
+						draggable: true,
+						visible: true,
+						//width: 100,
+						//height: 100,
+					});
+					layer.add(textNode);
+					
+					/*textNode.on("click", function(e) {
+						console.log('click');
 						if(document.getElementById('textEdit'))
 							document.getElementById('textEdit').remove();
 						
@@ -265,13 +211,105 @@ class StoryStudent extends Component{
                         var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
                         // var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
 						
-						if(group.draggable()){
+						if(textNode.draggable()){
+							console.log('entro')
+					
+							var tr = new Konva.Transformer({
+								node: textNode,
+								enabledAnchors: ['middle-left', 'middle-right'],
+								// set minimum width of text
+								boundBoxFunc: function(oldBox, newBox) {
+								  newBox.width = Math.max(30, newBox.width);
+								  return newBox;
+								}
+								
+							});
+							//layer.add(tr);
+							//layer.draw();
+
+							textNode.on('transform', function() {
+								console.log('transform')
+								// reset scale, so only with is changing by transformer
+								textNode.setAttrs({
+								  width: textNode.width() * textNode.scaleX(),
+								  scaleX: 1
+								});
+							});
+							layer.add(tr);
+							layer.draw();
+						layer.draw();
+						}
+					});
+					*/
+					
+					
+					textNode.on('dblclick', () => {
+						var textPosition = textNode.getAbsolutePosition();
+						var stageBox = stage.container().getBoundingClientRect();
+						var areaPosition = {
+						  x: stageBox.left + textPosition.x,
+						  y: stageBox.top + textPosition.y
+						};							
+						document.body.appendChild(textarea);
+						textarea.value = textNode.text();
+						textarea.style.position = 'absolute';
+						textarea.style.top = areaPosition.y + 'px';
+						textarea.style.left = areaPosition.x + 'px';
+						textarea.style.width = textNode.width();
+						textarea.maxLength = 50;
+						textarea.focus();
+						textarea.addEventListener('keydown', function(e) {
+						  if (e.keyCode === 13) {
+							textNode.text(textarea.value);
+							layer.draw();
+							document.body.removeChild(textarea);
+						  }
+						});
+						layer.draw();
+					});
+                    textNode.position(stage.getPointerPosition());
+					
+					
+
+					
+
+                    textNode.on("click", function(e) {
+						if(document.getElementById('textEdit'))
+							document.getElementById('textEdit').remove();
+						
+                        var transform = layer.getChildren(function(node){
+                           return node.getClassName() === 'Transformer';
+                        });
+                        transform.destroy();
+                        var del = layer.getChildren(function(node){
+                           return node.getAttr('del') === 'true';
+                        });
+                        del.destroy();
+                        var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
+                        // var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
+						
+						if(textNode.draggable()){
 
 							Konva.Image.fromURL(newURL, function(imageDel) {
 								var tr1 = new Konva.Transformer({
-									node: group,
-									keepRatio: true,
+									node: textNode,
+									
+									//enabledAnchors: ['middle-left', 'middle-right'],
+									// set minimum width of text
+									boundBoxFunc: function(oldBox, newBox) {
+									  newBox.width = Math.max(30, newBox.width);
+									  return newBox;
+									}
 								});
+								
+								textNode.on('transform', function() {
+									// reset scale, so only with is changing by transformer
+									textNode.setAttrs({
+									  width: textNode.width() * textNode.scaleX(),
+									  scaleX: 1
+									});
+								  });
+								
 
 								layer.add(tr1);
 								tr1.add(imageDel);
@@ -280,8 +318,8 @@ class StoryStudent extends Component{
 								})
 								imageDel.draggable(false);
 								imageDel.size({
-									width: 25,
-									height: 25
+									width: 15,
+									height: 15
 								});
 								imageDel.setAttr('del', 'true');
 
@@ -298,7 +336,7 @@ class StoryStudent extends Component{
 									});
 									del.destroy();
 									imageDel.destroy();
-									group.destroy();
+									textNode.destroy();
 									layer.draw();
 								});
 								layer.draw();
@@ -306,24 +344,159 @@ class StoryStudent extends Component{
 						}
                         layer.draw();
                     });
+					layer.draw();
+                }else{
 					
-                    //image.draggable(true);
-                    image.size({
-                        width: 150,
-                        height: 150
-                    });
-                    group.size({
-                        width: 150,
-                        height: 150
-                    });
-                    // group.setAttr('position', stage.getPointerPosition());
-                    //image.setAttr('position', stage.getPointerPosition());
-                }
-				//document.body.removeChild(textarea);
-				if(document.getElementById('textEdit'))
-					document.getElementById('textEdit').remove();
-                image.setAttr('fondo', dataset);
-                layer.draw();
+					/*Valida si es un fondo*/
+					if(dataset == 'true'){
+						layer.add(image)
+						image.position({});
+						image.draggable(false);
+						image.size({
+							width: stage.attrs.width,
+							height: stage.attrs.height
+						});
+						var fondo = layer.getChildren(function(node){
+						   return node.getAttr('fondo') === 'true';
+						});
+						image.zIndex(fondo.getAbsoluteZIndex());
+						fondo.destroy();
+						image.on("click", function(e) {
+							if(document.getElementById('textEdit'))
+								document.getElementById('textEdit').remove();
+						});
+					}else{
+					/*Si es un elemento*/
+						image.draggable(false);
+						var group = new Konva.Group({ width:100, height:100, draggable:true });
+						group.add(image);
+						layer.add(group);
+						
+						if(text == 'true'){
+							var textNode = new Konva.Text({
+								text: 'Texto ...',
+								x: 15,
+								y: 15,
+								fontSize: 14,
+								draggable: false,
+								width: group.width(),
+								height: group.height(),
+								align: 'center',
+								
+							});
+							group.add(textNode);
+							
+							textNode.on('dblclick', () => {
+								var textPosition = textNode.getAbsolutePosition();
+								var stageBox = stage.container().getBoundingClientRect();
+
+								var areaPosition = {
+								  x: stageBox.left + textPosition.x,
+								  y: stageBox.top + textPosition.y
+								};
+
+								// create textarea and style it
+								
+								document.body.appendChild(textarea);
+
+								textarea.value = textNode.text();
+								textarea.style.position = 'absolute';
+								textarea.style.top = areaPosition.y + 'px';
+								textarea.style.left = areaPosition.x + 'px';
+								textarea.style.width = textNode.width();
+								textarea.maxLength = 50;
+
+								textarea.focus();
+
+								textarea.addEventListener('keydown', function(e) {
+								  // hide on enter
+
+								  if (e.keyCode === 13) {
+									textNode.text(textarea.value);
+									layer.draw();
+									document.body.removeChild(textarea);
+								  }
+								});
+							});
+							
+						}
+						group.position(stage.getPointerPosition());
+
+						group.on("click", function(e) {
+							if(document.getElementById('textEdit'))
+								document.getElementById('textEdit').remove();
+							
+							var transform = layer.getChildren(function(node){
+							   return node.getClassName() === 'Transformer';
+							});
+							transform.destroy();
+							var del = layer.getChildren(function(node){
+							   return node.getAttr('del') === 'true';
+							});
+							del.destroy();
+							var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
+							// var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
+							
+							if(group.draggable()){
+
+								Konva.Image.fromURL(newURL, function(imageDel) {
+									var tr1 = new Konva.Transformer({
+										node: group,
+										keepRatio: true,
+									});
+
+									layer.add(tr1);
+									tr1.add(imageDel);
+									tr1.on('transform', () => {
+									  imageDel.x(10);
+									})
+									imageDel.draggable(false);
+									imageDel.size({
+										width: 25,
+										height: 25
+									});
+									imageDel.setAttr('del', 'true');
+
+									imageDel.position({x: 0, y: -25})
+									imageDel.on("click", function(e) {
+										if(document.getElementById('textEdit'))
+											document.getElementById('textEdit').remove();
+										var transform = layer.getChildren(function(node){
+										   return node.getClassName() === 'Transformer';
+										});
+										transform.destroy();
+										var del = layer.getChildren(function(node){
+										   return node.getAttr('del') === 'true';
+										});
+										del.destroy();
+										imageDel.destroy();
+										group.destroy();
+										layer.draw();
+									});
+									layer.draw();
+								});
+							}
+							layer.draw();
+						});
+						
+						//image.draggable(true);
+						image.size({
+							width: 150,
+							height: 150
+						});
+						group.size({
+							width: 150,
+							height: 150
+						});
+						// group.setAttr('position', stage.getPointerPosition());
+						//image.setAttr('position', stage.getPointerPosition());
+					}
+					//document.body.removeChild(textarea);
+					if(document.getElementById('textEdit'))
+						document.getElementById('textEdit').remove();
+					image.setAttr('fondo', dataset);
+					layer.draw();
+				}
             });
         });
     }
@@ -416,6 +589,7 @@ class StoryStudent extends Component{
                     <img
                         data-options={image.status}
                         data-text={true}
+						data-primer={index == 0 ? true : false}
                         name={image.tag}
                         id={image.id}
                         className='img-elementos'
