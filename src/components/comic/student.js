@@ -170,6 +170,10 @@ class StoryStudent extends Component{
         });
 
         con.addEventListener('drop', function(e) {
+			stage.on("click", function(e) {
+				if(document.getElementById('textEdit'))
+					document.getElementById('textEdit').remove();
+			});
             e.preventDefault();
             stage.setPointersPositions(e);
 			var textarea = document.createElement('textarea');
@@ -186,6 +190,7 @@ class StoryStudent extends Component{
 						fontSize: 14,
 						draggable: true,
 						visible: true,
+						padding: 5
 					});
 					layer.add(textNode);
 					
@@ -236,7 +241,8 @@ class StoryStudent extends Component{
 							Konva.Image.fromURL(newURL, function(imageDel) {
 								var tr1 = new Konva.Transformer({
 									node: textNode,
-									
+									rotateAnchorOffset:20,
+									anchorSize:6,
 									//enabledAnchors: ['middle-left', 'middle-right'],
 									// set minimum width of text
 									boundBoxFunc: function(oldBox, newBox) {
@@ -245,12 +251,36 @@ class StoryStudent extends Component{
 									}
 								});
 								
-								textNode.on('transform', function() {
+								textNode.on('transform', function(e) {
+									console.log('text ...')
+									console.log(e)
+									console.log(e.evt.movementX)
+									console.log(e.evt.movementY)
 									// reset scale, so only with is changing by transformer
-									textNode.setAttrs({
-									  width: textNode.width() * textNode.scaleX(),
-									  scaleX: 1
-									});
+									
+									if (e.evt.movementX != 0 && e.evt.movementY == 0){
+										console.log('x')
+										textNode.setAttrs({
+											width: textNode.width() * textNode.scaleX(),
+											scaleX: 1
+										});
+									}
+									else if (e.evt.movementX == 0 && e.evt.movementY != 0){
+										console.log('y')
+										textNode.setAttrs({
+										  height: textNode.height() * textNode.scaleY(),
+										  scaleY: 1,
+										});
+									}else{
+										console.log('esquina')
+										textNode.setAttrs({
+										  width: textNode.width() * textNode.scaleX(),
+										  height: textNode.height() * textNode.scaleY(),
+										  scaleX: 1,
+										  scaleY: 1,
+										  fontSize: textNode.fontSize() * textNode.scaleX(),
+										});
+									} 
 								  });
 								
 
@@ -386,6 +416,8 @@ class StoryStudent extends Component{
 									var tr1 = new Konva.Transformer({
 										node: group,
 										keepRatio: true,
+										rotateAnchorOffset:40,
+										anchorSize:6,
 									});
 
 									layer.add(tr1);
@@ -395,8 +427,8 @@ class StoryStudent extends Component{
 									})
 									imageDel.draggable(false);
 									imageDel.size({
-										width: 25,
-										height: 25
+										width: 20,
+										height: 20
 									});
 									imageDel.setAttr('del', 'true');
 
@@ -423,10 +455,14 @@ class StoryStudent extends Component{
 						});
 						
 						//image.draggable(true);
-						image.size({
+						image.scale({
+						  x: .2,
+						  y: .2
+						});
+						/*image.size({
 							width: 150,
 							height: 150
-						});
+						});*/
 						group.size({
 							width: 150,
 							height: 150
@@ -616,8 +652,12 @@ class StoryStudent extends Component{
                     </div>
                 </div>
                 <div className="div-btn">
-                    <button style={btnStyleD} onClick={this.handleClickDescargar.bind(this)} className="button-terminar-ejercicio-s">Descargar</button>
-                    <button style={btnStyleT} onClick={this.handleClickTerminar.bind(this)} className="button-terminar-ejercicio-s">Terminar</button>
+                    <button style={btnStyleD} onClick={this.handleClickDescargar.bind(this)} className="button-terminar-ejercicio-s">
+						<img src="/img/ico-terminar.svg"  style={{ width: '10px', marginRight: '6px'}}/>Descargar
+					</button>
+                    <button style={btnStyleT} onClick={this.handleClickTerminar.bind(this)} className="button-terminar-ejercicio-s">
+						<img src="/img/ico-descarga.svg" style={{ width: '10px', marginRight: '6px'}}/>Terminar
+					</button>
                 </div>
             </div>
         )

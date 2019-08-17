@@ -135,8 +135,12 @@ class Book extends Component {
 					    </Turn>
 					</div>
 					<div className="div-btn-b">
-						<button style={btnStyleT} onClick={this.handleClickTerminarB.bind(this)} className="button-terminar-ejercicio-b">Terminar</button>
-						<button style={btnStyleD} onClick={this.handleClickDescargar.bind(this)} className="button-terminar-ejercicio-b">Descargar</button>
+						<button style={btnStyleT} onClick={this.handleClickTerminarB.bind(this)} className="button-terminar-ejercicio-b">
+							<img src="/img/ico-terminar.svg"  style={{ width: '10px', marginRight: '6px'}}/>Terminar
+						</button>
+						<button style={btnStyleD} onClick={this.handleClickDescargar.bind(this)} className="button-terminar-ejercicio-b">
+							<img src="/img/ico-descarga.svg"  style={{ width: '10px', marginRight: '6px'}}/>Descargar
+						</button>
 					</div>
 				</div>
             </div>

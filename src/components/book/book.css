@@ -66,6 +66,8 @@
 	display: none;
 }
 #page-1, #page-2 {
+	outline: none;
+	height: 300px;
 	border:none;
 	position: absolute;
 	/*top: 600px;

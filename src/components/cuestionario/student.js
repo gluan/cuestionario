@@ -321,8 +321,12 @@ class Student extends Component {
                     </div>
 				</div>
                 <div className="div-btn">
-                    <button style={btnStyleD} onClick={this.handleClickDescargar} className="button-terminar-ejercicio">Descargar</button>
-                    <button style={btnStyleT} onClick={this.handleClickTerminar} className="button-terminar-ejercicio">Terminar</button>
+                    <button style={btnStyleD} onClick={this.handleClickDescargar} className="button-terminar-ejercicio">
+						<img src="/img/ico-descarga.svg"  style={{ width: '10px', marginRight: '6px'}}/>Descargar
+					</button>
+                    <button style={btnStyleT} onClick={this.handleClickTerminar} className="button-terminar-ejercicio">
+						<img src="/img/ico-terminar.svg"  style={{ width: '10px', marginRight: '6px'}}/>Terminar
+					</button>
                 </div>
             </div>
         );
