@@ -179,12 +179,10 @@ class StoryStudent extends Component{
             stage.setPointersPositions(e);
 			var textarea = document.createElement('textarea');
 			textarea.setAttribute("id", "textEdit");
-			console.log(itemURL)
             Konva.Image.fromURL((itemURL), function(image) {
                 image.setAttr('id', itemKey);
                 image.setAttr('tag', itemTag);
                 image.setAttr('url', itemURL);
-				console.log(texto)
 				if(texto == 'true'){
 					var textNode = new Konva.Text({
 						text: 'Texto ...',
@@ -195,7 +193,7 @@ class StoryStudent extends Component{
 					});
 					layer.add(textNode);
 
-					textNode.on('dblclick', () => {
+					textNode.on('dblclick dbltap', () => {
 						var textPosition = textNode.getAbsolutePosition();
 						var stageBox = stage.container().getBoundingClientRect();
 						var areaPosition = {
@@ -253,27 +251,19 @@ class StoryStudent extends Component{
 								});
 
 								textNode.on('transform', function(e) {
-									console.log('text ...')
-									console.log(e)
-									console.log(e.evt.movementX)
-									console.log(e.evt.movementY)
-									// reset scale, so only with is changing by transformer
 
 									if (e.evt.movementX != 0 && e.evt.movementY == 0){
-										console.log('x')
 										textNode.setAttrs({
 											width: textNode.width() * textNode.scaleX(),
 											scaleX: 1
 										});
 									}
 									else if (e.evt.movementX == 0 && e.evt.movementY != 0){
-										console.log('y')
 										textNode.setAttrs({
 										  height: textNode.height() * textNode.scaleY(),
 										  scaleY: 1,
 										});
 									}else{
-										console.log('esquina')
 										textNode.setAttrs({
 										  width: textNode.width() * textNode.scaleX(),
 										  height: textNode.height() * textNode.scaleY(),
@@ -360,7 +350,7 @@ class StoryStudent extends Component{
 							});
 							group.add(textNode);
 
-							textNode.on('dblclick', () => {
+							textNode.on('dblclick dbltap', () => {
 								var textPosition = textNode.getAbsolutePosition();
 								var stageBox = stage.container().getBoundingClientRect();
 
