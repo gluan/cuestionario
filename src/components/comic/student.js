@@ -135,7 +135,7 @@ class StoryStudent extends Component{
 
         this.state.stage.add(layer);
 
-        this.state.stage.on("click", function(e) {
+        this.state.stage.on("click tap", function(e) {
             var transform = layer.getChildren(function(node){
                return node.getClassName() === 'Transformer';
             });
@@ -171,7 +171,7 @@ class StoryStudent extends Component{
         });
 
         con.addEventListener('drop', function(e) {
-			stage.on("click", function(e) {
+			stage.on("click tap", function(e) {
 				if(document.getElementById('textEdit'))
 					document.getElementById('textEdit').remove();
 			});
@@ -222,7 +222,7 @@ class StoryStudent extends Component{
 					});
                     textNode.position(stage.getPointerPosition());
 
-                    textNode.on("click", function(e) {
+                    textNode.on("click tap", function(e) {
 						if(document.getElementById('textEdit'))
 							document.getElementById('textEdit').remove();
 
@@ -298,7 +298,7 @@ class StoryStudent extends Component{
 								imageDel.setAttr('del', 'true');
 
 								imageDel.position({x: 0, y: -25})
-								imageDel.on("click", function(e) {
+								imageDel.on("click tap", function(e) {
 									if(document.getElementById('textEdit'))
 										document.getElementById('textEdit').remove();
 									var transform = layer.getChildren(function(node){
@@ -335,7 +335,7 @@ class StoryStudent extends Component{
 						});
 						image.zIndex(fondo.getAbsoluteZIndex());
 						fondo.destroy();
-						image.on("click", function(e) {
+						image.on("click tap", function(e) {
 							if(document.getElementById('textEdit'))
 								document.getElementById('textEdit').remove();
 						});
@@ -394,7 +394,7 @@ class StoryStudent extends Component{
 						}
 						group.position(stage.getPointerPosition());
 
-						group.on("click", function(e) {
+						group.on("click tap", function(e) {
 							if(document.getElementById('textEdit'))
 								document.getElementById('textEdit').remove();
 
@@ -432,7 +432,7 @@ class StoryStudent extends Component{
 									imageDel.setAttr('del', 'true');
 
 									imageDel.position({x: 0, y: -25})
-									imageDel.on("click", function(e) {
+									imageDel.on("click tap", function(e) {
 										if(document.getElementById('textEdit'))
 											document.getElementById('textEdit').remove();
 										var transform = layer.getChildren(function(node){
@@ -466,7 +466,7 @@ class StoryStudent extends Component{
 							width: 150,
 							height: 150
 						});
-						// group.setAttr('position', stage.getPointerPosition());
+						//group.setAttr('position', stage.getPointerPosition());
 						//image.setAttr('position', stage.getPointerPosition());
 					}
 					//document.body.removeChild(textarea);

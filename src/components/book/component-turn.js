@@ -27,12 +27,8 @@ class Turn extends React.Component {
     }
     document.removeEventListener("keydown", this.handleKeyDown, false);
   }
-  componentWillReceiveProps(props){
-      console.log('props -------------    ')
-      console.log(props)
-
-  }
   handleKeyDown = event => {
+      console.log('jhjhhhhhhhhhhhhhhhhhhhhh')
     if (event.keyCode === 37) {
       $(this.el).turn("previous");
     }
@@ -42,15 +38,9 @@ class Turn extends React.Component {
   };
 
   render() {
-      console.log('turn ...........................')
-      console.log(this.props.className)
-      console.log(this.props.style)
-      console.log(this.props.children)
-      console.log(this.el)
     return (
       <div
         className={this.props.className}
-        //style={{width:'100%'}}
         ref={el => (this.el = el)}
       >
         {this.props.children}
