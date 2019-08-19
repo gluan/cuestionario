@@ -34,31 +34,6 @@ class StoryStudent extends Component{
             },
             instructions:'',
             /*Cambiarlo por imagenes que regrese el servicio de imagenes predefinidas*/
-            imagenesPredefinidas2:{
-                fondos:[
-                    { url:'/img/elementos/fondos/atardecer.jpg', id:'atardecer'},
-                    { url:'/img/elementos/fondos/cabaña.jpg', id: 'cabaña'},
-                    { url:'/img/elementos/fondos/castillo-dia.jpg', id:'castillo-dia'},
-                    { url:'/img/elementos/fondos/castillo-interior.jpg', id:'castillo-interior'},
-                    { url:'/img/elementos/fondos/castillo-noche.jpg', id:'castillo-noche'}
-                ],
-                objetos:[
-                    { url:'/img/elementos/objetos/caldero.png', id:'diablito'},
-                    { url:'/img/elementos/objetos/cofre.png', id: 'alberick'},
-                    { url:'/img/elementos/objetos/escoba.png', id:'argus'},
-                    { url:'/img/elementos/objetos/Escudo Corazon.png', id:'arlina'},
-                    { url:'/img/elementos/objetos/Escudo Morado Amarillo.png', id:'flame'},
-                    { url:'/img/elementos/objetos/letrero.png', id:'diablito', },
-                ],
-                personajes: [
-                    { url:'/img/elementos/personajes/Diabillo-1.png', id:'diablito'},
-                    { url:'/img/elementos/personajes/S_AlberickSorprised_01.png', id: 'alberick'},
-                    { url:'/img/elementos/personajes/S_argus-diciendo-yo.png', id:'argus'},
-                    { url:'/img/elementos/personajes/S_Arlinaleyendo.png', id:'arlina'},
-                    { url:'/img/elementos/personajes/S_TweenEvilFlame_01.png', id:'flame'},
-                    { url:'/img/elementos/personajes/S_Narrator_01.png', id:'diablito'},
-                ]
-            },
             imagenesPredefinidas:{
                 fondos:[
                     { url:'/img/elementos/fondos/atardecer.jpg', id:'atardecer'},
@@ -84,11 +59,7 @@ class StoryStudent extends Component{
                     { url:'/img/elementos/personajes/S_Narrator_01.png', id:'diablito'},
                 ]
             },
-            nuevasImagenes:{
-                fondos:[],
-                objetos:[],
-                personajes: []
-            },
+            nuevasImagenes: {},
             imagenes:[],
         }
         this.handleAdd= value =>{
@@ -204,27 +175,18 @@ class StoryStudent extends Component{
             })
         }
         this.handleEditTag = (e) => {
+            console.log('Add tag')
+            console.log(e)
+            console.log(e.currentTarget)
             let id = e.currentTarget.id.split('-');
-            let imagenes = [];
-            if(id[0] == 'pre'){
-                imagenes= this.state.imagenesPredefinidas2;
-                if(id[1] == 'fondos')
-                    imagenes.fondos[id[2]].tag = e.currentTarget.value;
-                if(id[1] == 'personajes')
-                    imagenes.personajes[id[2]].tag = e.currentTarget.value;
-                if(id[1] == 'objetos')
-                    imagenes.objetos[id[2]].tag = e.currentTarget.value;
-                this.setState({imagenesPredefinidas2: imagenes})
-            }else{
-                imagenes= this.state.nuevasImagenes;
-                if(id[1] == 'fondos')
-                    imagenes.fondos[id[2]].tag = e.currentTarget.value;
-                if(id[1] == 'personajes')
-                    imagenes.personajes[id[2]].tag = e.currentTarget.value;
-                if(id[1] == 'objetos')
-                    imagenes.objetos[id[2]].tag = e.currentTarget.value;
-                this.setState({nuevasImagenes: imagenes})
-            }
+            let imagenes = this.state.nuevasImagenes;
+            if(id[1] == 'fondos')
+                imagenes.fondos[id[2]].tag = e.currentTarget.value;
+            if(id[1] == 'personajes')
+                imagenes.personajes[id[2]].tag = e.currentTarget.value;
+            if(id[1] == 'objetos')
+                imagenes.objetos[id[2]].tag = e.currentTarget.value;
+            this.setState({nuevasImagenes: imagenes})
         }
         this.handleClickDeleteImage= (e) =>{
             var name = e.target.name.split('-')
@@ -272,92 +234,47 @@ class StoryStudent extends Component{
         }else {
             errors.instructions = null;
         }
-        if (this.state.predefinidas){
-            if (this.state.imagenesPredefinidas.fondos.length == 0){
-                errors.fondos = 'div-elementos error-story';
-                errors.error=true;
-            }else {
-                errors.fondos = null;
-                this.state.imagenesPredefinidas.fondos.map((item, i) =>{
-                    if(!item.tag){
-                        errors.error=true;
-                        errors.fondosTag.push('input-tag error-story');
-                    }else{
-                        errors.fondosTag.push(null);
-                    }
-                })
-            }
-            if (this.state.imagenesPredefinidas.personajes.length == 0){
-                errors.personajes = 'div-elementos error-story';
-                errors.error=true;
-            }else {
-                errors.personajes = null;
-                this.state.imagenesPredefinidas.personajes.map((item, i) =>{
-                    if(!item.tag){
-                        errors.error=true;
-                        errors.personajesTag.push('input-tag error-story');
-                    }else{
-                        errors.personajesTag.push(null);
-                    }
-                })
-            }
-            if (this.state.imagenesPredefinidas.objetos.length == 0){
-                errors.objetos = 'div-elementos error-story';
-                errors.error=true;
-            }else {
-                errors.objetos = null;
-                this.state.imagenesPredefinidas.objetos.map((item, i) =>{
-                    if(!item.tag){
-                        errors.error=true;
-                        errors.objetosTag.push('input-tag error-story');
-                    }else{
-                        errors.objetosTag.push(null);
-                    }
-                })
-            }
-        }else{
-            if (this.state.nuevasImagenes.fondos.length == 0){
-                errors.fondos = 'div-elementos error-story';
-                errors.error=true;
-            }else {
-                errors.fondos = null;
-                this.state.nuevasImagenes.fondos.map((item, i) =>{
-                    if(!item.tag){
-                        errors.error=true;
-                        errors.fondosTag.push('input-tag error-story');
-                    }else{
-                        errors.fondosTag.push(null);
-                    }
-                })
-            }
-            if (this.state.nuevasImagenes.personajes.length == 0){
-                errors.personajes = 'div-elementos error-story';
-                errors.error=true;
-            }else {
-                errors.personajes = null;
-                this.state.nuevasImagenes.personajes.map((item, i) =>{
-                    if(!item.tag){
-                        errors.error=true;
-                        errors.personajesTag.push('input-tag error-story');
-                    }else{
-                        errors.personajesTag.push(null);
-                    }
-                })
-            }
-            if (this.state.nuevasImagenes.objetos.length == 0){
-                errors.objetos = 'div-elementos error-story';
-                errors.error=true;
-            }else {
-                errors.objetos = null;
-                this.state.nuevasImagenes.objetos.map((item, i) =>{
-                    if(!item.tag){
-                        errors.error=true;
-                        errors.objetosTag.push('input-tag error-story');
-                    }else{
-                        errors.objetosTag.push(null);
-                    }
-                })
-            }
+        if (this.state.nuevasImagenes.fondos.length == 0){
+            errors.fondos = 'div-elementos error-story';
+            errors.error=true;
+        }else {
+            errors.fondos = null;
+            this.state.nuevasImagenes.fondos.map((item, i) =>{
+                if(!item.tag){
+                    errors.error=true;
+                    errors.fondosTag.push('input-tag error-story');
+                }else{
+                    errors.fondosTag.push(null);
+                }
+            })
+        }
+        if (this.state.nuevasImagenes.personajes.length == 0){
+            errors.personajes = 'div-elementos error-story';
+            errors.error=true;
+        }else {
+            errors.personajes = null;
+            this.state.nuevasImagenes.personajes.map((item, i) =>{
+                if(!item.tag){
+                    errors.error=true;
+                    errors.personajesTag.push('input-tag error-story');
+                }else{
+                    errors.personajesTag.push(null);
+                }
+            })
+        }
+        if (this.state.nuevasImagenes.objetos.length == 0){
+            errors.objetos = 'div-elementos error-story';
+            errors.error=true;
+        }else {
+            errors.objetos = null;
+            this.state.nuevasImagenes.objetos.map((item, i) =>{
+                if(!item.tag){
+                    errors.error=true;
+                    errors.objetosTag.push('input-tag error-story');
+                }else{
+                    errors.objetosTag.push(null);
+                }
+            })
         }
         this.setState({errors:errors});
     }
@@ -374,11 +291,7 @@ class StoryStudent extends Component{
     handleClickInit(){
         this.setState({
             instructions:'',
-            nuevasImagenes:{
-                fondos:[],
-                objetos:[],
-                personajes: []
-            },
+            nuevasImagenes:Object.assign({}, this.state.imagenesPredefinidas),
             imagesUpload:[],
             imagenes:[],
             imgSelect: 0,
@@ -401,30 +314,22 @@ class StoryStudent extends Component{
     /*Imagenes predefinidas*/
     handleClickImagenes(){
         this.setState({
-            predefinidas:true,
-            nuevasImagenes:{
-                fondos:[],
-                objetos:[],
-                personajes: []
-            },
+            predefinidas: true,
+            nuevasImagenes: Object.assign({}, this.state.imagenesPredefinidas)
         });
     }
     handleClickSelecionar(e){
-        this.setState({
-            files:[], filesURL:[], imagesUpload:[],
-            imagenesPredefinidas2: Object.assign({}, this.state.imagenesPredefinidas)
-        })
         var imagenes=[];
         var imgSelect = 0;
         /*TODO: Cambiarlo por imagenes que regrese el servicio de galerio*/
         if (e=='fondos'){
-            imagenes = this.state.imagenesPredefinidas.fondos;
+            imagenes = JSON.parse(JSON.stringify(this.state.imagenesPredefinidas.fondos));
             imgSelect= this.state.nuevasImagenes.fondos.length;
         }else if(e == 'personajes'){
-            imagenes = this.state.imagenesPredefinidas.personajes;
+            imagenes = JSON.parse(JSON.stringify(this.state.imagenesPredefinidas.personajes));
             imgSelect= this.state.nuevasImagenes.personajes.length;
         }else{
-            imagenes = this.state.imagenesPredefinidas.objetos;
+            imagenes = JSON.parse(JSON.stringify(this.state.imagenesPredefinidas.objetos));
             imgSelect= this.state.nuevasImagenes.objetos.length;
         }
         imagenes.map((item, i) =>{
@@ -476,7 +381,6 @@ class StoryStudent extends Component{
             });
         }
         this.setState({view: true,nuevasImagenes:img});
-        // this.validate();
     }
 
     handleClickCancel(){
@@ -504,6 +408,13 @@ class StoryStudent extends Component{
         this.setState({files: fileList, filesURL:urls})
     }
 
+    componentWillMount() {
+        console.log('njnjnjnjn')
+        this.setState({
+            nuevasImagenes:JSON.parse(JSON.stringify(this.state.imagenesPredefinidas)),
+        });
+    }
+
     render(){
         console.log('Render ...................')
         console.log(this.state);
@@ -517,142 +428,75 @@ class StoryStudent extends Component{
         var fondos = [];
         var objetos = [];
         var personajes = [];
-
-        if (this.state.predefinidas == true){
-            fondos = this.state.imagenesPredefinidas.fondos.map(
-                function iterator (value, i){
-                    return (
-                        <div>
-                            <div className="elemento">
-                                <label className="identificador-elemento">{i+1}</label>
-                                <div className="div-image-elemento">
-                                    <img className="image-elemento" src={value.url} />
-                                </div>
-                                <label className="nombre-elemento">fondo.eldventir1.jpg</label>
-                                <label className="peso-elemento">400 KB</label>
-                                <img src="/img/tag.svg" className="img-tag"/>
-                                <input id={'pre-fondos-'+i} onChange={handleEditTag} value={value.tag}
-                                    className={errors.fondosTag[i] ? errors.fondosTag[i] : "input-tag"} />
+        var handleClickDeleteImage = this.handleClickDeleteImage;
+        fondos = this.state.nuevasImagenes.fondos.map(
+            function iterator (value, i){
+                return (
+                    <div>
+                        <div className="elemento">
+                            <label className="identificador-elemento">{i+1}</label>
+                            <div className="div-image-elemento">
+                                <img className="image-elemento" src={value.url} />
                             </div>
-                            <hr className="separador-elemento"/>
+                            <label className="nombre-elemento">fondo.eldventir1.jpg</label>
+                            <label className="peso-elemento">400 KB</label>
+                            <img src="/img/tag.svg" className="img-tag"/>
+                            <input id={'new-fondos-'+i} onChange={handleEditTag} value={value.tag}
+                                className={errors.fondosTag[i] ? errors.fondosTag[i] : "input-tag"} />
+                            <img className="image-elemento-bote" src='/img/bote.svg' name={'fondos-'+i}
+                                onClick={handleClickDeleteImage}/>
                         </div>
-                    )
-                }
-            );
+                        <hr className="separador-elemento"/>
+                    </div>
+                )
+            }
+        );
 
-            objetos = this.state.imagenesPredefinidas.objetos.map(
-                function iterator (value, i){
-                    return (
-                        <div>
-                            <div className="elemento">
-                                <label className="identificador-elemento">{i+1}</label>
-                                <div className="div-image-elemento">
-                                    <img className="image-elemento" src={value.url} />
-                                </div>
-                                <label className="nombre-elemento">fondo.eldventir1.jpg</label>
-                                <label className="peso-elemento">400 KB</label>
-                                <img src="/img/tag.svg" className="img-tag"/>
-                                <input id={'pre-objetos-'+i} onChange={handleEditTag} value={value.tag}
-                                    className={errors.objetosTag[i] ? errors.objetosTag[i] : "input-tag"} />
+        objetos = this.state.nuevasImagenes.objetos.map(
+            function iterator (value, i){
+                return (
+                    <div>
+                        <div className="elemento">
+                            <label className="identificador-elemento">{i+1}</label>
+                            <div className="div-image-elemento">
+                                <img className="image-elemento" src={value.url} />
                             </div>
-                            <hr className="separador-elemento"/>
+                            <label className="nombre-elemento">fondo.eldventir1.jpg</label>
+                            <label className="peso-elemento">400 KB</label>
+                            <img src="/img/tag.svg" className="img-tag"/>
+                            <input id={'new-objetos-'+i} onChange={handleEditTag} value={value.tag}
+                                className={errors.objetosTag[i] ? errors.objetosTag[i] : "input-tag"} />
+                            <img className="image-elemento-bote" src='/img/bote.svg' name={'objetos-'+i}
+                                onClick={handleClickDeleteImage}/>
                         </div>
-                    )
-                }
-            );
+                        <hr className="separador-elemento"/>
+                    </div>
+                )
+            }
+        );
 
-            personajes = this.state.imagenesPredefinidas.personajes.map(
-                function iterator (value, i){
-                    return (
-                        <div>
-                            <div className="elemento">
-                                <label className="identificador-elemento">{i+1}</label>
-                                <div className="div-image-elemento">
-                                    <img className="image-elemento" src={value.url} />
-                                </div>
-                                <label className="nombre-elemento">fondo.eldventir1.jpg</label>
-                                <label className="peso-elemento">400 KB</label>
-                                <img src="/img/tag.svg" className="img-tag"/>
-                                <input id={'pre-personajes-'+i} onChange={handleEditTag} value={value.tag}
-                                    className={errors.personajesTag[i] ? errors.personajesTag[i] : "input-tag"} />
+        personajes = this.state.nuevasImagenes.personajes.map(
+            function iterator (value, i){
+                return (
+                    <div>
+                        <div className="elemento">
+                            <label className="identificador-elemento">{i+1}</label>
+                            <div className="div-image-elemento">
+                                <img className="image-elemento" src={value.url} />
                             </div>
-                            <hr className="separador-elemento"/>
+                            <label className="nombre-elemento">fondo.eldventir1.jpg</label>
+                            <label className="peso-elemento">400 KB</label>
+                            <img src="/img/tag.svg" className="img-tag"/>
+                            <input id={'new-personajes-'+i} onChange={handleEditTag} value={value.tag}
+                                className={errors.personajesTag[i] ? errors.personajesTag[i] : "input-tag"} />
+                            <img className="image-elemento-bote" src='/img/bote.svg' name={'personajes-'+i}
+                                onClick={handleClickDeleteImage}/>
                         </div>
-                    )
-                }
-            );
-        } else{
-            var handleClickDeleteImage = this.handleClickDeleteImage;
-            fondos = this.state.nuevasImagenes.fondos.map(
-                function iterator (value, i){
-                    return (
-                        <div>
-                            <div className="elemento">
-                                <label className="identificador-elemento">{i+1}</label>
-                                <div className="div-image-elemento">
-                                    <img className="image-elemento" src={value.url} />
-                                </div>
-                                <label className="nombre-elemento">fondo.eldventir1.jpg</label>
-                                <label className="peso-elemento">400 KB</label>
-                                <img src="/img/tag.svg" className="img-tag"/>
-                                <input id={'new-fondos-'+i} onChange={handleEditTag} value={value.tag}
-                                    className={errors.fondosTag[i] ? errors.fondosTag[i] : "input-tag"} />
-                                <img className="image-elemento-bote" src='/img/bote.svg' name={'fondos-'+i}
-                                    onClick={handleClickDeleteImage}/>
-                            </div>
-                            <hr className="separador-elemento"/>
-                        </div>
-                    )
-                }
-            );
-
-            objetos = this.state.nuevasImagenes.objetos.map(
-                function iterator (value, i){
-                    return (
-                        <div>
-                            <div className="elemento">
-                                <label className="identificador-elemento">{i+1}</label>
-                                <div className="div-image-elemento">
-                                    <img className="image-elemento" src={value.url} />
-                                </div>
-                                <label className="nombre-elemento">fondo.eldventir1.jpg</label>
-                                <label className="peso-elemento">400 KB</label>
-                                <img src="/img/tag.svg" className="img-tag"/>
-                                <input id={'new-objetos-'+i} onChange={handleEditTag} value={value.tag}
-                                    className={errors.objetosTag[i] ? errors.objetosTag[i] : "input-tag"} />
-                                <img className="image-elemento-bote" src='/img/bote.svg' name={'objetos-'+i}
-                                    onClick={handleClickDeleteImage}/>
-                            </div>
-                            <hr className="separador-elemento"/>
-                        </div>
-                    )
-                }
-            );
-
-            personajes = this.state.nuevasImagenes.personajes.map(
-                function iterator (value, i){
-                    return (
-                        <div>
-                            <div className="elemento">
-                                <label className="identificador-elemento">{i+1}</label>
-                                <div className="div-image-elemento">
-                                    <img className="image-elemento" src={value.url} />
-                                </div>
-                                <label className="nombre-elemento">fondo.eldventir1.jpg</label>
-                                <label className="peso-elemento">400 KB</label>
-                                <img src="/img/tag.svg" className="img-tag"/>
-                                <input id={'new-personajes-'+i} onChange={handleEditTag} value={value.tag}
-                                    className={errors.personajesTag[i] ? errors.personajesTag[i] : "input-tag"} />
-                                <img className="image-elemento-bote" src='/img/bote.svg' name={'personajes-'+i}
-                                    onClick={handleClickDeleteImage}/>
-                            </div>
-                            <hr className="separador-elemento"/>
-                        </div>
-                    )
-                }
-            );
-        }
-
+                        <hr className="separador-elemento"/>
+                    </div>
+                )
+            }
+        );
         var body ='';
         var btnStyle = this.state.restrictLabel ? {display:'initial'} : {display:'none'};
 
@@ -679,9 +523,9 @@ class StoryStudent extends Component{
                             <div className="div-botones">
                                 <div>Fondos </div>
                                 <div>
-                                <button className={this.state.predefinidas ? "btn-default-img": "btn-default-img-inactive"} onClick={() => this.handleClickImagenes()}>Imagenes Predefinidas</button>
+                                <button className="btn-default-img" onClick={() => this.handleClickImagenes()}>Imagenes Predefinidas</button>
                                 <button
-                                    className={this.state.predefinidas || !(this.state.nuevasImagenes.fondos.length < maxImg) ? "btn-add-img-inactive": "btn-add-img"}
+                                    className={!(this.state.nuevasImagenes.fondos.length < maxImg) ? "btn-add-img-inactive": "btn-add-img"}
                                     onClick={() => this.handleClickSelecionar('fondos')}
                                     disabled = {this.state.nuevasImagenes.fondos.length >= maxImg}
                                 >Seleccionar imagen</button>
@@ -695,7 +539,7 @@ class StoryStudent extends Component{
                             <div className="div-botones">
                                 <label>Personajes </label>
                                 <button
-                                    className={this.state.predefinidas || !(this.state.nuevasImagenes.personajes.length < maxImg) ? "btn-add-img-inactive": "btn-add-img"}
+                                    className={!(this.state.nuevasImagenes.personajes.length < maxImg) ? "btn-add-img-inactive": "btn-add-img"}
                                     onClick={() => this.handleClickSelecionar('personajes')}
                                     disabled = {this.state.nuevasImagenes.personajes.length >= maxImg}
                                 >Seleccionar imagen</button>
@@ -708,7 +552,7 @@ class StoryStudent extends Component{
                             <div className="div-botones">
                                 <label>Objetos </label>
                                 <button
-                                    className={this.state.predefinidas || !(this.state.nuevasImagenes.objetos.length < maxImg) ? "btn-add-img-inactive": "btn-add-img"}
+                                    className={!(this.state.nuevasImagenes.objetos.length < maxImg) ? "btn-add-img-inactive": "btn-add-img"}
                                     onClick={() => this.handleClickSelecionar('objetos')}
                                     disabled = {this.state.nuevasImagenes.objetos.length >= maxImg}
                                 >Seleccionar imagen</button>
@@ -789,7 +633,6 @@ class StoryStudent extends Component{
                     </div>
                 </div>
         }
-
         return(
             <div>
                 { body }

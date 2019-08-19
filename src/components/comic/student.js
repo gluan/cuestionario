@@ -155,6 +155,7 @@ class StoryStudent extends Component{
 		var texto='';
         document.getElementById('navbarFondos')
         .addEventListener('dragstart', function(e) {
+            console.log('dragstart')
           itemURL = e.target.src;
           itemKey = e.target.id;
           itemTag = e.target.name;
@@ -193,14 +194,14 @@ class StoryStudent extends Component{
 						padding: 5
 					});
 					layer.add(textNode);
-					
+
 					textNode.on('dblclick', () => {
 						var textPosition = textNode.getAbsolutePosition();
 						var stageBox = stage.container().getBoundingClientRect();
 						var areaPosition = {
 						  x: stageBox.left + textPosition.x,
 						  y: stageBox.top + textPosition.y
-						};							
+						};
 						document.body.appendChild(textarea);
 						textarea.value = textNode.text();
 						textarea.style.position = 'absolute';
@@ -220,11 +221,11 @@ class StoryStudent extends Component{
 						layer.draw();
 					});
                     textNode.position(stage.getPointerPosition());
-				
+
                     textNode.on("click", function(e) {
 						if(document.getElementById('textEdit'))
 							document.getElementById('textEdit').remove();
-						
+
                         var transform = layer.getChildren(function(node){
                            return node.getClassName() === 'Transformer';
                         });
@@ -235,7 +236,7 @@ class StoryStudent extends Component{
                         del.destroy();
                         var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
                         // var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
-						
+
 						if(textNode.draggable()){
 
 							Konva.Image.fromURL(newURL, function(imageDel) {
@@ -250,14 +251,14 @@ class StoryStudent extends Component{
 									  return newBox;
 									}
 								});
-								
+
 								textNode.on('transform', function(e) {
 									console.log('text ...')
 									console.log(e)
 									console.log(e.evt.movementX)
 									console.log(e.evt.movementY)
 									// reset scale, so only with is changing by transformer
-									
+
 									if (e.evt.movementX != 0 && e.evt.movementY == 0){
 										console.log('x')
 										textNode.setAttrs({
@@ -280,9 +281,9 @@ class StoryStudent extends Component{
 										  scaleY: 1,
 										  fontSize: textNode.fontSize() * textNode.scaleX(),
 										});
-									} 
+									}
 								  });
-								
+
 
 								layer.add(tr1);
 								tr1.add(imageDel);
@@ -319,7 +320,7 @@ class StoryStudent extends Component{
                     });
 					layer.draw();
                 }else{
-					
+
 					/*Valida si es un fondo*/
 					if(dataset == 'true'){
 						layer.add(image)
@@ -344,7 +345,7 @@ class StoryStudent extends Component{
 						var group = new Konva.Group({ width:100, height:100, draggable:true });
 						group.add(image);
 						layer.add(group);
-						
+
 						if(text == 'true'){
 							var textNode = new Konva.Text({
 								text: 'Texto ...',
@@ -355,10 +356,10 @@ class StoryStudent extends Component{
 								width: group.width(),
 								height: group.height(),
 								align: 'center',
-								
+
 							});
 							group.add(textNode);
-							
+
 							textNode.on('dblclick', () => {
 								var textPosition = textNode.getAbsolutePosition();
 								var stageBox = stage.container().getBoundingClientRect();
@@ -368,8 +369,6 @@ class StoryStudent extends Component{
 								  y: stageBox.top + textPosition.y
 								};
 
-								// create textarea and style it
-								
 								document.body.appendChild(textarea);
 
 								textarea.value = textNode.text();
@@ -391,14 +390,14 @@ class StoryStudent extends Component{
 								  }
 								});
 							});
-							
+
 						}
 						group.position(stage.getPointerPosition());
 
 						group.on("click", function(e) {
 							if(document.getElementById('textEdit'))
 								document.getElementById('textEdit').remove();
-							
+
 							var transform = layer.getChildren(function(node){
 							   return node.getClassName() === 'Transformer';
 							});
@@ -409,7 +408,7 @@ class StoryStudent extends Component{
 							del.destroy();
 							var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
 							// var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
-							
+
 							if(group.draggable()){
 
 								Konva.Image.fromURL(newURL, function(imageDel) {
@@ -453,7 +452,7 @@ class StoryStudent extends Component{
 							}
 							layer.draw();
 						});
-						
+
 						//image.draggable(true);
 						image.scale({
 						  x: .2,
@@ -629,7 +628,7 @@ class StoryStudent extends Component{
                     <div className="btn-menu-fondo" style={style}>
                         <div className="fondoo">
                             <div className="iconos">
-                                <button className='fondos' id='fondos' onClick={this.handleClickElements.bind(this)} 
+                                <button className='fondos' id='fondos' onClick={this.handleClickElements.bind(this)}
 									style={this.state.element == 'fondos' ? back : {}}></button>
                                 <button className='personajes' id='personajes' onClick={this.handleClickElements.bind(this)}
 									style={this.state.element == 'personajes' ? back : {}}></button>
@@ -653,10 +652,10 @@ class StoryStudent extends Component{
                 </div>
                 <div className="div-btn">
                     <button style={btnStyleD} onClick={this.handleClickDescargar.bind(this)} className="button-terminar-ejercicio-s">
-						<img src="/img/ico-terminar.svg"  style={{ width: '10px', marginRight: '6px'}}/>Descargar
+						<img src="/img/ico-descarga.svg"  style={{ width: '10px', marginRight: '6px'}}/>Descargar
 					</button>
                     <button style={btnStyleT} onClick={this.handleClickTerminar.bind(this)} className="button-terminar-ejercicio-s">
-						<img src="/img/ico-descarga.svg" style={{ width: '10px', marginRight: '6px'}}/>Terminar
+						<img src="/img/ico-terminar.svg" style={{ width: '10px', marginRight: '6px'}}/>Terminar
 					</button>
                 </div>
             </div>

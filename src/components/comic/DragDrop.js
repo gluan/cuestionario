@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import './drag.js';
 class DragAndDrop extends Component {
   state = {
     drag: false
