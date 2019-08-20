@@ -140,6 +140,15 @@ class StoryStudent extends Component{
                return node.getClassName() === 'Transformer';
             });
             transform.destroy();
+            var transform1 = layer.getChildren(function(node){
+                if (node.getClassName() === 'Group'){
+                    var x = node.getChildren(function(node2){
+                        return node2.getClassName() === 'Transformer';
+                    });
+                    x.destroy();
+                }
+
+            });
             var del = layer.getChildren(function(node){
                return node.getAttr('del') === 'true';
             });
@@ -169,6 +178,19 @@ class StoryStudent extends Component{
         var stage = this.state.stage;
         con.addEventListener('dragover', function(e) {
             e.preventDefault(); // !important
+            var transform = layer.getChildren(function(node){
+               return node.getClassName() === 'Transformer';
+            });
+            transform.destroy();
+            var transform1 = layer.getChildren(function(node){
+                if (node.getClassName() === 'Group'){
+                    var x = node.getChildren(function(node2){
+                        return node2.getClassName() === 'Transformer';
+                    });
+                    x.destroy();
+                }
+
+            });
         });
 
         con.addEventListener('drop', function(e) {
@@ -185,15 +207,30 @@ class StoryStudent extends Component{
                 image.setAttr('tag', itemTag);
                 image.setAttr('url', itemURL);
 				if(texto == 'true'){
+                    var rect = new Konva.Rect({
+                        width: 100,
+                        height: 50,
+                        fill: '#fff',
+                        stroke: '#fff',
+                        cornerRadius:5
+                    });
 					var textNode = new Konva.Text({
 						text: 'Texto ...',
 						fontSize: 14,
-						draggable: true,
+						draggable: false,
 						visible: true,
-						padding: 5
+						padding: 10,
+                        width: 100,
+                        height: 50,
 					});
-					layer.add(textNode);
+                    var group = new Konva.Group({ draggable:true });
+                    group.add(rect);
+                    group.add(textNode);
+                    // rect.position(stage.getPointerPosition());
+                    // textNode.position(stage.getPointerPosition());
+                    group.position(stage.getPointerPosition());
 
+                    layer.add(group);
 					textNode.on('dblclick dbltap', () => {
 						var textPosition = textNode.getAbsolutePosition();
 						var stageBox = stage.container().getBoundingClientRect();
@@ -212,6 +249,7 @@ class StoryStudent extends Component{
 						textarea.addEventListener('keydown', function(e) {
 						  if (e.keyCode === 13) {
 							textNode.text(textarea.value);
+                            rect.size(textNode.size())
 							layer.draw();
 							if(document.getElementById('textEdit'))
 								document.body.removeChild(textarea);
@@ -219,9 +257,9 @@ class StoryStudent extends Component{
 						});
 						layer.draw();
 					});
-                    textNode.position(stage.getPointerPosition());
 
                     textNode.on("click tap", function(e) {
+                        console.log('click')
 						if(document.getElementById('textEdit'))
 							document.getElementById('textEdit').remove();
 
@@ -236,10 +274,12 @@ class StoryStudent extends Component{
                         var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
                         // var newURL= itemURL.split('/img/')[0]+'/img/tache.svg';
 
-						if(textNode.draggable()){
+						if(group.draggable()){
 
 							Konva.Image.fromURL(newURL, function(imageDel) {
 								var tr1 = new Konva.Transformer({
+                                    x:300,
+                                    y:300,
 									node: textNode,
 									rotateAnchorOffset:20,
 									anchorSize:6,
@@ -250,8 +290,11 @@ class StoryStudent extends Component{
 									  return newBox;
 									}
 								});
+                                // console.log(textNode.getAbsolutePosition())
+                                tr1.position(group.getAbsolutePosition());
 
 								textNode.on('transform', function(e) {
+                                    console.log(transform)
 
 									if (e.evt.movementX != 0 && e.evt.movementY == 0){
 										textNode.setAttrs({
@@ -273,10 +316,14 @@ class StoryStudent extends Component{
 										  fontSize: textNode.fontSize() * textNode.scaleX(),
 										});
 									}
+                                    rect.size(textNode.size())
+                                    rect.position(textNode.position())
 								  });
 
 
-								layer.add(tr1);
+								group.add(tr1);
+                                console.log('tr1')
+                                console.log(tr1)
 								tr1.add(imageDel);
 								tr1.on('transform', () => {
 								  imageDel.x(10);
@@ -300,7 +347,7 @@ class StoryStudent extends Component{
 									   return node.getAttr('del') === 'true';
 									});
 									del.destroy();
-									imageDel.destroy();
+									group.destroy();
 									textNode.destroy();
 									layer.draw();
 								});
@@ -310,6 +357,7 @@ class StoryStudent extends Component{
                         layer.draw();
                     });
 					layer.draw();
+                    console.log(stage)
                 }else{
 
 					/*Valida si es un fondo*/
@@ -479,6 +527,7 @@ class StoryStudent extends Component{
 				}
             });
         });
+
     }
     handleClickElements(event){
         this.setState({ element:event.target.id });
@@ -504,6 +553,15 @@ class StoryStudent extends Component{
            return node.getClassName() === 'Transformer';
         });
         transform.destroy();
+        var transform1 = layer.getChildren(function(node){
+            if (node.getClassName() === 'Group'){
+                var x = node.getChildren(function(node2){
+                    return node2.getClassName() === 'Transformer';
+                });
+                x.destroy();
+            }
+
+        });
         // layer.stopDrag();
         this.setState({btn:false, herramientas:false, stage:stage});
         this.handleDelete();
