@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Instructions from '../instructions/instructions';
 import './comic.css';
-import './drag.js';
+// import './drag.js';
 import { Stage } from 'react-konva';
 import Konva from 'konva';
 import domtoimage from 'dom-to-image';
@@ -50,7 +50,7 @@ class StoryStudent extends Component{
                 { url:'/img/elementos/globos/9.png', id:'diablito', status:false, tag:'enojado'},
                 //{ url:'/img/elementos/globos/10.png', id:'diablito', status:false, tag:'enojado'},
                 //{ url:'/img/elementos/globos/11.png', id:'diablito', status:false, tag:'enojado'},
-                { url:'/img/elementos/globos/12.png', id:'diablito', status:false, tag:'enojado'},
+                // { url:'/img/elementos/globos/12.png', id:'diablito', status:false, tag:'enojado'},
                 { url:'/img/elementos/globos/13.png', id:'diablito', status:false, tag:'enojado'}
 
             ],
@@ -152,16 +152,17 @@ class StoryStudent extends Component{
         var itemTag = '';
         var dataset = '';
         var text = '';
-		var texto='';
+		var texto = '';
+        var textMas = '';
         document.getElementById('navbarFondos')
         .addEventListener('dragstart', function(e) {
-            console.log('dragstart')
           itemURL = e.target.src;
           itemKey = e.target.id;
           itemTag = e.target.name;
           dataset= e.target.dataset.options;
           text= e.target.dataset.text;
 		  texto = e.target.dataset.primer;
+          textMas = e.target.dataset.textmas;
         });
 
         var con = this.state.stage.container();
@@ -206,7 +207,7 @@ class StoryStudent extends Component{
 						textarea.style.top = areaPosition.y + 'px';
 						textarea.style.left = areaPosition.x + 'px';
 						textarea.style.width = textNode.width();
-						textarea.maxLength = 50;
+                        textarea.maxLength = 100;
 						textarea.focus();
 						textarea.addEventListener('keydown', function(e) {
 						  if (e.keyCode === 13) {
@@ -366,7 +367,12 @@ class StoryStudent extends Component{
 								textarea.style.top = areaPosition.y + 'px';
 								textarea.style.left = areaPosition.x + 'px';
 								textarea.style.width = textNode.width();
-								textarea.maxLength = 50;
+                                if (textMas == 'true'){
+                                    textarea.maxLength = 70;
+                                }
+                                else{
+                                    textarea.maxLength = 50;
+                                }
 
 								textarea.focus();
 
@@ -452,10 +458,16 @@ class StoryStudent extends Component{
 							width: 150,
 							height: 150
 						});*/
-						group.size({
-							width: 150,
-							height: 150
-						});
+						// group.size({
+						// 	width: 150,
+						// 	height: 150
+						// });
+                        console.log('iiiiiiii')
+                        console.log(image.size())
+                        console.log(image.size().x)
+                        image.setAttr('width', image.size().width);
+                        image.setAttr('height', image.size().height);
+
 						//group.setAttr('position', stage.getPointerPosition());
 						//image.setAttr('position', stage.getPointerPosition());
 					}
@@ -476,7 +488,7 @@ class StoryStudent extends Component{
         console.log(this.state)
         let stage = this.state.stage;
         stage.draggable(false);
-        let layer = stage.getChildren(function(node){ //layer
+        let layer = stage.getChildren(function(node){
             node.draggable(false);
             node.getChildren(function(node1){
                 node1.draggable(false);
@@ -498,7 +510,6 @@ class StoryStudent extends Component{
         /*TODO: Falta dar formato a respuestA*/
     };
     handleClickDescargar(value){
-        console.log('descargar');
         this.handleDelete();
         domtoimage.toJpeg(document.getElementById('body-story'), { quality: 0.95 })
         .then(function (dataUrl) {
@@ -574,6 +585,7 @@ class StoryStudent extends Component{
                     <img
                         data-options={image.status}
                         data-text={true}
+                        data-textMas={index == 8 || index== 9 ? true : false}
 						data-primer={index == 0 ? true : false}
                         name={image.tag}
                         id={image.id}
